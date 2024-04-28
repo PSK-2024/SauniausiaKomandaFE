@@ -8,7 +8,7 @@ export interface Recipe {
 }
 
 export interface RecipeState {
-  recipes: Recipe[];
+  recipe: Recipe | null;
   loading: 'idle' | 'pending' | 'succeeded' | 'failed';
   error: string | undefined;
 }

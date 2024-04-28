@@ -26,7 +26,7 @@ export const fetchAllRecipes = createAsyncThunk<
   { rejectValue: string }
 >('recipes/fetchAllRecipes', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get(`${RECIPE_BASE_URL}`);
+    const response = await axios.get<Recipe[]>(`${RECIPE_BASE_URL}`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
