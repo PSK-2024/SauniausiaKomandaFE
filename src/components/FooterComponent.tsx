@@ -30,7 +30,7 @@ function FooterComponent() {
       >
         <Box sx={{ textAlign: 'left' }}>
           <Typography variant='h6' color='textPrimary' gutterBottom>
-            Company Name
+            <img src='/app-logo.png' alt='Logo' style={{ height: 40 }} />
           </Typography>
           <Typography variant='body2' color='textSecondary'>
             Address: 1234 Street Address, City, Country

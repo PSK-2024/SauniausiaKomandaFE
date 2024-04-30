@@ -29,6 +29,7 @@ function ResponsiveAppBar() {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -61,11 +62,7 @@ function ResponsiveAppBar() {
     <AppBar position='static' sx={{ bgcolor: '#ffffff' }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <img
-            src='src/logo.svg'
-            alt=''
-            style={{ height: 24, marginRight: 8 }}
-          />
+          <img src='/app-logo.png' alt='Logo' style={{ height: 40 }} />
           <Typography
             variant='h6'
             noWrap
@@ -141,7 +138,7 @@ function ResponsiveAppBar() {
                 onClick={
                   page === 'Home' ? handleNavigateHome : handleCloseNavMenu
                 }
-                sx={{ my: 2, color: '#509E2F', display: 'block' }}
+                sx={{ my: 2, color: '#509E2F', display: 'block', p: 0, m: 0 }}
               >
                 {page}
               </Button>

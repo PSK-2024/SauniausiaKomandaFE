@@ -25,10 +25,14 @@ const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
   duration,
 }) => {
   return (
-    <Card
-      sx={{ borderRadius: 2, overflow: 'visible', boxShadow: 3, margin: 2 }}
-    >
-      <CardMedia component='img' height='200' image={img} alt={title} />
+    <Card sx={{ borderRadius: 2, boxShadow: 3, margin: 2 }}>
+      <CardMedia
+        component='img'
+        height='200'
+        image={img}
+        alt={title}
+        sx={{ borderRadius: 2 }}
+      />
       <CardContent
         sx={{
           display: 'flex',
@@ -41,7 +45,7 @@ const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
           gutterBottom
           variant='h5'
           component='div'
-          sx={{ fontWeight: 'bold', flexGrow: 1, fontSize: '25px', m: 0 }}
+          sx={{ fontWeight: 'bold', fontSize: '25px', m: 0 }}
         >
           {title}
         </Typography>

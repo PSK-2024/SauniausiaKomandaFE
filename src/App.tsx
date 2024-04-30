@@ -18,7 +18,7 @@ function App() {
         sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
       >
         <ResponsiveAppBar />
-        <Box component='main' sx={{ flexGrow: 1, padding: '100px' }}>
+        <Box component='main' sx={{ flexGrow: 1, padding: '50px 100px' }}>
           <Routes>
             <Route path='/' element={<HomeComponent />} />
             <Route path='/recipes/:id' element={<RecipeComponent />} />
