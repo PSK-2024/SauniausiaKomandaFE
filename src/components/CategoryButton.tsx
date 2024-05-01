@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 
 interface CategoryButtonProps {
-  categoryLabel: string; // Specifies that categoryLabel is expected to be a string
+  categoryLabel: string;
 }
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({ categoryLabel }) => {
@@ -12,6 +12,9 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({ categoryLabel }) => {
       sx={{
         flexGrow: 1,
         bgcolor: '#509E2F',
+        '&:hover': {
+          bgcolor: '#2E3D28',
+        },
         m: 1,
         p: 2,
         typography: 'h6',
