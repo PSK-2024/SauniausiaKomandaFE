@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import SidebarComponent from './SidebarComponent';
 
+import '../styles/homeComponent.css';
+
 const cardsData = [
   {
     id: 1,
@@ -62,6 +64,20 @@ const cardsData = [
     img: '/food.png',
     duration: 20,
   },
+  {
+    id: 9,
+    title: 'Caesar Salad',
+    rating: 4.0,
+    img: '/food.png',
+    duration: 30,
+  },
+  {
+    id: 10,
+    title: 'Greek Salad',
+    rating: 4.2,
+    img: '/food.png',
+    duration: 20,
+  },
 ];
 
 function HomeComponent() {
@@ -80,132 +96,78 @@ function HomeComponent() {
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'auto' }}>
-        <Link
-          to={`/recipes/${cardsData[0].id}`}
-          style={{ textDecoration: 'none' }}
-        >
-          <Box
-            sx={{
-              position: 'relative',
-              width: '100%',
-              margin: 2,
-              borderRadius: 2,
-              overflow: 'hidden',
-            }}
-          >
-            <img
-              src={cardsData[0].img}
-              alt='Hero'
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                borderRadius: 2,
-              }}
-            />
-            <Box
-              sx={{
-                position: 'absolute',
-                display: 'flex',
-                top: 0,
-                padding: '100px',
-                flexDirection: 'column',
-              }}
+      <Link
+        to={`/recipes/${cardsData[0].id}`}
+        style={{ textDecoration: 'none' }}
+      >
+        <Box className='hero-image'>
+          <img src={cardsData[0].img} alt='Hero' />
+          <Box className='hero-image-text'>
+            <Typography
+              sx={{ color: '#DC582A', fontWeight: '400', fontSize: '30px' }}
             >
-              <Typography
-                sx={{ color: '#DC582A', fontWeight: '400', fontSize: '30px' }}
-              >
-                Trending now
-              </Typography>
-              <Typography
-                sx={{ color: '#ffffff', fontWeight: '600', fontSize: '50px' }}
-              >
-                {cardsData[0].title}
-              </Typography>
-            </Box>
+              Trending now
+            </Typography>
+            <Typography
+              sx={{ color: '#ffffff', fontWeight: '600', fontSize: '50px' }}
+            >
+              {cardsData[0].title}
+            </Typography>
           </Box>
-        </Link>
-        <Box
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginRight: 12,
-            width: '100%',
-          }}
-        >
-          <Button
-            sx={{
-              padding: 2,
-              bgcolor: '#509E2F',
-              color: '#ffffff',
-              '&:hover': { bgcolor: '#367022' },
-            }}
-            onClick={handleClickShareRecipe}
-          >
-            Share your recipe
-          </Button>
         </Box>
-        <Box sx={{ display: 'flex' }}>
+      </Link>
+
+      <Box className='button-container'>
+        <Button onClick={handleClickShareRecipe}>Share your recipe</Button>
+      </Box>
+
+      <Box className='home-container-content'>
+        <Box className='sidebar'>
           <SidebarComponent />
-          <Box
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'auto',
-              flexBasis: '100%',
-            }}
-          >
-            {cardsData.map(card => (
-              <Link
+        </Box>
+        <Box className='recipes-container'>
+          {cardsData.map(card => (
+            <Link
+              key={card.id}
+              to={`/recipes/${card.id}`}
+              style={{ textDecoration: 'none', maxWidth: '300px' }}
+            >
+              <RecipeReviewCard
                 key={card.id}
-                to={`/recipes/${card.id}`}
-                style={{ textDecoration: 'none', flex: '1 0 300px' }}
-              >
-                <RecipeReviewCard
-                  key={card.id}
-                  title={card.title}
-                  rating={card.rating}
-                  img={card.img}
-                  duration={card.duration}
-                />
-              </Link>
-            ))}
-            <Box
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                marginRight: 12,
-                width: '100%',
+                title={card.title}
+                rating={card.rating}
+                img={card.img}
+                duration={card.duration}
+              />
+            </Link>
+          ))}
+          <Box className='recommended-recipes-container'>
+            <Typography
+              sx={{
+                padding: 2,
+                color: '#000000',
+                fontSize: '30px',
+                fontWeight: 'bold',
               }}
             >
-              <Typography
-                sx={{
-                  padding: 2,
-                  color: '#000000',
-                  fontSize: '30px',
-                  fontWeight: 'bold',
-                }}
-              >
-                Recommended Recipes
-              </Typography>
-            </Box>
-            {cardsData.map(card => (
-              <Link
-                key={card.id}
-                to={`/recipes/${card.id}`}
-                style={{ textDecoration: 'none', flex: '1 0 300px' }}
-              >
-                <RecipeReviewCard
-                  key={card.id}
-                  title={card.title}
-                  rating={card.rating}
-                  img={card.img}
-                  duration={card.duration}
-                />
-              </Link>
-            ))}
+              Recommended Recipes
+            </Typography>
           </Box>
+          {cardsData.map(card => (
+            <Link
+              key={card.id}
+              to={`/recipes/${card.id}`}
+              style={{ textDecoration: 'none', maxWidth: '300px' }}
+            >
+              <RecipeReviewCard
+                key={card.id}
+                title={card.title}
+                rating={card.rating}
+                img={card.img}
+                duration={card.duration}
+              />
+            </Link>
+          ))}
         </Box>
       </Box>
     </>

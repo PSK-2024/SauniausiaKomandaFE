@@ -1,0 +1,22 @@
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.star {
+    color: #FDC040;
+    font-size: 20px;
+}
+
+.card-bottom {
+    justify-content: space-between; 
+    padding: 20px;
+    padding-top: 0; 
+}

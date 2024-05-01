@@ -10,6 +10,8 @@ import StarIcon from '@mui/icons-material/Star';
 import { Box } from '@mui/material';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 
+import '../styles/recipeReviewCard.css';
+
 interface RecipeReviewCardProps {
   key: number;
   title: string;
@@ -33,49 +35,40 @@ const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
         alt={title}
         sx={{ borderRadius: 2 }}
       />
-      <CardContent
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 2,
-        }}
-      >
+      <CardContent className='card-content'>
         <Typography
           gutterBottom
           variant='h5'
           component='div'
-          sx={{ fontWeight: 'bold', fontSize: '25px', m: 0 }}
+          fontWeight='bold'
+          fontSize='25px'
         >
           {title}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <StarIcon sx={{ color: '#FDC040', fontSize: '20px' }} />
+        <Box className='rating'>
+          <StarIcon className='star' />
           <Typography
             variant='subtitle1'
-            sx={{ ml: 0.5, color: '#ADADAD', fontSize: '20px' }}
+            color='#ADADAD'
+            fontSize='20px'
+            marginLeft='2px'
           >
             {rating}
           </Typography>
         </Box>
       </CardContent>
-      <CardActions
-        disableSpacing
-        sx={{ justifyContent: 'space-between', padding: 2, paddingTop: 0 }}
-      >
+      <CardActions className='card-bottom' disableSpacing>
         <Typography
-          sx={{
-            color: '#DC582A',
-            fontSize: '20px',
-            fontWeight: '600',
-            padding: '8px',
-          }}
+          color='#DC582A'
+          fontWeight='600'
+          fontSize='20px'
+          padding='8px'
         >
           {duration} min
         </Typography>
         <Box>
           <IconButton aria-label='add to favorites'>
-            <FavoriteIcon sx={{ color: 'red' }} />
+            <FavoriteIcon />
           </IconButton>
           <IconButton>
             <ModeCommentOutlinedIcon />
