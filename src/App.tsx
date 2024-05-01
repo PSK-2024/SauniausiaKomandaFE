@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import RecipeComponent from './components/RecipeComponent';
 import './App.css';
+import RecipeComponent from './components/recipe/RecipeComponent';
 
 function App() {
   return (
