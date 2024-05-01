@@ -6,7 +6,7 @@ export const mockRecipe: RecipeData = {
   duration: 90,
   calories: 350,
   image:
-    'https://cdn.loveandlemons.com/wp-content/uploads/2021/04/green-salad-1.jpg',
+    'https://static01.nyt.com/images/2021/11/02/dining/dg-Tall-and-Creamy-Cheesecake-copy/dg-Tall-and-Creamy-Cheesecake-superJumbo.jpg',
   ingredients: [
     { name: 'Cream cheese', amount: '500g' },
     { name: 'Granulated sugar', amount: '1 cup' },
