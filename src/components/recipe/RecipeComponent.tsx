@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  Box,
-  Container,
-  Grid,
-  CircularProgress,
-  CardMedia,
-  Card,
-} from '@mui/material';
+import { CircularProgress, CardMedia, Card } from '@mui/material';
 import Header from './Header';
 import Rating from './Rating';
 import NutritionalInfo from './NutritionalInfo';
@@ -17,6 +10,8 @@ import CommentsSection from './CommentsSection';
 import { RootState } from '../../app/store';
 import { fetchRecipe } from '../../state/thunk/recipeThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import './RecipeComponent.css';
+import SectionName from './SectionName';
 
 const RecipeComponent: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,34 +29,41 @@ const RecipeComponent: React.FC = () => {
   if (!recipe) return <div>No recipe found or error loading.</div>;
 
   return (
-    <Container maxWidth='lg'>
-      <Box my={4}>
+    <div className='recipe-container'>
+      <div className='header-container'>
+        <div className='info-container'>
+          <Header title={recipe.title} />
+          <Rating value={recipe.rating} />
+          <NutritionalInfo
+            ingredientCount={recipe.ingredients.length}
+            duration={recipe.duration}
+            calories={recipe.calories}
+          />
+        </div>
         <Card>
           <CardMedia
             component='img'
-            height='140'
+            height='250'
             image={recipe.image}
             alt={`Image of ${recipe.title}`}
           />
         </Card>
-        <Header title={recipe.title} />
-        <Rating value={recipe.rating} />
-        <NutritionalInfo
-          ingredientCount={recipe.ingredients.length}
-          duration={recipe.duration}
-          calories={recipe.calories}
-        />
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <IngredientsList ingredients={recipe.ingredients} />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Instructions steps={recipe.instructions} />
-          </Grid>
-        </Grid>
+      </div>
+      <div className='flex-container'>
+        <div className='flex-item'>
+          <SectionName name={'Ingredients'} />
+          <IngredientsList ingredients={recipe.ingredients} />
+        </div>
+        <div className='flex-item'>
+          <SectionName name={'Instructions'} />
+          <Instructions steps={recipe.instructions} />
+        </div>
+      </div>
+      <div className='comments-container'>
+        <SectionName name={'Comments'} />
         <CommentsSection comments={recipe.comments} />
-      </Box>
-    </Container>
+      </div>
+    </div>
   );
 };
 

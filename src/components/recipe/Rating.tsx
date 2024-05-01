@@ -6,7 +6,11 @@ interface RatingProps {
 }
 
 const Rating: React.FC<RatingProps> = ({ value }) => {
-  return <MuiRating name='recipe-rating' value={value} readOnly />;
+  return (
+    <div className='rating-container'>
+      <MuiRating name='recipe-rating' value={value} readOnly />
+    </div>
+  );
 };
 
 export default Rating;

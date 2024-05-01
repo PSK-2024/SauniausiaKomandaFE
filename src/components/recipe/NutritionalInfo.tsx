@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
 
 interface NutritionalInfoProps {
   ingredientCount: number;
@@ -13,11 +12,20 @@ const NutritionalInfo: React.FC<NutritionalInfoProps> = ({
   calories,
 }) => {
   return (
-    <Box>
-      <Typography>{ingredientCount} Ingredients</Typography>
-      <Typography>{duration} Minutes</Typography>
-      <Typography>{calories} Calories</Typography>
-    </Box>
+    <div className='nutrition-container'>
+      <div className='ingredients-container'>
+        <p className='count'>{ingredientCount}</p>
+        <p className='label'>Ingredients</p>
+      </div>
+      <div>
+        <p className='count'>{duration}</p>
+        <p className='label'>Minutes</p>
+      </div>
+      <div>
+        <p className='count'>{calories}</p>
+        <p className='label'>Calories</p>
+      </div>
+    </div>
   );
 };
 
