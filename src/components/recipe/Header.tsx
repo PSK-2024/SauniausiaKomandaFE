@@ -1,12 +1,11 @@
 import React from 'react';
-import { Typography } from '@mui/material';
 
 interface HeaderProps {
   title: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ title }) => {
-  return <Typography variant='h4'>{title}</Typography>;
+  return <h1 className='product-name'>{title}</h1>;
 };
 
 export default Header;

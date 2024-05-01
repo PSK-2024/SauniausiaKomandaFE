@@ -13,22 +13,26 @@ interface CommentsSectionProps {
 
 const CommentsSection: React.FC<CommentsSectionProps> = ({ comments }) => {
   return (
-    <List>
-      {comments.map(comment => (
-        <ListItem key={comment.id}>
-          <ListItemText
-            primary={comment.text}
-            secondary={`By ${comment.author}`}
-          />
-        </ListItem>
-      ))}
-      <ListItem>
+    <div className='comments'>
+      <div className='comments-list'>
+        <List>
+          {comments.map(comment => (
+            <ListItem key={comment.id}>
+              <ListItemText
+                primary={comment.text}
+                secondary={`By ${comment.author}`}
+              />
+            </ListItem>
+          ))}
+        </List>
         <TextField label='Add a comment' fullWidth />
+      </div>
+      <div className='comment-button'>
         <Button variant='contained' color='primary'>
           Comment
         </Button>
-      </ListItem>
-    </List>
+      </div>
+    </div>
   );
 };
 

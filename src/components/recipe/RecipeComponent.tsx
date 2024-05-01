@@ -43,7 +43,7 @@ const RecipeComponent: React.FC = () => {
         <Card>
           <CardMedia
             component='img'
-            height='250'
+            height='270'
             image={recipe.image}
             alt={`Image of ${recipe.title}`}
           />

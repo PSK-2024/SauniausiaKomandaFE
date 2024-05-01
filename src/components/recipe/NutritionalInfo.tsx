@@ -17,11 +17,11 @@ const NutritionalInfo: React.FC<NutritionalInfoProps> = ({
         <p className='count'>{ingredientCount}</p>
         <p className='label'>Ingredients</p>
       </div>
-      <div>
+      <div className='duration-container'>
         <p className='count'>{duration}</p>
         <p className='label'>Minutes</p>
       </div>
-      <div>
+      <div className='calories-container'>
         <p className='count'>{calories}</p>
         <p className='label'>Calories</p>
       </div>
