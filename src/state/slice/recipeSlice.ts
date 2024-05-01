@@ -1,31 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Recipe, RecipeState } from '../model/recipeModel';
-import { fetchRecipeById } from '../thunk/recipeThunk';
+import { RecipeData, RecipeState } from '../model/recipeModel';
+import { fetchRecipe } from '../thunk/recipeThunk';
 
 const recipeSlice = createSlice({
   name: 'recipe',
   initialState: {
     recipe: null,
-    loading: 'idle',
-    error: '',
+    status: 'idle',
+    error: null,
   } as RecipeState,
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchRecipeById.pending, state => {
-        state.loading = 'pending';
+      .addCase(fetchRecipe.pending, state => {
+        state.status = 'loading';
       })
       .addCase(
-        fetchRecipeById.fulfilled,
-        (state, action: PayloadAction<Recipe>) => {
-          state.loading = 'succeeded';
+        fetchRecipe.fulfilled,
+        (state, action: PayloadAction<RecipeData>) => {
+          state.status = 'succeeded';
           state.recipe = action.payload;
         }
       )
-      .addCase(fetchRecipeById.rejected, (state, action) => {
-        state.loading = 'failed';
-        state.error = action.payload;
+      .addCase(fetchRecipe.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
       });
   },
 });
