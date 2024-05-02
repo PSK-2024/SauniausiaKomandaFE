@@ -83,6 +83,7 @@ const cardsData = [
 function HomeComponent() {
   const [redirectToUploadRecipePage, setRedirectToUploadRecipePage] =
     useState(false);
+  const [showAllRecipes, setShowAllRecipes] = useState(false);
 
   useEffect(() => {
     if (redirectToUploadRecipePage) {
@@ -92,6 +93,10 @@ function HomeComponent() {
 
   const handleClickShareRecipe = () => {
     setRedirectToUploadRecipePage(true);
+  };
+
+  const toggleRecipesDisplay = () => {
+    setShowAllRecipes(!showAllRecipes);
   };
 
   return (
@@ -119,45 +124,57 @@ function HomeComponent() {
 
       <Box className='button-container'>
         <Button onClick={handleClickShareRecipe}>Share your recipe</Button>
+        <Button variant='text' onClick={toggleRecipesDisplay}>
+          {showAllRecipes ? 'Show Recommended' : 'Show All Recipes'}
+        </Button>
       </Box>
 
       <Box className='home-container-content'>
-        <Box className='sidebar'>
-          <SidebarComponent />
-        </Box>
+        <SidebarComponent />
         <Box className='recipes-container'>
-          {cardsData.map(card => (
-            <RecipeReviewCard
-              key={card.id}
-              id={card.id}
-              title={card.title}
-              rating={card.rating}
-              img={card.img}
-              duration={card.duration}
-            />
-          ))}
-          <Box className='recommended-recipes-container'>
-            <Typography
-              sx={{
-                padding: 2,
-                color: '#000000',
-                fontSize: '30px',
-                fontWeight: 'bold',
-              }}
-            >
-              Recommended Recipes
-            </Typography>
-          </Box>
-          {cardsData.map(card => (
-            <RecipeReviewCard
-              key={card.id}
-              id={card.id}
-              title={card.title}
-              rating={card.rating}
-              img={card.img}
-              duration={card.duration}
-            />
-          ))}
+          {showAllRecipes ? (
+            // Show all recipes if showAllRecipes is true
+            cardsData.map(card => (
+              <RecipeReviewCard
+                key={card.id}
+                id={card.id}
+                title={card.title}
+                rating={card.rating}
+                img={card.img}
+                duration={card.duration}
+              />
+            ))
+          ) : (
+            // Otherwise, show this as the "Recommended Recipes" section
+            <>
+              {/* <Box className='recommended-recipes-container'>
+                <Typography
+                  sx={{
+                    padding: 2,
+                    color: '#000000',
+                    fontSize: '30px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Recommended Recipes
+                </Typography>
+              </Box> */}
+              {cardsData.slice(0, 5).map(
+                (
+                  card // Assuming first 5 are recommended
+                ) => (
+                  <RecipeReviewCard
+                    key={card.id}
+                    id={card.id}
+                    title={card.title}
+                    rating={card.rating}
+                    img={card.img}
+                    duration={card.duration}
+                  />
+                )
+              )}
+            </>
+          )}
         </Box>
       </Box>
     </>

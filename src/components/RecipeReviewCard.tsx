@@ -6,7 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import StarIcon from '@mui/icons-material/Star';
+// import StarIcon from '@mui/icons-material/Star';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
@@ -25,7 +25,7 @@ interface RecipeReviewCardProps {
 const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
   id,
   title,
-  rating,
+  // rating,
   img,
   duration,
 }) => {
@@ -52,10 +52,11 @@ const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
             component='div'
             fontWeight='bold'
             fontSize='25px'
+            noWrap
           >
             {title}
           </Typography>
-          <Box className='rating'>
+          {/* <Box className='rating'>
             <StarIcon className='star' />
             <Typography
               variant='subtitle1'
@@ -65,7 +66,7 @@ const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
             >
               {rating}
             </Typography>
-          </Box>
+          </Box> */}
         </CardContent>
       </Link>
       <CardActions className='card-bottom' disableSpacing>
