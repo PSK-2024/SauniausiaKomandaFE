@@ -127,19 +127,14 @@ function HomeComponent() {
         </Box>
         <Box className='recipes-container'>
           {cardsData.map(card => (
-            <Link
+            <RecipeReviewCard
               key={card.id}
-              to={`/recipes/${card.id}`}
-              style={{ textDecoration: 'none', maxWidth: '300px' }}
-            >
-              <RecipeReviewCard
-                key={card.id}
-                title={card.title}
-                rating={card.rating}
-                img={card.img}
-                duration={card.duration}
-              />
-            </Link>
+              id={card.id}
+              title={card.title}
+              rating={card.rating}
+              img={card.img}
+              duration={card.duration}
+            />
           ))}
           <Box className='recommended-recipes-container'>
             <Typography
@@ -154,19 +149,14 @@ function HomeComponent() {
             </Typography>
           </Box>
           {cardsData.map(card => (
-            <Link
+            <RecipeReviewCard
               key={card.id}
-              to={`/recipes/${card.id}`}
-              style={{ textDecoration: 'none', maxWidth: '300px' }}
-            >
-              <RecipeReviewCard
-                key={card.id}
-                title={card.title}
-                rating={card.rating}
-                img={card.img}
-                duration={card.duration}
-              />
-            </Link>
+              id={card.id}
+              title={card.title}
+              rating={card.rating}
+              img={card.img}
+              duration={card.duration}
+            />
           ))}
         </Box>
       </Box>
