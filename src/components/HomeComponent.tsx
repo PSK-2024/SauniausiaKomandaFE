@@ -39,7 +39,7 @@ const cardsData = [
   {
     id: 5,
     title: 'Ramen',
-    rating: 5,
+    rating: 5.0,
     img: '/food.png',
     duration: 30,
   },
@@ -123,10 +123,10 @@ function HomeComponent() {
       </Link>
 
       <Box className='button-container'>
-        <Button onClick={handleClickShareRecipe}>Share your recipe</Button>
         <Button variant='text' onClick={toggleRecipesDisplay}>
-          {showAllRecipes ? 'Show Recommended' : 'Show All Recipes'}
+          {showAllRecipes ? 'Show Recommended Recipes' : 'Show All Recipes'}
         </Button>
+        <Button onClick={handleClickShareRecipe}>Share your recipe</Button>
       </Box>
 
       <Box className='home-container-content'>
@@ -145,34 +145,17 @@ function HomeComponent() {
               />
             ))
           ) : (
-            // Otherwise, show this as the "Recommended Recipes" section
             <>
-              {/* <Box className='recommended-recipes-container'>
-                <Typography
-                  sx={{
-                    padding: 2,
-                    color: '#000000',
-                    fontSize: '30px',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Recommended Recipes
-                </Typography>
-              </Box> */}
-              {cardsData.slice(0, 5).map(
-                (
-                  card // Assuming first 5 are recommended
-                ) => (
-                  <RecipeReviewCard
-                    key={card.id}
-                    id={card.id}
-                    title={card.title}
-                    rating={card.rating}
-                    img={card.img}
-                    duration={card.duration}
-                  />
-                )
-              )}
+              {cardsData.slice(0, 5).map(card => (
+                <RecipeReviewCard
+                  key={card.id}
+                  id={card.id}
+                  title={card.title}
+                  rating={card.rating}
+                  img={card.img}
+                  duration={card.duration}
+                />
+              ))}
             </>
           )}
         </Box>

@@ -1,5 +1,6 @@
 .card {
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: space-between;
     border-radius: 8px ;
@@ -7,6 +8,11 @@
     margin: 20px;
     max-width: 250px;
     max-height: 350px;
+}
+
+.media-wrapper {
+    position: relative;
+    overflow: hidden;
 }
 
 .card-content {
@@ -17,8 +23,14 @@
 }
 
 .rating {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
     display: flex;
     align-items: center;
+    border-radius: 0 0 0 8px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .star {

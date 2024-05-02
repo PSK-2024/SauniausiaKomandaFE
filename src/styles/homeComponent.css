@@ -29,8 +29,10 @@
 
 .button-container button {
     padding: 20px;
+    margin: 10px;
     background-color: #509E2F;
     color: #ffffff;
+    width: 300px;
 }
 
 .button-container button:hover {
@@ -43,13 +45,13 @@
 }
 
 .sidebar {
-    flex: 0 0 13%;
+    flex: 0 0 15%;
 }
 
 .recipes-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 13px;
+    gap: 20px;
     flex: 0 0 90%;
 }
 
