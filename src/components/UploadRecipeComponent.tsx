@@ -61,7 +61,6 @@ const UploadRecipeComponent: React.FC = () => {
         maxWidth: '1574px',
         color: 'text.secondary',
         '@media (max-width:768px)': {
-          mt: 10,
           maxWidth: '100%',
         },
       }}

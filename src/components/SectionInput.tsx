@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextField } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface SectionInputProps {
   placeholder: string;
@@ -10,23 +11,21 @@ const SectionInput: React.FC<SectionInputProps> = ({
   placeholder,
   minRows = 1,
 }) => {
+  const isMobile = useMediaQuery('(max-width:768px)');
+
   return (
     <div>
       <TextField
         fullWidth
         variant='outlined'
         placeholder={placeholder}
-        multiline
-        minRows={minRows}
+        multiline={!isMobile}
+        minRows={!isMobile ? minRows : 1}
         sx={{
           mt: 2,
           fontSize: '3xl',
           fontStyle: 'italic',
           borderColor: 'grey.400',
-          '@media (max-width:768px)': {
-            pr: 5,
-            mt: 10,
-          },
         }}
         InputProps={{
           style: {

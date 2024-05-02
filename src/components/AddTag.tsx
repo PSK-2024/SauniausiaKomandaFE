@@ -13,9 +13,6 @@ const AddTag: React.FC<AddTagProps> = ({ placeholder }) => {
         width: 495,
         mt: 5,
         mb: 5,
-        '@media (max-width:768px)': {
-          mt: 10,
-        },
       }}
     >
       <Box
