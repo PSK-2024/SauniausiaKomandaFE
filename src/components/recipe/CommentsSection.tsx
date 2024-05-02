@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem, ListItemText, TextField, Button } from '@mui/material';
+import { List, ListItem, ListItemText, TextField } from '@mui/material';
 
 interface Comment {
   id: number;
@@ -25,12 +25,26 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ comments }) => {
             </ListItem>
           ))}
         </List>
-        <TextField label='Add a comment' fullWidth />
+        <TextField
+          label='Add a comment'
+          fullWidth
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: '#509E2F',
+              },
+              '&:hover fieldset': {
+                borderColor: '#509E2F',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#509E2F',
+              },
+            },
+          }}
+        />
       </div>
       <div className='comment-button'>
-        <Button variant='contained' color='primary'>
-          Comment
-        </Button>
+        <button>Comment</button>
       </div>
     </div>
   );
