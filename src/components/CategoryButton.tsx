@@ -3,17 +3,24 @@ import Button from '@mui/material/Button';
 
 interface CategoryButtonProps {
   categoryLabel: string;
+  onClick: () => void;
+  selected: boolean;
 }
 
-const CategoryButton: React.FC<CategoryButtonProps> = ({ categoryLabel }) => {
+const CategoryButton: React.FC<CategoryButtonProps> = ({
+  categoryLabel,
+  onClick,
+  selected,
+}) => {
   return (
     <Button
+      onClick={onClick}
       variant='contained'
       sx={{
         flexGrow: 1,
-        bgcolor: '#509E2F',
+        bgcolor: selected ? '#2E3D28' : '#509E2F',
         '&:hover': {
-          bgcolor: '#2E3D28',
+          bgcolor: '#607D3B',
         },
         m: 1,
         p: 2,

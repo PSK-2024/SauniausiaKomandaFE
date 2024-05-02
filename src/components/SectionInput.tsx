@@ -5,11 +5,15 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 interface SectionInputProps {
   placeholder: string;
   minRows: number;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 const SectionInput: React.FC<SectionInputProps> = ({
   placeholder,
   minRows = 1,
+  value,
+  onChange,
 }) => {
   const isMobile = useMediaQuery('(max-width:768px)');
 
@@ -17,6 +21,8 @@ const SectionInput: React.FC<SectionInputProps> = ({
     <div>
       <TextField
         fullWidth
+        value={value}
+        onChange={event => onChange(event.target.value)}
         variant='outlined'
         placeholder={placeholder}
         multiline={!isMobile}

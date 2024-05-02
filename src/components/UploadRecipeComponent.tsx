@@ -6,11 +6,68 @@ import CategoryButton from './CategoryButton';
 import SectionInput from './SectionInput';
 import AddTag from './AddTag';
 import SectionTitle from './SectionTitle';
+import Snackbar from '@mui/material/Snackbar';
 
 const UploadRecipeComponent: React.FC = () => {
   const [redirectToHomePage, setRedirectToHomePage] = useState(false);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [error, setError] = useState('');
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [recipeName, setRecipeName] = useState('');
+  const [instructions, setInstructions] = useState('');
+  const [time, setTime] = useState('');
+  const [calories, setCalories] = useState('');
+  const [nutrition, setNutrition] = useState('');
+  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [recipeTags, setRecipeTags] = useState<string[]>([]);
+  const [imageBase64, setImageBase64] = useState('');
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const postRecipe = () => {
+    const errors = [];
+    if (!selectedCategory) errors.push('Category must be selected.');
+    if (!recipeName) errors.push('Recipe name must be provided.');
+    if (ingredients.length === 0)
+      errors.push('At least one ingredient must be added.');
+    if (!imageBase64) errors.push('Image must be uploaded.');
+    if (!instructions) errors.push('Instructions must be provided.');
+    if (!time) errors.push('Time must be specified.');
+    if (!calories) errors.push('Calories must be specified.');
+    if (!nutrition) errors.push('Nutrition details must be provided.');
+    if (recipeTags.length === 0)
+      errors.push('At least one recipe tag must be added.');
+
+    if (errors.length > 0) {
+      setError(errors.join('\n'));
+      return;
+    }
+
+    const recipeData = {
+      category: selectedCategory,
+      recipeName,
+      instructions,
+      time,
+      calories,
+      nutrition,
+      ingredients: ingredients.reduce(
+        (acc, curr, index) => ({ ...acc, ['ingredient' + (index + 1)]: curr }),
+        {}
+      ),
+      recipeTags: recipeTags.reduce(
+        (acc, curr, index) => ({ ...acc, ['recipeTag' + (index + 1)]: curr }),
+        {}
+      ),
+      image: imageBase64,
+    };
+
+    console.log('Posting recipe:', recipeData);
+    // api call or other logic to actually post the data
+  };
 
   useEffect(() => {
     if (redirectToHomePage) {
@@ -43,10 +100,20 @@ const UploadRecipeComponent: React.FC = () => {
   const handleUploadPhotoOrVideoChange = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
-    const fileUploaded = event.target.files?.[0];
-    if (fileUploaded) {
-      console.log(fileUploaded);
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setImageBase64(reader.result as string);
+      };
+
+      reader.readAsDataURL(file);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setError('');
   };
 
   return (
@@ -58,13 +125,19 @@ const UploadRecipeComponent: React.FC = () => {
         justifyContent: 'center',
         p: 2,
         width: '100%',
-        maxWidth: '1574px',
         color: 'text.secondary',
         '@media (max-width:768px)': {
           maxWidth: '100%',
         },
       }}
     >
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        message={error}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      />
       <Box
         sx={{
           display: 'flex',
@@ -120,7 +193,12 @@ const UploadRecipeComponent: React.FC = () => {
             }}
           >
             {row.map((category, index) => (
-              <CategoryButton key={index} categoryLabel={category} />
+              <CategoryButton
+                key={index}
+                categoryLabel={category}
+                onClick={() => handleCategoryClick(category)}
+                selected={category === selectedCategory}
+              />
             ))}
           </Box>
         ))}
@@ -163,7 +241,6 @@ const UploadRecipeComponent: React.FC = () => {
           justifyContent: 'center',
           mt: 0,
           width: '100%',
-          maxWidth: { xs: '100%', md: '1551px' },
           '@media (max-width:768px)': {
             mt: 10,
           },
@@ -176,7 +253,6 @@ const UploadRecipeComponent: React.FC = () => {
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            maxWidth: { xs: '100%', md: '1551px' },
             '@media (max-width:768px)': {
               mt: 10,
             },
@@ -192,8 +268,7 @@ const UploadRecipeComponent: React.FC = () => {
               mt: 6,
               borderColor: 'grey.400',
               '@media (max-width:768px)': {
-                px: 5,
-                mt: 10,
+                px: 2,
               },
             }}
           >
@@ -229,28 +304,59 @@ const UploadRecipeComponent: React.FC = () => {
         </Box>
 
         <SectionTitle label='RECIPE NAME' />
-        <SectionInput placeholder='What do you call your recipe?' minRows={1} />
+        <SectionInput
+          placeholder='What do you call your recipe?'
+          value={recipeName}
+          onChange={setRecipeName}
+          minRows={1}
+        />
 
         <SectionTitle label='INGREDIENTS' />
 
-        <AddTag placeholder='Ingredient name' />
+        <AddTag
+          placeholder='Ingredient name'
+          tags={ingredients}
+          setTags={setIngredients}
+        />
 
         <SectionTitle label='INSTRUCTIONS' />
-        <SectionInput placeholder='How do you cook your recipe?' minRows={6} />
+        <SectionInput
+          placeholder='How do you cook your recipe?'
+          value={instructions}
+          onChange={setInstructions}
+          minRows={6}
+        />
 
         <SectionTitle label='CALORIES' />
-        <SectionInput placeholder='What’s your calory count?' minRows={1} />
+        <SectionInput
+          placeholder='What’s your calory count?'
+          value={calories}
+          onChange={setCalories}
+          minRows={1}
+        />
         <SectionTitle label='TIME' />
         <SectionInput
           placeholder='How long does it take to prepare?'
+          value={time}
+          onChange={setTime}
           minRows={1}
         />
         <SectionTitle label='NUTRITION' />
-        <SectionInput placeholder='List your nutrition values.' minRows={6} />
+        <SectionInput
+          placeholder='List your nutrition values.'
+          value={nutrition}
+          onChange={setNutrition}
+          minRows={6}
+        />
 
         <SectionTitle label='RECIPE TAGS' />
 
-        <AddTag placeholder='Tag name' />
+        <AddTag
+          placeholder='Tag name'
+          tags={recipeTags}
+          setTags={setRecipeTags}
+          prefix='#'
+        />
 
         <Box
           sx={{
@@ -260,6 +366,7 @@ const UploadRecipeComponent: React.FC = () => {
           }}
         >
           <Button
+            onClick={postRecipe}
             variant='contained'
             sx={{
               mt: 8,
