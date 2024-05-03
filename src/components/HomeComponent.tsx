@@ -7,7 +7,7 @@ import SidebarComponent from './SidebarComponent';
 
 import '../styles/homeComponent.css';
 
-const cardsData = [
+const allRecipesData = [
   {
     id: 1,
     title: 'Russian Salad',
@@ -80,6 +80,23 @@ const cardsData = [
   },
 ];
 
+const recommendedRecipesData = [
+  {
+    id: 11,
+    title: 'Greek Salad',
+    rating: 4.2,
+    img: '/food.png',
+    duration: 20,
+  },
+  {
+    id: 12,
+    title: 'Ramen',
+    rating: 5.0,
+    img: '/food.png',
+    duration: 30,
+  },
+];
+
 function HomeComponent() {
   const [redirectToUploadRecipePage, setRedirectToUploadRecipePage] =
     useState(false);
@@ -102,11 +119,11 @@ function HomeComponent() {
   return (
     <>
       <Link
-        to={`/recipes/${cardsData[0].id}`}
+        to={`/recipes/${allRecipesData[0].id}`}
         style={{ textDecoration: 'none' }}
       >
         <Box className='hero-image'>
-          <img src={cardsData[0].img} alt='Hero' />
+          <img src={allRecipesData[0].img} alt='Hero' />
           <Box className='hero-image-text'>
             <Typography
               sx={{ color: '#DC582A', fontWeight: '400', fontSize: '30px' }}
@@ -116,7 +133,7 @@ function HomeComponent() {
             <Typography
               sx={{ color: '#ffffff', fontWeight: '600', fontSize: '50px' }}
             >
-              {cardsData[0].title}
+              {allRecipesData[0].title}
             </Typography>
           </Box>
         </Box>
@@ -133,8 +150,7 @@ function HomeComponent() {
         <SidebarComponent />
         <Box className='recipes-container'>
           {showAllRecipes ? (
-            // Show all recipes if showAllRecipes is true
-            cardsData.map(card => (
+            allRecipesData.map(card => (
               <RecipeReviewCard
                 key={card.id}
                 id={card.id}
@@ -146,7 +162,7 @@ function HomeComponent() {
             ))
           ) : (
             <>
-              {cardsData.slice(0, 5).map(card => (
+              {recommendedRecipesData.map(card => (
                 <RecipeReviewCard
                   key={card.id}
                   id={card.id}

@@ -64,6 +64,7 @@ const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
             component='div'
             fontWeight='bold'
             fontSize='25px'
+            color='#000000'
           >
             {title}
           </Typography>

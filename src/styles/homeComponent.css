@@ -35,6 +35,10 @@
     width: 300px;
 }
 
+.button-container> button:nth-child(1) {
+    background-color: #60c236;
+}
+
 .button-container button:hover {
     background-color: #367022;
 }
