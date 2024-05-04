@@ -1,6 +1,11 @@
-interface Ingredient {
+export interface Ingredient {
   name: string;
   amount: string;
+}
+
+export interface IngredientGroup {
+  groupName: string;
+  items: Ingredient[];
 }
 
 interface Instruction {
@@ -31,7 +36,7 @@ export interface RecipeData {
   duration: number;
   calories: number;
   image: string;
-  ingredients: Ingredient[];
+  ingredients: Ingredient[] | IngredientGroup[];
   instructions: Instruction[];
   reviews: Review[];
 }
