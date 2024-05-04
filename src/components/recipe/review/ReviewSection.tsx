@@ -1,33 +1,59 @@
-import React from 'react';
-import { List, ListItem, ListItemText, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { List, ListItem, ListItemText, TextField, Rating } from '@mui/material';
 import './ReviewSection.css';
+import { Review } from '../../../state/model/recipeModel';
+import { addReview } from '../../../state/thunk/recipeThunk';
+import { useAppDispatch } from '../../../app/hooks';
 
-interface Comment {
-  id: number;
-  text: string;
-  author: string;
+interface ReviewSectionProps {
+  recipeId: string;
+  reviews: Review[];
 }
 
-interface CommentsSectionProps {
-  comments: Comment[];
-}
+const ReviewSection: React.FC<ReviewSectionProps> = ({ recipeId, reviews }) => {
+  const [text, setText] = useState('');
+  const [rating, setRating] = useState<number | null>(null);
+  const dispatch = useAppDispatch();
 
-const ReviewSection: React.FC<CommentsSectionProps> = ({ comments }) => {
+  const handleAddReview = async () => {
+    if (text && rating !== null) {
+      await dispatch(
+        addReview({
+          recipeId: recipeId,
+          review: { text, rating },
+        })
+      );
+      setText('');
+      setRating(null);
+    }
+  };
+
   return (
-    <div className='comments'>
-      <div className='comments-list'>
-        <List>
-          {comments.map(comment => (
-            <ListItem key={comment.id}>
-              <ListItemText
-                primary={comment.text}
-                secondary={`By ${comment.author}`}
-              />
-            </ListItem>
-          ))}
-        </List>
+    <div className='reviews'>
+      <List className='reviews-list'>
+        {reviews.map(review => (
+          <ListItem key={review.id}>
+            <ListItemText
+              primary={review.text}
+              secondary={`By ${review.author} - ${review.rating} Stars`}
+            />
+          </ListItem>
+        ))}
+      </List>
+      <div className='review-form'>
+        <div className='review-rating'>
+          <Rating
+            name='simple-controlled'
+            value={rating}
+            onChange={(event, newValue) => {
+              setRating(newValue);
+            }}
+          />
+        </div>
         <TextField
-          label='Add a comment'
+          label='Add a review'
+          value={text}
+          onChange={e => setText(e.target.value)}
           fullWidth
           sx={{
             '& .MuiOutlinedInput-root': {
@@ -43,9 +69,9 @@ const ReviewSection: React.FC<CommentsSectionProps> = ({ comments }) => {
             },
           }}
         />
-      </div>
-      <div className='comment-button'>
-        <button>Comment</button>
+        <div className='review-button'>
+          <button onClick={handleAddReview}>Comment</button>
+        </div>
       </div>
     </div>
   );

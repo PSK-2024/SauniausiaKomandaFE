@@ -26,16 +26,18 @@ export const mockRecipe: RecipeData = {
     { step: 'Cool completely in the oven with the door open.' },
     { step: 'Refrigerate cheesecake for at least 4 hours.' },
   ],
-  comments: [
+  reviews: [
     {
       id: 1,
       text: 'Absolutely delicious! Will make again.',
       author: 'Jane Doe',
+      rating: 5,
     },
     {
       id: 2,
       text: 'Great recipe, though I added more sugar.',
       author: 'John Smith',
+      rating: 2,
     },
   ],
 };

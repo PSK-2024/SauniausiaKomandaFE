@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RecipeData } from '../model/recipeModel';
+import { RecipeData, ReviewPost } from '../model/recipeModel';
 import axios from 'axios';
 
 const RECIPE_BASE_URL = 'https://api.yourdomain.com/recipes';
@@ -33,6 +33,25 @@ export const fetchAllRecipes = createAsyncThunk<
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return rejectWithValue('Failed to fetch recipes');
+    }
+    throw error;
+  }
+});
+
+export const addReview = createAsyncThunk<
+  RecipeData,
+  { recipeId: string; review: ReviewPost },
+  { rejectValue: string }
+>('recipe/addReview', async ({ recipeId, review }, { rejectWithValue }) => {
+  try {
+    const response = await axios.post<RecipeData>(
+      `${RECIPE_BASE_URL}/${recipeId}/reviews`,
+      review
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return rejectWithValue('Failed to add review');
     }
     throw error;
   }

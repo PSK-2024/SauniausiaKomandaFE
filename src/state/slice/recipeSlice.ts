@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RecipeData, RecipeState } from '../model/recipeModel';
-import { fetchRecipe } from '../thunk/recipeThunk';
+import { addReview, fetchRecipe } from '../thunk/recipeThunk';
 
 const recipeSlice = createSlice({
   name: 'recipe',
@@ -26,6 +26,16 @@ const recipeSlice = createSlice({
       .addCase(fetchRecipe.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
+      })
+      .addCase(
+        addReview.fulfilled,
+        (state, action: PayloadAction<RecipeData>) => {
+          state.recipe = action.payload;
+          state.status = 'succeeded';
+        }
+      )
+      .addCase(addReview.rejected, (state, action) => {
+        state.error = action.error.message || 'Failed to add review';
       });
   },
 });

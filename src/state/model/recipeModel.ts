@@ -1,6 +1,3 @@
-// example models, might change later
-import { Comment } from './commentsModel';
-
 interface Ingredient {
   name: string;
   amount: string;
@@ -8,6 +5,18 @@ interface Ingredient {
 
 interface Instruction {
   step: string;
+}
+
+export interface Review {
+  id: number;
+  text: string;
+  author: string;
+  rating: number;
+}
+
+export interface ReviewPost {
+  text: string;
+  rating: number;
 }
 
 export interface RecipeState {
@@ -24,5 +33,5 @@ export interface RecipeData {
   image: string;
   ingredients: Ingredient[];
   instructions: Instruction[];
-  comments: Comment[];
+  reviews: Review[];
 }
