@@ -1,0 +1,50 @@
+.comments-container {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 36px;
+}
+
+.calories-container, .duration-container, .ingredients-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.calories-container {
+    border-left: black 1px solid;
+}
+
+.ingredients-container {
+    border-right: black 1px solid;
+}
+
+.nutrition-container {
+    display: flex;
+    margin-top: 28px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.count {
+    font-size: 42px;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 0;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 0;
+    font-family: 'Montserrat-Regular', sans-serif;
+}
+
+.label {
+    margin-top: 0;
+    font-family: 'Montserrat-Regular', sans-serif;
+    font-size: 10px;
+    padding-left: 24px;
+    padding-right: 24px;
+    color: #509E2F;
+    text-transform: uppercase;
+    font-weight: 200;
+    padding-bottom: 0;
+}
