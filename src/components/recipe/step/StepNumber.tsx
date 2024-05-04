@@ -1,11 +1,12 @@
 import React from 'react';
+import './StepNumber.css';
 
 interface ListNumberProps {
   number: number;
 }
 
-const ListNumber: React.FC<ListNumberProps> = ({ number }) => {
+const StepNumber: React.FC<ListNumberProps> = ({ number }) => {
   return <div className='list-number'>{number}</div>;
 };
 
-export default ListNumber;
+export default StepNumber;

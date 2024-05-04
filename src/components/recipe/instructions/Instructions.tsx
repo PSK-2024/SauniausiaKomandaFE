@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, ListItem } from '@mui/material';
-import ListNumber from './ListNumber';
+import StepNumber from '../step/StepNumber';
+import './Instructions.css';
 
 interface Instruction {
   step: string;
@@ -14,9 +15,9 @@ const Instructions: React.FC<InstructionsProps> = ({ steps }) => {
   return (
     <List>
       {steps.map((instruction, index) => (
-        <ListItem key={index} className='list-item'>
+        <ListItem key={index}>
           <div className='step-container'>
-            <ListNumber number={index + 1} />
+            <StepNumber number={index + 1} />
             <p>{instruction.step}</p>
           </div>
         </ListItem>

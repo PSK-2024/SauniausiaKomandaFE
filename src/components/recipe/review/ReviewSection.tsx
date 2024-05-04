@@ -1,5 +1,6 @@
 import React from 'react';
 import { List, ListItem, ListItemText, TextField } from '@mui/material';
+import './ReviewSection.css';
 
 interface Comment {
   id: number;
@@ -11,7 +12,7 @@ interface CommentsSectionProps {
   comments: Comment[];
 }
 
-const CommentsSection: React.FC<CommentsSectionProps> = ({ comments }) => {
+const ReviewSection: React.FC<CommentsSectionProps> = ({ comments }) => {
   return (
     <div className='comments'>
       <div className='comments-list'>
@@ -50,4 +51,4 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ comments }) => {
   );
 };
 
-export default CommentsSection;
+export default ReviewSection;

@@ -1,4 +1,5 @@
 import React from 'react';
+import './NutritionalInfo.css';
 
 interface NutritionalInfoProps {
   ingredientCount: number;

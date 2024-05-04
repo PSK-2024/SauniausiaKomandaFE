@@ -1,4 +1,5 @@
 import React from 'react';
+import './SectionName.css';
 
 interface SectionNameProps {
   name: string;

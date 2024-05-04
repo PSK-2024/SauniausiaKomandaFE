@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress, CardMedia, Card } from '@mui/material';
-import Header from './Header';
-import Rating from './Rating';
-import NutritionalInfo from './NutritionalInfo';
-import IngredientsList from './IngredientsList';
-import Instructions from './Instructions';
-import CommentsSection from './CommentsSection';
+import Header from './header/Header';
+import Rating from './rating/Rating';
+import NutritionalInfo from './nutrition/NutritionalInfo';
+import Ingredients from './ingredients/Ingredients';
+import Instructions from './instructions/Instructions';
+import ReviewSection from './review/ReviewSection';
 import { RootState } from '../../app/store';
 import { fetchRecipe } from '../../state/thunk/recipeThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import './RecipeComponent.css';
-import SectionName from './SectionName';
+import SectionName from './section/SectionName';
 
 const RecipeComponent: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -52,7 +52,7 @@ const RecipeComponent: React.FC = () => {
       <div className='flex-container'>
         <div className='flex-item'>
           <SectionName name={'Ingredients'} />
-          <IngredientsList ingredients={recipe.ingredients} />
+          <Ingredients ingredients={recipe.ingredients} />
         </div>
         <div className='flex-item'>
           <SectionName name={'Instructions'} />
@@ -61,7 +61,7 @@ const RecipeComponent: React.FC = () => {
       </div>
       <div className='comments-container'>
         <SectionName name={'Comments'} />
-        <CommentsSection comments={recipe.comments} />
+        <ReviewSection comments={recipe.comments} />
       </div>
     </div>
   );

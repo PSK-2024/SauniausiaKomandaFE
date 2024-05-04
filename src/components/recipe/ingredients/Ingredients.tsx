@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, ListItem } from '@mui/material';
-import ListNumber from './ListNumber';
+import StepNumber from '../step/StepNumber';
+import './Ingredients.css';
 
 interface Ingredient {
   name: string;
@@ -11,13 +12,13 @@ interface IngredientsListProps {
   ingredients: Ingredient[];
 }
 
-const IngredientsList: React.FC<IngredientsListProps> = ({ ingredients }) => {
+const Ingredients: React.FC<IngredientsListProps> = ({ ingredients }) => {
   return (
     <List>
       {ingredients.map((ingredient, index) => (
         <ListItem key={index}>
           <div className='step-container'>
-            <ListNumber number={index + 1} />
+            <StepNumber number={index + 1} />
             <p>
               {ingredient.amount} {ingredient.name}
             </p>
@@ -28,4 +29,4 @@ const IngredientsList: React.FC<IngredientsListProps> = ({ ingredients }) => {
   );
 };
 
-export default IngredientsList;
+export default Ingredients;
