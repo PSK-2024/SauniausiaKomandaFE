@@ -59,9 +59,9 @@ const RecipeComponent: React.FC = () => {
           <Instructions steps={recipe.instructions} />
         </div>
       </div>
-      <div className='comments-container'>
-        <SectionName name={'Comments'} />
-        <ReviewSection comments={recipe.comments} />
+      <div className='reviews-container'>
+        <SectionName name={'Reviews'} />
+        <ReviewSection recipeId={id as string} reviews={recipe.reviews} />
       </div>
     </div>
   );
