@@ -8,6 +8,8 @@ import {
   Divider,
 } from '@mui/material';
 
+import { categories, cuisines, allergies, goals } from '../data/MockFilters';
+
 interface CheckedState {
   [key: string]: boolean;
 }
@@ -22,26 +24,6 @@ function SidebarComponent() {
     };
     setChecked(newChecked);
   };
-
-  const categories = [
-    { label: 'Veggies', value: 'veggies' },
-    { label: 'Dairy', value: 'dairy' },
-  ];
-  const cuisines = [
-    { label: 'Indian', value: 'indian' },
-    { label: 'Italian', value: 'italian' },
-    { label: 'British', value: 'british' },
-    { label: 'Irish', value: 'irish' },
-    { label: 'Persian', value: 'persian' },
-  ];
-  const allergies = [
-    { label: 'Gluten', value: 'gluten' },
-    { label: 'Lorem', value: 'lorem' },
-  ];
-  const goals = [
-    { label: 'Weight Loss', value: 'weightLoss' },
-    { label: 'Get Active', value: 'getActive' },
-  ];
 
   return (
     <Box sx={{ p: 2 }}>

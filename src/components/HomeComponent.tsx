@@ -5,97 +5,9 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import SidebarComponent from './SidebarComponent';
 
+import { allRecipesData, recommendedRecipesData } from '../data/MockRecipes';
+
 import '../styles/homeComponent.css';
-
-const allRecipesData = [
-  {
-    id: 1,
-    title: 'Russian Salad',
-    rating: 4.5,
-    img: '/hero.png',
-    duration: 40,
-  },
-  {
-    id: 2,
-    title: 'Caesar Salad',
-    rating: 4.0,
-    img: '/food.png',
-    duration: 30,
-  },
-  {
-    id: 3,
-    title: 'Greek Salad',
-    rating: 4.2,
-    img: '/food.png',
-    duration: 20,
-  },
-  {
-    id: 4,
-    title: 'Pasta Salad',
-    rating: 4.8,
-    img: '/food.png',
-    duration: 60,
-  },
-  {
-    id: 5,
-    title: 'Ramen',
-    rating: 5.0,
-    img: '/food.png',
-    duration: 30,
-  },
-  {
-    id: 6,
-    title: 'Russian Salad',
-    rating: 4.5,
-    img: '/food.png',
-    duration: 40,
-  },
-  {
-    id: 7,
-    title: 'Caesar Salad',
-    rating: 4.0,
-    img: '/food.png',
-    duration: 30,
-  },
-  {
-    id: 8,
-    title: 'Greek Salad',
-    rating: 4.2,
-    img: '/food.png',
-    duration: 20,
-  },
-  {
-    id: 9,
-    title: 'Caesar Salad',
-    rating: 4.0,
-    img: '/food.png',
-    duration: 30,
-  },
-  {
-    id: 10,
-    title: 'Greek Salad',
-    rating: 4.2,
-    img: '/food.png',
-    duration: 20,
-  },
-];
-
-const recommendedRecipesData = [
-  {
-    id: 11,
-    title: 'Greek Salad',
-    rating: 4.2,
-    img: '/food.png',
-    duration: 20,
-  },
-  {
-    id: 12,
-    title: 'Ramen',
-    rating: 5.0,
-    img: '/food.png',
-    duration: 30,
-  },
-];
 
 function HomeComponent() {
   const [redirectToUploadRecipePage, setRedirectToUploadRecipePage] =
