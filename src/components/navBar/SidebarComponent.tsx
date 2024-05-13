@@ -8,7 +8,7 @@ import {
   Divider,
 } from '@mui/material';
 
-import { categories, cuisines, allergies, goals } from '../data/MockFilters';
+import { categories, cuisines, allergies, goals } from '../../data/MockFilters';
 
 interface CheckedState {
   [key: string]: boolean;

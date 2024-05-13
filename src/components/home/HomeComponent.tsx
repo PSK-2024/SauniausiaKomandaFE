@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import RecipeReviewCard from './RecipeReviewCard';
+import RecipeReviewCard from '../recipeCard/RecipeReviewCard';
 import { Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import SidebarComponent from './SidebarComponent';
+import SidebarComponent from '../navBar/SidebarComponent';
 
-import { AppDispatch, RootState } from '../app/store';
+import { AppDispatch, RootState } from '../../app/store';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchAllRecipes,
   fetchRecommendedRecipes,
-} from '../state/thunk/recipeThunk';
+} from '../../state/thunk/recipeThunk';
 
-import { allRecipesData, recommendedRecipesData } from '../data/MockRecipes';
+import { allRecipesData, recommendedRecipesData } from '../../data/MockRecipes';
 
-import '../styles/homeComponent.css';
+import './homeComponent.css';
 
 function HomeComponent() {
   const dispatch = useDispatch<AppDispatch>();

@@ -11,9 +11,9 @@ import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 
-import { RecipeCard } from '../state/model/recipeCardModel';
+import { RecipeCard } from '../../state/model/recipeCardModel';
 
-import '../styles/recipeReviewCard.css';
+import './recipeReviewCard.css';
 
 const RecipeReviewCard: React.FC<RecipeCard> = ({
   id,

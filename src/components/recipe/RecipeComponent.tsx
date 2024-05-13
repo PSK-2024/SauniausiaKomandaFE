@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { fetchRecipeById } from '../state/thunk/recipeThunk';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { fetchRecipeById } from '../../state/thunk/recipeThunk';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useParams } from 'react-router-dom';
 
 const RecipeComponent = () => {
