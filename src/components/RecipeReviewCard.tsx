@@ -8,10 +8,14 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarIcon from '@mui/icons-material/Star';
 import { Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
+
+import '../styles/recipeReviewCard.css';
 
 interface RecipeReviewCardProps {
   key: number;
+  id: number;
   title: string;
   rating: number;
   img: string;
@@ -19,63 +23,68 @@ interface RecipeReviewCardProps {
 }
 
 const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
+  id,
   title,
   rating,
   img,
   duration,
 }) => {
+  const [isFavorite, setIsFavorite] = React.useState(false);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
-    <Card sx={{ borderRadius: 2, boxShadow: 3, margin: 2 }}>
-      <CardMedia
-        component='img'
-        height='200'
-        image={img}
-        alt={title}
-        sx={{ borderRadius: 2 }}
-      />
-      <CardContent
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 2,
-        }}
-      >
-        <Typography
-          gutterBottom
-          variant='h5'
-          component='div'
-          sx={{ fontWeight: 'bold', fontSize: '25px', m: 0 }}
-        >
-          {title}
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <StarIcon sx={{ color: '#FDC040', fontSize: '20px' }} />
+    <Card className='card'>
+      <Link to={`/recipes/${id}`} style={{ textDecoration: 'none' }}>
+        <CardMedia
+          className='media-wrapper'
+          component='img'
+          height='200'
+          image={img}
+          alt={title}
+          sx={{ borderRadius: 2 }}
+        />
+        <Box className='rating'>
+          <StarIcon className='star' />
           <Typography
             variant='subtitle1'
-            sx={{ ml: 0.5, color: '#ADADAD', fontSize: '20px' }}
+            color='#ffffff'
+            fontSize='20px'
+            marginLeft='2px'
           >
-            {rating}
+            {rating.toFixed(1)}
           </Typography>
         </Box>
-      </CardContent>
-      <CardActions
-        disableSpacing
-        sx={{ justifyContent: 'space-between', padding: 2, paddingTop: 0 }}
-      >
+        <CardContent className='card-content'>
+          <Typography
+            gutterBottom
+            variant='h5'
+            component='div'
+            fontWeight='bold'
+            fontSize='25px'
+          >
+            {title}
+          </Typography>
+        </CardContent>
+      </Link>
+      <CardActions className='card-bottom' disableSpacing>
         <Typography
-          sx={{
-            color: '#DC582A',
-            fontSize: '20px',
-            fontWeight: '600',
-            padding: '8px',
-          }}
+          color='#DC582A'
+          fontWeight='600'
+          fontSize='20px'
+          padding='8px'
         >
           {duration} min
         </Typography>
         <Box>
-          <IconButton aria-label='add to favorites'>
-            <FavoriteIcon sx={{ color: 'red' }} />
+          <IconButton
+            aria-label='add to favorites'
+            onClick={toggleFavorite}
+            sx={{ color: isFavorite ? '#e01930' : '#D3D3D3' }}
+          >
+            <FavoriteIcon />
           </IconButton>
           <IconButton>
             <ModeCommentOutlinedIcon />
