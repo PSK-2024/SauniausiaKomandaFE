@@ -248,59 +248,104 @@ const UploadRecipeComponent: React.FC = () => {
       >
         <Box
           sx={{
-            display: 'block',
-            flexDirection: 'column',
+            display: 'flex',
+            flexDirection: imageBase64 ? 'row' : 'column',
+            gap: 3,
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            '@media (max-width:768px)': {
-              mt: 10,
-            },
           }}
         >
-          <SectionTitle label='PHOTOS AND VIDEOS' />
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
+              display: 'block',
+              flexDirection: 'column',
               alignItems: 'center',
-              border: 1,
-              mt: 6,
-              borderColor: 'grey.400',
+              justifyContent: 'center',
+              width: imageBase64 ? '50%' : '100%',
               '@media (max-width:768px)': {
-                px: 2,
+                mt: 10,
               },
             }}
           >
-            <Button
-              variant='contained'
+            <SectionTitle label='UPLOAD PHOTOS' />
+            <Box
               sx={{
-                mt: 24,
-                mb: 24,
-                bgcolor: '#509E2F',
-                '&:hover': {
-                  bgcolor: '#509E2F',
-                },
-                width: { xs: '100%', md: '633px' },
-                fontSize: '2rem',
-                borderRadius: 'lg',
-                color: 'white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: 1,
+                mt: 6,
+                borderColor: 'grey.400',
                 '@media (max-width:768px)': {
-                  mt: 10,
-                  fontSize: '4xl',
+                  px: 2,
                 },
               }}
-              onClick={handleUploadPhotoOrVideoClick}
             >
-              Upload Photo or Video
-            </Button>
-            <input
-              type='file'
-              ref={hiddenFileInput}
-              onChange={handleUploadPhotoOrVideoChange}
-              style={{ display: 'none' }}
-            ></input>
+              <Button
+                variant='contained'
+                sx={{
+                  mt: 24,
+                  mb: 24,
+                  bgcolor: '#509E2F',
+                  '&:hover': {
+                    bgcolor: '#509E2F',
+                  },
+                  width: { xs: '100%', md: '633px' },
+                  fontSize: '2rem',
+                  borderRadius: 'lg',
+                  color: 'white',
+                  '@media (max-width:768px)': {
+                    mt: 10,
+                    fontSize: '4xl',
+                  },
+                }}
+                onClick={handleUploadPhotoOrVideoClick}
+              >
+                Upload Photo
+              </Button>
+              <input
+                type='file'
+                ref={hiddenFileInput}
+                onChange={handleUploadPhotoOrVideoChange}
+                style={{ display: 'none' }}
+              />
+            </Box>
           </Box>
+          {imageBase64 && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '50%',
+              }}
+            >
+              <SectionTitle label='PHOTO PREVIEW' />
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  mt: 6,
+                  width: { xs: '100%', md: '633px' },
+                  height: '455px',
+                  overflow: 'hidden',
+                }}
+              >
+                <Box
+                  component='img'
+                  src={imageBase64}
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                  }}
+                />
+              </Box>
+            </Box>
+          )}
         </Box>
 
         <SectionTitle label='RECIPE NAME' />
