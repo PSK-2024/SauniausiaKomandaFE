@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CategoryButton from './CategoryButton';
 import SectionInput from './SectionInput';
-import AddTag from './AddTag';
+import IngredientsComponent from './IngredientsComponent';
 import SectionTitle from './SectionTitle';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -20,9 +20,10 @@ const UploadRecipeComponent: React.FC = () => {
   const [time, setTime] = useState('');
   const [calories, setCalories] = useState('');
   const [nutrition, setNutrition] = useState('');
-  const [ingredients, setIngredients] = useState<string[]>([]);
-  const [recipeTags, setRecipeTags] = useState<string[]>([]);
   const [imageBase64, setImageBase64] = useState('');
+  const [ingredients, setIngredients] = useState<
+    { header: string; steps: string[] }[]
+  >([]);
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategories(prevCategories =>
@@ -32,20 +33,41 @@ const UploadRecipeComponent: React.FC = () => {
     );
   };
 
+  const handleIngredientsChange = (
+    data: { header: string; steps: string[] }[]
+  ) => {
+    setIngredients(data);
+  };
+
   const postRecipe = () => {
     const errors = [];
     if (selectedCategories.length === 0)
       errors.push('At least one category must be selected.');
     if (!recipeName) errors.push('Recipe name must be provided.');
-    if (ingredients.length === 0)
-      errors.push('At least one ingredient must be added.');
     if (!imageBase64) errors.push('Image must be uploaded.');
+    if (ingredients.length === 0) {
+      errors.push('At least one ingredient must be provided.');
+    } else {
+      for (const ingredient of ingredients) {
+        if (!ingredient.header.trim()) {
+          errors.push('Ingredient headers must not be empty.');
+          break;
+        }
+        if (
+          ingredient.steps.length === 0 ||
+          ingredient.steps.some(step => !step.trim())
+        ) {
+          errors.push(
+            'Each ingredient header must have at least one non-empty step.'
+          );
+          break;
+        }
+      }
+    }
     if (!instructions) errors.push('Instructions must be provided.');
     if (!time) errors.push('Time must be specified.');
     if (!calories) errors.push('Calories must be specified.');
     if (!nutrition) errors.push('Nutrition details must be provided.');
-    if (recipeTags.length === 0)
-      errors.push('At least one recipe tag must be added.');
 
     if (errors.length > 0) {
       setError(errors.join('\n'));
@@ -59,15 +81,7 @@ const UploadRecipeComponent: React.FC = () => {
       time,
       calories,
       nutrition,
-      ingredients: ingredients.reduce(
-        (acc, curr, index) => ({ ...acc, ['ingredient' + (index + 1)]: curr }),
-        {}
-      ),
-      recipeTags: recipeTags.reduce(
-        (acc, curr, index) => ({ ...acc, ['recipeTag' + (index + 1)]: curr }),
-        {}
-      ),
-      image: imageBase64,
+      ingredients,
     };
 
     console.log('Posting recipe:', recipeData);
@@ -369,10 +383,9 @@ const UploadRecipeComponent: React.FC = () => {
 
         <SectionTitle label='INGREDIENTS' />
 
-        <AddTag
-          placeholder='Ingredient name'
-          tags={ingredients}
-          setTags={setIngredients}
+        <IngredientsComponent
+          placeholder='E.g. 2 cups of flour'
+          onChange={handleIngredientsChange}
         />
 
         <SectionTitle label='INSTRUCTIONS' />
@@ -403,15 +416,6 @@ const UploadRecipeComponent: React.FC = () => {
           value={nutrition}
           onChange={setNutrition}
           minRows={6}
-        />
-
-        <SectionTitle label='RECIPE TAGS' />
-
-        <AddTag
-          placeholder='Tag name'
-          tags={recipeTags}
-          setTags={setRecipeTags}
-          prefix='#'
         />
 
         <Box
