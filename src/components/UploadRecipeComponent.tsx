@@ -14,7 +14,7 @@ const UploadRecipeComponent: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [error, setError] = useState('');
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [recipeName, setRecipeName] = useState('');
   const [instructions, setInstructions] = useState('');
   const [time, setTime] = useState('');
@@ -25,12 +25,17 @@ const UploadRecipeComponent: React.FC = () => {
   const [imageBase64, setImageBase64] = useState('');
 
   const handleCategoryClick = (category: string) => {
-    setSelectedCategory(category);
+    setSelectedCategories(prevCategories =>
+      prevCategories.includes(category)
+        ? prevCategories.filter(cat => cat !== category)
+        : [...prevCategories, category]
+    );
   };
 
   const postRecipe = () => {
     const errors = [];
-    if (!selectedCategory) errors.push('Category must be selected.');
+    if (selectedCategories.length === 0)
+      errors.push('At least one category must be selected.');
     if (!recipeName) errors.push('Recipe name must be provided.');
     if (ingredients.length === 0)
       errors.push('At least one ingredient must be added.');
@@ -48,7 +53,7 @@ const UploadRecipeComponent: React.FC = () => {
     }
 
     const recipeData = {
-      category: selectedCategory,
+      categories: selectedCategories,
       recipeName,
       instructions,
       time,
@@ -197,7 +202,7 @@ const UploadRecipeComponent: React.FC = () => {
                 key={index}
                 categoryLabel={category}
                 onClick={() => handleCategoryClick(category)}
-                selected={category === selectedCategory}
+                selected={selectedCategories.includes(category)}
               />
             ))}
           </Box>
