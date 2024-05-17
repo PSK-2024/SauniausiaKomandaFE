@@ -317,40 +317,46 @@ const UploadRecipeComponent: React.FC = () => {
               />
             </Box>
           </Box>
-          {imageBase64 && (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '50%',
-              }}
-            >
-              <SectionTitle label='PHOTO PREVIEW' />
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  mt: 6,
-                  width: { xs: '100%', md: '633px' },
-                  height: '455px',
-                  overflow: 'hidden',
-                }}
-              >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '50%',
+              maxHeight: imageBase64 ? '500px' : '0px',
+              opacity: imageBase64 ? 1 : 0,
+              overflow: 'hidden',
+              transition: 'max-height 0.5s ease, opacity 0.5s ease',
+            }}
+          >
+            {imageBase64 && (
+              <>
+                <SectionTitle label='PHOTO PREVIEW' />
                 <Box
-                  component='img'
-                  src={imageBase64}
                   sx={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    mt: 6,
+                    width: { xs: '100%', md: '633px' },
+                    height: '455px',
+                    overflow: 'hidden',
                   }}
-                />
-              </Box>
-            </Box>
-          )}
+                >
+                  <Box
+                    component='img'
+                    src={imageBase64}
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                    }}
+                  />
+                </Box>
+              </>
+            )}
+          </Box>
         </Box>
 
         <SectionTitle label='RECIPE NAME' />
