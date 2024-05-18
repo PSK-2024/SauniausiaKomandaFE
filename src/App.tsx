@@ -8,7 +8,6 @@ import HomeComponent from './components/home/HomeComponent';
 import RecipeComponent from './components/recipe/RecipeComponent';
 import UploadRecipeComponent from './components/uploadRecipe/UploadRecipeComponent';
 import ProfileComponent from './components/profile/ProfileComponent';
-
 import './App.css';
 
 function App() {
