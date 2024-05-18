@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CategoryButton from './CategoryButton';
 import SectionInput from './SectionInput';
+import InstructionsComponent from './InstructionsComponent';
 import IngredientsComponent from './IngredientsComponent';
 import SectionTitle from './SectionTitle';
 import Snackbar from '@mui/material/Snackbar';
@@ -16,7 +17,7 @@ const UploadRecipeComponent: React.FC = () => {
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [recipeName, setRecipeName] = useState('');
-  const [instructions, setInstructions] = useState('');
+  const [instructions, setInstructions] = useState<string[]>(['']);
   const [time, setTime] = useState('');
   const [calories, setCalories] = useState('');
   const [nutrition, setNutrition] = useState('');
@@ -64,7 +65,8 @@ const UploadRecipeComponent: React.FC = () => {
         }
       }
     }
-    if (!instructions) errors.push('Instructions must be provided.');
+    if (instructions.some(step => !step.trim()))
+      errors.push('Instruction steps must be filled out.');
     if (!time) errors.push('Time must be specified.');
     if (!calories) errors.push('Calories must be specified.');
     if (!nutrition) errors.push('Nutrition details must be provided.');
@@ -389,12 +391,7 @@ const UploadRecipeComponent: React.FC = () => {
         />
 
         <SectionTitle label='INSTRUCTIONS' />
-        <SectionInput
-          placeholder='How do you cook your recipe?'
-          value={instructions}
-          onChange={setInstructions}
-          minRows={6}
-        />
+        <InstructionsComponent onChange={setInstructions} />
 
         <SectionTitle label='CALORIES' />
         <SectionInput

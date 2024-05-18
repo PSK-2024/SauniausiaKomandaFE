@@ -195,7 +195,7 @@ const IngredientsComponent: React.FC<IngredientsComponentProps> = ({
               '&:hover': { bgcolor: '#607D3B' },
               p: 2,
               typography: 'h6',
-              width: '200px',
+              width: '250px',
             }}
           >
             Add Header
@@ -213,10 +213,10 @@ const IngredientsComponent: React.FC<IngredientsComponentProps> = ({
               '&:hover': { bgcolor: '#607D3B' },
               p: 2,
               typography: 'h6',
-              width: '200px',
+              width: '250px',
             }}
           >
-            Add Step
+            Add Ingredient
           </Button>
         </Box>
       </Box>
