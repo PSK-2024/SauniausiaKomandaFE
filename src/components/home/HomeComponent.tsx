@@ -12,17 +12,17 @@ import {
   fetchRecommendedRecipes,
 } from '../../state/thunk/recipeThunk';
 
-import { allRecipesData, recommendedRecipesData } from '../../data/MockRecipes';
-
 import './homeComponent.css';
 
 function HomeComponent() {
   const dispatch = useDispatch<AppDispatch>();
 
-  // const recipes = useSelector((state: RootState) => state.recipeCard.recipes);
-  // const recommendedRecipes = useSelector((state: RootState) => state.recipeCard.recommendedRecipes);
-  const isLoading = useSelector((state: RootState) => state.recipeCard.loading);
-  const error = useSelector((state: RootState) => state.recipeCard.error);
+  const recipes = useSelector((state: RootState) => state.recipes.recipes);
+  const recommendedRecipes = useSelector(
+    (state: RootState) => state.recipes.recommendedRecipes
+  );
+  const isLoading = useSelector((state: RootState) => state.recipes.loading);
+  const error = useSelector((state: RootState) => state.recipes.error);
 
   const [redirectToUploadRecipePage, setRedirectToUploadRecipePage] =
     useState(false);
@@ -52,12 +52,9 @@ function HomeComponent() {
       {isLoading === 'pending' && <Typography>Loading...</Typography>}
       {error && <Typography>Error: {error}</Typography>}
 
-      <Link
-        to={`/recipes/${allRecipesData[0].id}`}
-        style={{ textDecoration: 'none' }}
-      >
+      <Link to={`/recipes/${recipes[0].id}`} style={{ textDecoration: 'none' }}>
         <Box className='hero-image'>
-          <img src={allRecipesData[0].img} alt='Hero' />
+          <img src={recipes[0].img} alt='Hero' />
           <Box className='hero-image-text'>
             <Typography
               sx={{ color: '#DC582A', fontWeight: '400', fontSize: '30px' }}
@@ -67,7 +64,7 @@ function HomeComponent() {
             <Typography
               sx={{ color: '#ffffff', fontWeight: '600', fontSize: '50px' }}
             >
-              {allRecipesData[0].title}
+              {recipes[0].title}
             </Typography>
           </Box>
         </Box>
@@ -84,7 +81,7 @@ function HomeComponent() {
         <SidebarComponent />
         <Box className='recipes-container'>
           {showAllRecipes ? (
-            allRecipesData.map(recipe => (
+            recipes.map(recipe => (
               <RecipeReviewCard
                 key={recipe.id}
                 id={recipe.id}
@@ -96,7 +93,7 @@ function HomeComponent() {
             ))
           ) : (
             <>
-              {recommendedRecipesData.map(recommendedRecipe => (
+              {recommendedRecipes.map(recommendedRecipe => (
                 <RecipeReviewCard
                   key={recommendedRecipe.id}
                   id={recommendedRecipe.id}
