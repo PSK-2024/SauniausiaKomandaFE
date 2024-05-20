@@ -1,0 +1,13 @@
+.step-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.group-name {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    font-weight: bold;
+    font-family: 'Montserrat-Regular', sans-serif;
+}

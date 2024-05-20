@@ -1,17 +1,42 @@
-// example models, might change later
-import { Comment } from './commentsModel';
+export interface Ingredient {
+  name: string;
+  amount: string;
+}
 
-export interface Recipe {
+export interface IngredientGroup {
+  groupName: string;
+  items: Ingredient[];
+}
+
+interface Instruction {
+  step: string;
+}
+
+export interface Review {
   id: number;
-  title: string;
-  description: string;
-  ingredients: string[];
-  instructions: string[];
-  comments: Comment[];
+  text: string;
+  author: string;
+  rating: number;
+}
+
+export interface ReviewPost {
+  text: string;
+  rating: number;
 }
 
 export interface RecipeState {
-  recipe: Recipe | null;
-  loading: 'idle' | 'pending' | 'succeeded' | 'failed';
-  error: string | undefined;
+  recipe: RecipeData | null;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
+
+export interface RecipeData {
+  title: string;
+  rating: number;
+  duration: number;
+  calories: number;
+  image: string;
+  ingredients: Ingredient[] | IngredientGroup[];
+  instructions: Instruction[];
+  reviews: Review[];
 }

@@ -1,0 +1,47 @@
+.card {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px ;
+    box-shadow: 30px;
+    margin: 20px;
+    width: 250px;
+    max-width: 250px;
+    max-height: 340px;
+}
+
+.media-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.rating {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 0 0 0 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.star {
+    color: #FDC040;
+    font-size: 20px;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between; 
+    padding: 20px;
+    padding-top: 0; 
+}

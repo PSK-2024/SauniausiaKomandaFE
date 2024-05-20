@@ -1,0 +1,12 @@
+.list-number {
+    display: flex;
+    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: #509E2F;
+    color: white;
+    font-family: 'Montserrat-Regular', sans-serif;
+}

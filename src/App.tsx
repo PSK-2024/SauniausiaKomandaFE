@@ -2,13 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-import ResponsiveAppBar from './components/ResponsiveAppBar';
-import FooterComponent from './components/FooterComponent';
-import HomeComponent from './components/HomeComponent';
-import RecipeComponent from './components/RecipeComponent';
+import ResponsiveAppBar from './components/navBar/ResponsiveAppBar';
+import FooterComponent from './components/footer/FooterComponent';
+import HomeComponent from './components/home/HomeComponent';
+import RecipeComponent from './components/recipe/RecipeComponent';
 import UploadRecipeComponent from './components/uploadRecipe/UploadRecipeComponent';
-import ProfileComponent from './components/ProfileComponent';
-
+import ProfileComponent from './components/profile/ProfileComponent';
 import './App.css';
 
 function App() {

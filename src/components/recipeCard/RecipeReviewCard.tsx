@@ -11,18 +11,11 @@ import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 
-import '../styles/recipeReviewCard.css';
+import { RecipeCard } from '../../state/model/recipeCardModel';
 
-interface RecipeReviewCardProps {
-  key: number;
-  id: number;
-  title: string;
-  rating: number;
-  img: string;
-  duration: number;
-}
+import './recipeReviewCard.css';
 
-const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
+const RecipeReviewCard: React.FC<RecipeCard> = ({
   id,
   title,
   rating,
@@ -64,6 +57,7 @@ const RecipeReviewCard: React.FC<RecipeReviewCardProps> = ({
             component='div'
             fontWeight='bold'
             fontSize='25px'
+            color='#000000'
           >
             {title}
           </Typography>

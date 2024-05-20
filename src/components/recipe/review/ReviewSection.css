@@ -1,0 +1,29 @@
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-button {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    margin: 12px 0;
+}
+
+.review-button button {
+    background-color: #509E2F;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: 'Montserrat-Regular', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.review-rating {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    margin: 12px 0;
+}

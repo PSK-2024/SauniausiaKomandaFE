@@ -1,0 +1,7 @@
+.product-name {
+    font-family: 'Montserrat-Regular', sans-serif;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
