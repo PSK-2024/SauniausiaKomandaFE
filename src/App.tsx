@@ -6,7 +6,7 @@ import ResponsiveAppBar from './components/ResponsiveAppBar';
 import FooterComponent from './components/FooterComponent';
 import HomeComponent from './components/HomeComponent';
 import RecipeComponent from './components/RecipeComponent';
-import UploadRecipeComponent from './components/UploadRecipeComponent';
+import UploadRecipeComponent from './components/uploadRecipe/UploadRecipeComponent';
 import ProfileComponent from './components/ProfileComponent';
 
 import './App.css';

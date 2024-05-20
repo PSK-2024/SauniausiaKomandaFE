@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import CategoryButton from './CategoryButton';
-import SectionInput from './SectionInput';
-import InstructionsComponent from './InstructionsComponent';
-import IngredientsComponent from './IngredientsComponent';
-import SectionTitle from './SectionTitle';
+import CategoryButton from './categoryButton/CategoryButton';
+import SectionInput from './sectionInput/SectionInput';
+import InstructionsComponent from './instructions/InstructionsComponent';
+import IngredientsComponent from './ingredients/IngredientsComponent';
+import SectionTitle from './sectionTitle/SectionTitle';
 import Snackbar from '@mui/material/Snackbar';
 
 const UploadRecipeComponent: React.FC = () => {
