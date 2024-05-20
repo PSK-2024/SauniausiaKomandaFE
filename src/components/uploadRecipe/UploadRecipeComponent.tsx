@@ -68,7 +68,9 @@ const UploadRecipeComponent: React.FC = () => {
     if (instructions.some(step => !step.trim()))
       errors.push('Instruction steps must be filled out.');
     if (!time) errors.push('Time must be specified.');
+    if (isNaN(Number(time))) errors.push('Time must be a number in minutes.');
     if (!calories) errors.push('Calories must be specified.');
+    if (isNaN(Number(calories))) errors.push('Calories must be a number.');
     if (!nutrition) errors.push('Nutrition details must be provided.');
 
     if (errors.length > 0) {
@@ -80,8 +82,8 @@ const UploadRecipeComponent: React.FC = () => {
       categories: selectedCategories,
       recipeName,
       instructions,
-      time,
-      calories,
+      time: Number(time),
+      calories: Number(calories),
       nutrition,
       ingredients,
     };
@@ -399,13 +401,15 @@ const UploadRecipeComponent: React.FC = () => {
           value={calories}
           onChange={setCalories}
           minRows={1}
+          type='number'
         />
         <SectionTitle label='TIME' />
         <SectionInput
-          placeholder='How long does it take to prepare?'
+          placeholder='How long does it take to prepare? (In minutes)'
           value={time}
           onChange={setTime}
           minRows={1}
+          type='number'
         />
         <SectionTitle label='NUTRITION' />
         <SectionInput

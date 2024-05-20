@@ -7,6 +7,7 @@ interface SectionInputProps {
   minRows: number;
   value: string;
   onChange: (value: string) => void;
+  type?: string;
 }
 
 const SectionInput: React.FC<SectionInputProps> = ({
@@ -14,6 +15,7 @@ const SectionInput: React.FC<SectionInputProps> = ({
   minRows = 1,
   value,
   onChange,
+  type,
 }) => {
   const isMobile = useMediaQuery('(max-width:768px)');
 
@@ -40,6 +42,7 @@ const SectionInput: React.FC<SectionInputProps> = ({
             color: '#000',
           },
         }}
+        type={type}
       />
     </div>
   );
