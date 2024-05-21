@@ -20,7 +20,6 @@ const UploadRecipeComponent: React.FC = () => {
   const [instructions, setInstructions] = useState<string[]>(['']);
   const [time, setTime] = useState('');
   const [calories, setCalories] = useState('');
-  const [nutrition, setNutrition] = useState('');
   const [imageBase64, setImageBase64] = useState('');
   const [ingredients, setIngredients] = useState<
     { header: string; steps: string[] }[]
@@ -71,7 +70,6 @@ const UploadRecipeComponent: React.FC = () => {
     if (isNaN(Number(time))) errors.push('Time must be a number in minutes.');
     if (!calories) errors.push('Calories must be specified.');
     if (isNaN(Number(calories))) errors.push('Calories must be a number.');
-    if (!nutrition) errors.push('Nutrition details must be provided.');
 
     if (errors.length > 0) {
       setError(errors.join('\n'));
@@ -84,12 +82,15 @@ const UploadRecipeComponent: React.FC = () => {
       instructions,
       time: Number(time),
       calories: Number(calories),
-      nutrition,
       ingredients,
+      imageBase64,
     };
 
     console.log('Posting recipe:', recipeData);
     // api call or other logic to actually post the data
+
+    const jsonString = JSON.stringify(recipeData, null, 2);
+    console.log(jsonString);
   };
 
   useEffect(() => {
@@ -410,13 +411,6 @@ const UploadRecipeComponent: React.FC = () => {
           onChange={setTime}
           minRows={1}
           type='number'
-        />
-        <SectionTitle label='NUTRITION' />
-        <SectionInput
-          placeholder='List your nutrition values.'
-          value={nutrition}
-          onChange={setNutrition}
-          minRows={6}
         />
 
         <Box
