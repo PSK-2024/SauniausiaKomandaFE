@@ -11,19 +11,19 @@ export const mockRecipe: RecipeData = {
     {
       groupName: 'For the Crust',
       items: [
-        { name: 'Graham cracker crumbs', amount: '1 1/2 cups' },
-        { name: 'Melted butter', amount: '1/3 cup' },
-        { name: 'Granulated sugar', amount: '1/4 cup' },
+        { name: 'Graham cracker crumbs 1 1/2 cups' },
+        { name: 'Melted butter 1/3 cup' },
+        { name: 'Granulated sugar 1/4 cup' },
       ],
     },
     {
       groupName: 'For the Filling',
       items: [
-        { name: 'Cream cheese', amount: '500g' },
-        { name: 'Granulated sugar', amount: '1 cup' },
-        { name: 'Vanilla extract', amount: '2 tsp' },
-        { name: 'Eggs', amount: '3' },
-        { name: 'Sour cream', amount: '1 cup' },
+        { name: 'Cream cheese 500g' },
+        { name: 'Granulated sugar 1 cup' },
+        { name: 'Vanilla extract 2 tsp' },
+        { name: '3 Eggs' },
+        { name: 'Sour cream 1 cup' },
       ],
     },
   ],
