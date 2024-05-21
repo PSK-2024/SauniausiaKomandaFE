@@ -27,9 +27,7 @@ const Ingredients: React.FC<IngredientsListProps> = ({ ingredients }) => {
                   <ListItem key={itemIndex}>
                     <div className='step-container'>
                       <StepNumber number={itemIndex + 1} />
-                      <p>
-                        {item.amount} of {item.name}
-                      </p>
+                      <p>{item.name}</p>
                     </div>
                   </ListItem>
                 ))}
@@ -41,9 +39,7 @@ const Ingredients: React.FC<IngredientsListProps> = ({ ingredients }) => {
             <ListItem key={index}>
               <div className='step-container'>
                 <StepNumber number={index + 1} />
-                <p>
-                  {ingredient.amount} of {ingredient.name}
-                </p>
+                <p>{ingredient.name}</p>
               </div>
             </ListItem>
           );
