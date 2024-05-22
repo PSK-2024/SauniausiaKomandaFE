@@ -60,7 +60,7 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position='static' sx={{ bgcolor: '#ffffff' }}>
-      <Container maxWidth='xl'>
+      <Container maxWidth={false}>
         <Toolbar disableGutters>
           <img src='/app-logo.png' alt='Logo' style={{ height: 100 }} />
           <Typography
