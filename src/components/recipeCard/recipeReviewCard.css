@@ -3,12 +3,9 @@
     position: relative;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 8px ;
-    box-shadow: 30px;
+    border-radius: 8px;
     margin: 20px;
     width: 250px;
-    max-width: 250px;
-    max-height: 340px;
 }
 
 .media-wrapper {
