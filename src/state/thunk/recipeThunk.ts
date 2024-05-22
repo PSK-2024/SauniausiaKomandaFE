@@ -2,14 +2,16 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RecipeCard } from '../model/recipeCardModel';
 import { RecipeData, ReviewPost } from '../model/recipeModel';
 import axios from 'axios';
-
-const RECIPE_BASE_URL = 'https://pskbackendapi.azurewebsites.net/api/Recipe';
-const IMAGE_BASE_URL = 'https://pskbackendapi.azurewebsites.net/images';
+import { BASE_URL, PATHS } from '../../api/paths';
+import api from '../../api/api';
 
 const fetchImageUrl = async (imageName: string): Promise<string> => {
-  const response = await axios.get(`${IMAGE_BASE_URL}/${imageName}`, {
-    responseType: 'blob',
-  });
+  const response = await axios.get(
+    `${BASE_URL}${PATHS.IMAGES_PATH}/${imageName}`,
+    {
+      responseType: 'blob',
+    }
+  );
   return URL.createObjectURL(response.data);
 };
 
@@ -19,8 +21,8 @@ export const fetchRecipe = createAsyncThunk<
   { rejectValue: string }
 >('recipe/fetchRecipe', async (recipeId, { rejectWithValue }) => {
   try {
-    const response = await axios.get<RecipeData>(
-      `${RECIPE_BASE_URL}/${recipeId}`
+    const response = await api.get<RecipeData>(
+      `${BASE_URL}${PATHS.RECIPE_PATH}/${recipeId}`
     );
     const recipe: RecipeData = response.data;
     const [imageUrl] = await Promise.all([fetchImageUrl(recipe.image)]);
@@ -40,8 +42,8 @@ export const fetchAllRecipes = createAsyncThunk<
   { rejectValue: string }
 >('recipe/fetchAllRecipes', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get<RecipeCard[]>(
-      `${RECIPE_BASE_URL}/preview`
+    const response = await api.get<RecipeCard[]>(
+      `${BASE_URL}${PATHS.PREVIEW_RECIPE_PATH}`
     );
     const recipes = response.data;
 
@@ -69,8 +71,8 @@ export const fetchRecommendedRecipes = createAsyncThunk<
 >('recipes/fetchRecommendedRecipes', async (_, { rejectWithValue }) => {
   try {
     // TODO: specify from somewhere in UI recommended recipe count
-    const response = await axios.get<RecipeCard[]>(
-      `${RECIPE_BASE_URL}/recommended?top=5`
+    const response = await api.get<RecipeCard[]>(
+      `${BASE_URL}${PATHS.PREVIEW_RECIPE_PATH}?top=5`
     );
     const recipes = response.data;
 
@@ -97,8 +99,8 @@ export const addReview = createAsyncThunk<
   { rejectValue: string }
 >('recipe/addReview', async ({ recipeId, review }, { rejectWithValue }) => {
   try {
-    const response = await axios.post<RecipeData>(
-      `${RECIPE_BASE_URL}/${recipeId}/reviews`,
+    const response = await api.post<RecipeData>(
+      `${BASE_URL}${PATHS.RECIPE_PATH}/${recipeId}/reviews`,
       review
     );
     return response.data;
