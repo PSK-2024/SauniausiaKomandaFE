@@ -68,6 +68,7 @@ export const fetchRecommendedRecipes = createAsyncThunk<
   { rejectValue: string }
 >('recipes/fetchRecommendedRecipes', async (_, { rejectWithValue }) => {
   try {
+    // TODO: specify from somewhere in UI recommended recipe count
     const response = await axios.get<RecipeCard[]>(
       `${RECIPE_BASE_URL}/recommended?top=5`
     );
