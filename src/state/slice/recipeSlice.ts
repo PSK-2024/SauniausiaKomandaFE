@@ -7,7 +7,7 @@ const recipeSlice = createSlice({
   name: 'recipe',
   initialState: {
     recipe: null,
-    status: 'idle',
+    status: 'loading',
     error: null,
   } as RecipeState,
   reducers: {},

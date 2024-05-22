@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RecipeReviewCard from '../recipeCard/RecipeReviewCard';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import SidebarComponent from '../navBar/SidebarComponent';
@@ -21,7 +21,10 @@ function HomeComponent() {
   const recommendedRecipes = useSelector(
     (state: RootState) => state.recipes.recommendedRecipes
   );
-  const isLoading = useSelector((state: RootState) => state.recipes.loading);
+  const statusAll = useSelector((state: RootState) => state.recipes.statusAll);
+  const statusRecommended = useSelector(
+    (state: RootState) => state.recipes.statusRecommended
+  );
   const error = useSelector((state: RootState) => state.recipes.error);
 
   const [redirectToUploadRecipePage, setRedirectToUploadRecipePage] =
@@ -43,15 +46,20 @@ function HomeComponent() {
   }, [redirectToUploadRecipePage]);
 
   useEffect(() => {
-    dispatch(fetchAllRecipes());
-    dispatch(fetchRecommendedRecipes());
-  }, [dispatch]);
+    if (recipes.length < 1) {
+      dispatch(fetchAllRecipes());
+    }
+    if (recommendedRecipes.length < 1) {
+      dispatch(fetchRecommendedRecipes());
+    }
+  }, [dispatch, recipes, recommendedRecipes]);
+
+  if (statusAll === 'loading' || statusRecommended === 'loading')
+    return <CircularProgress />;
+  if (error) return <Typography>Error occurred. Try again!</Typography>;
 
   return (
     <>
-      {isLoading === 'pending' && <Typography>Loading...</Typography>}
-      {error && <Typography>Error: {error}</Typography>}
-
       <Link to={`/recipes/${recipes[0].id}`} style={{ textDecoration: 'none' }}>
         <Box className='hero-image'>
           <img src={recipes[0].img} alt='Hero' />

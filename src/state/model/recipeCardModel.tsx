@@ -9,6 +9,7 @@ export interface RecipeCard {
 export interface RecipeCardState {
   recipes: RecipeCard[];
   recommendedRecipes: RecipeCard[];
-  loading: 'idle' | 'pending' | 'succeeded' | 'failed';
+  statusRecommended: 'idle' | 'loading' | 'succeeded' | 'failed';
+  statusAll: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | undefined;
 }
