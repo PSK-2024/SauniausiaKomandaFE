@@ -20,10 +20,10 @@ const RecipeComponent: React.FC = () => {
   const status = useAppSelector((state: RootState) => state.recipe.status);
 
   useEffect(() => {
-    if (!recipe && id) {
+    if (id) {
       dispatch(fetchRecipe(id));
     }
-  }, [dispatch, id, recipe]);
+  }, [dispatch, id]);
 
   if (status === 'loading') return <CircularProgress />;
   if (!recipe) return <div>No recipe found or error loading.</div>;

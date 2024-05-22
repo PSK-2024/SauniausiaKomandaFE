@@ -3,7 +3,15 @@ import { RecipeCard } from '../model/recipeCardModel';
 import { RecipeData, ReviewPost } from '../model/recipeModel';
 import axios from 'axios';
 
-const RECIPE_BASE_URL = 'https://api.yourdomain.com/recipes';
+const RECIPE_BASE_URL = 'https://pskbackendapi.azurewebsites.net/api/Recipe';
+const IMAGE_BASE_URL = 'https://pskbackendapi.azurewebsites.net/images';
+
+const fetchImageUrl = async (imageName: string): Promise<string> => {
+  const response = await axios.get(`${IMAGE_BASE_URL}/${imageName}`, {
+    responseType: 'blob',
+  });
+  return URL.createObjectURL(response.data);
+};
 
 export const fetchRecipe = createAsyncThunk<
   RecipeData,
@@ -14,7 +22,10 @@ export const fetchRecipe = createAsyncThunk<
     const response = await axios.get<RecipeData>(
       `${RECIPE_BASE_URL}/${recipeId}`
     );
-    return response.data;
+    const recipe: RecipeData = response.data;
+    const [imageUrl] = await Promise.all([fetchImageUrl(recipe.image)]);
+    recipe.image = imageUrl;
+    return recipe;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return rejectWithValue('Failed to fetch recipe');
@@ -29,8 +40,20 @@ export const fetchAllRecipes = createAsyncThunk<
   { rejectValue: string }
 >('recipe/fetchAllRecipes', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get<RecipeCard[]>(`${RECIPE_BASE_URL}`);
-    return response.data;
+    const response = await axios.get<RecipeCard[]>(
+      `${RECIPE_BASE_URL}/preview`
+    );
+    const recipes = response.data;
+
+    return await Promise.all(
+      recipes.map(async recipe => {
+        if (recipe.img) {
+          const imageUrl = await fetchImageUrl(recipe.img);
+          return { ...recipe, img: imageUrl };
+        }
+        return recipe;
+      })
+    );
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return rejectWithValue('Failed to fetch recipes');
@@ -45,8 +68,20 @@ export const fetchRecommendedRecipes = createAsyncThunk<
   { rejectValue: string }
 >('recipes/fetchRecommendedRecipes', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get<RecipeCard[]>(`${RECIPE_BASE_URL}`);
-    return response.data;
+    const response = await axios.get<RecipeCard[]>(
+      `${RECIPE_BASE_URL}/recommended?top=5`
+    );
+    const recipes = response.data;
+
+    return await Promise.all(
+      recipes.map(async recipe => {
+        if (recipe.img) {
+          const imageUrl = await fetchImageUrl(recipe.img);
+          return { ...recipe, img: imageUrl };
+        }
+        return recipe;
+      })
+    );
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return rejectWithValue('Failed to fetch recipes');
