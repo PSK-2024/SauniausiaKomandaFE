@@ -30,9 +30,9 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  const handleSignUp = () => {
-    navigate('/register');
-  };
+  // const handleSignUp = () => {
+  //   navigate('/register');
+  // };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -69,15 +69,15 @@ const LoginPage: React.FC = () => {
           <Button type='submit' fullWidth variant='contained' color='primary'>
             Sign In
           </Button>
-          <Button
-            sx={{ margin: '8px 0px' }}
-            fullWidth
-            variant='outlined'
-            color='secondary'
-            onClick={handleSignUp}
-          >
-            Sign Up
-          </Button>
+          {/*<Button*/}
+          {/*  sx={{ margin: '8px 0px' }}*/}
+          {/*  fullWidth*/}
+          {/*  variant='outlined'*/}
+          {/*  color='secondary'*/}
+          {/*  onClick={handleSignUp}*/}
+          {/*>*/}
+          {/*  Sign Up*/}
+          {/*</Button>*/}
         </form>
       </Box>
     </Container>
