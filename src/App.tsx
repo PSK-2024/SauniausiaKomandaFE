@@ -19,7 +19,7 @@ import './App.css';
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
-  const isRegisterPage = location.pathname === '/register'; // Check if on Register page
+  const isRegisterPage = location.pathname === '/register';
 
   const hideAppBarAndFooter = isLoginPage || isRegisterPage;
 
