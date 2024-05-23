@@ -8,6 +8,7 @@ import { AppDispatch } from '../../app/store';
 import ProfileHeader from './ProfileHeader';
 import BioSection from './BioSection';
 import RecipesGrid from './RecipesGrid';
+import { mockedProfile } from '../../data/MockUser';
 import {
   fetchProfile,
   fetchPostedRecipes,
@@ -18,12 +19,6 @@ import { posted, favorites } from '../../data/MockProfileRecipes';
 const ProfileComponent: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   // const { profile, postedRecipes, favoriteRecipes, loading, error } = useSelector((state: RootState) => state.profile);
-
-  const mockedProfile = {
-    name: 'John Doe',
-    profilePicture: 'https://via.placeholder.com/100',
-    bio: 'Lorem ipsum dolor sit amet...',
-  };
 
   useEffect(() => {
     dispatch(fetchProfile());
