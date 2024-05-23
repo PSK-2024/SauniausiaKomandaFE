@@ -1,4 +1,4 @@
-export const allRecipesData = [
+export const posted = [
   {
     id: 1,
     title: 'Russian Salad',
@@ -81,7 +81,7 @@ export const allRecipesData = [
   },
 ];
 
-export const recommendedRecipesData = [
+export const favorites = [
   {
     id: 11,
     title: 'Greek Salad',
@@ -92,6 +92,38 @@ export const recommendedRecipesData = [
   },
   {
     id: 12,
+    title: 'Ramen',
+    rating: 5.0,
+    img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    duration: 30,
+    categories: ['Italian', 'Pasta', 'Dinner'],
+  },
+  {
+    id: 13,
+    title: 'Greek Salad',
+    rating: 4.2,
+    img: 'https://plus.unsplash.com/premium_photo-1669687759693-52ba5f9fa7a8?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    duration: 20,
+    categories: ['Italian', 'Pasta', 'Dinner'],
+  },
+  {
+    id: 14,
+    title: 'Ramen',
+    rating: 5.0,
+    img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    duration: 30,
+    categories: ['Italian', 'Pasta', 'Dinner'],
+  },
+  {
+    id: 15,
+    title: 'Greek Salad',
+    rating: 4.2,
+    img: 'https://plus.unsplash.com/premium_photo-1669687759693-52ba5f9fa7a8?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    duration: 20,
+    categories: ['Italian', 'Pasta', 'Dinner'],
+  },
+  {
+    id: 16,
     title: 'Ramen',
     rating: 5.0,
     img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',

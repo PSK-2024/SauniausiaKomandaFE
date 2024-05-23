@@ -28,15 +28,23 @@ jobs:
       - name: Build the app
         run: npm run build
 
-      - name: Upload to Google Cloud Storage
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
-          GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Build Docker image
         run: |
-          cat > $HOME/gcloud-service-key.json <<EOF
-          ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          EOF
-          gcloud auth activate-service-account --key-file=$HOME/gcloud-service-key.json
-          gcloud config set project $GCP_PROJECT
-          gsutil -m cp -r build/* gs://$GCS_BUCKET
+          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/recipe-app
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy recipe-app \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/recipe-app \
+            --platform managed \
+            --region ${{ secrets.GCP_REGION }} \
+            --allow-unauthenticated
