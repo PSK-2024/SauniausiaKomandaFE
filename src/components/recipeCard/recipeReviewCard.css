@@ -17,8 +17,8 @@
 
 .card-content {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     padding: 20px;
 }
 
@@ -42,4 +42,16 @@
     display: flex;
     justify-content: space-between;
     padding: 0 20px 20px;
+}
+
+.categories {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.category-chip {
+    background-color: #f0f0f0;
+    color: #000;
 }

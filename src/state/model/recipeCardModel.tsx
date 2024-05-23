@@ -4,6 +4,7 @@ export interface RecipeCard {
   rating: number;
   img: string;
   duration: number;
+  categories: string[];
 }
 
 export interface RecipeCardState {

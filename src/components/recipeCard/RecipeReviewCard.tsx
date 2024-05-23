@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarIcon from '@mui/icons-material/Star';
-import { Box } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 
@@ -21,7 +21,9 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
   rating,
   img,
   duration,
+  categories,
 }) => {
+  console.log('Categories:', categories); // Add this line to log categories
   const [isFavorite, setIsFavorite] = React.useState(false);
 
   const toggleFavorite = () => {
@@ -61,6 +63,11 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
           >
             {title}
           </Typography>
+          <Box className='categories'>
+            {categories.map(category => (
+              <Chip key={category} label={category} className='category-chip' />
+            ))}
+          </Box>
         </CardContent>
       </Link>
       <CardActions className='card-bottom' disableSpacing>
