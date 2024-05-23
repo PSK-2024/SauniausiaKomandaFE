@@ -4,11 +4,22 @@ import { useNavigate } from 'react-router-dom';
 //import authService from '../../api/authService';
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isEmailTouched, setIsEmailTouched] = useState<boolean>(false);
   const navigate = useNavigate();
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    setIsEmailValid(emailPattern.test(e.target.value));
+  };
+
+  const handleEmailBlur = () => {
+    setIsEmailTouched(true);
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    setIsEmailValid(emailPattern.test(email));
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,11 +28,16 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Username:', username);
+    console.log('Email:', email);
     console.log('Password:', password);
-    //await authService.login({ username, password });
+    // await authService.login({ email, password });
 
-    const isLoginSuccessful = username === 'a' && password === 'a';
+    if (!isEmailValid) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    const isLoginSuccessful = email === 'a@a.com' && password === 'a';
 
     if (isLoginSuccessful) {
       navigate('/');
@@ -46,12 +62,20 @@ const LoginPage: React.FC = () => {
             margin='normal'
             required
             fullWidth
-            id='username'
-            label='Username'
-            name='username'
-            autoComplete='username'
-            value={username}
-            onChange={handleUsernameChange}
+            id='email'
+            label='Email'
+            name='email'
+            autoComplete='email'
+            value={email}
+            onChange={handleEmailChange}
+            onBlur={handleEmailBlur}
+            type='email'
+            error={!isEmailValid && isEmailTouched}
+            helperText={
+              !isEmailValid && isEmailTouched
+                ? 'Please enter a valid email address'
+                : ''
+            }
           />
           <TextField
             variant='outlined'
@@ -69,15 +93,15 @@ const LoginPage: React.FC = () => {
           <Button type='submit' fullWidth variant='contained' color='primary'>
             Sign In
           </Button>
-          {/*<Button*/}
-          {/*  sx={{ margin: '8px 0px' }}*/}
-          {/*  fullWidth*/}
-          {/*  variant='outlined'*/}
-          {/*  color='secondary'*/}
-          {/*  onClick={handleSignUp}*/}
-          {/*>*/}
-          {/*  Sign Up*/}
-          {/*</Button>*/}
+          {/* <Button
+            sx={{ margin: '8px 0px' }}
+            fullWidth
+            variant='outlined'
+            color='secondary'
+            onClick={handleSignUp}
+          >
+            Sign Up
+          </Button> */}
         </form>
       </Box>
     </Container>

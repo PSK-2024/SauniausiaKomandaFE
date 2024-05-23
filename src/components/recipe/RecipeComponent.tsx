@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress, CardMedia, Card } from '@mui/material';
 import Header from './header/Header';
@@ -12,6 +12,7 @@ import { fetchRecipe } from '../../state/thunk/recipeThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import './RecipeComponent.css';
 import SectionName from './section/SectionName';
+import { Ingredient, IngredientGroup } from '../../state/model/recipeModel';
 
 const RecipeComponent: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,6 +26,23 @@ const RecipeComponent: React.FC = () => {
     }
   }, [dispatch, id]);
 
+  const countTotalIngredients = (
+    ingredients: (Ingredient | IngredientGroup)[]
+  ): number => {
+    return ingredients.reduce((total, ingredient) => {
+      if ('groupName' in ingredient) {
+        return total + ingredient.items.length;
+      } else {
+        return total + 1;
+      }
+    }, 0);
+  };
+
+  const totalIngredients = useMemo(
+    () => (recipe ? countTotalIngredients(recipe.ingredients) : 0),
+    [recipe]
+  );
+
   if (status === 'loading') return <CircularProgress />;
   if (!recipe) return <div>No recipe found or error loading.</div>;
 
@@ -35,7 +53,7 @@ const RecipeComponent: React.FC = () => {
           <Header title={recipe.title} />
           <Rating value={recipe.rating} />
           <NutritionalInfo
-            ingredientCount={recipe.ingredients.length}
+            ingredientCount={totalIngredients}
             duration={recipe.duration}
             calories={recipe.calories}
           />
