@@ -5,7 +5,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Box, Typography } from '@mui/material';
 import RecipeReviewCard from '../recipeCard/RecipeReviewCard';
 import { RecipeCard } from '../../state/model/recipeCardModel';
-import { NextArrow, PrevArrow } from './SliderArrows';
 
 interface RecipesGridProps {
   recipes: RecipeCard[];
@@ -19,8 +18,6 @@ const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 1024,
