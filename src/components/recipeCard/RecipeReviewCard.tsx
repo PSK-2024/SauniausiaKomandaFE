@@ -23,7 +23,6 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
   duration,
   categories,
 }) => {
-  console.log('Categories:', categories); // Add this line to log categories
   const [isFavorite, setIsFavorite] = React.useState(false);
 
   const toggleFavorite = () => {
