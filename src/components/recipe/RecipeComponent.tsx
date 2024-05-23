@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress, CardMedia, Card } from '@mui/material';
 import Header from './header/Header';
@@ -26,9 +26,6 @@ const RecipeComponent: React.FC = () => {
     }
   }, [dispatch, id]);
 
-  if (status === 'loading') return <CircularProgress />;
-  if (!recipe) return <div>No recipe found or error loading.</div>;
-
   const countTotalIngredients = (
     ingredients: (Ingredient | IngredientGroup)[]
   ): number => {
@@ -41,7 +38,13 @@ const RecipeComponent: React.FC = () => {
     }, 0);
   };
 
-  const totalIngredients = countTotalIngredients(recipe.ingredients);
+  const totalIngredients = useMemo(
+    () => (recipe ? countTotalIngredients(recipe.ingredients) : 0),
+    [recipe]
+  );
+
+  if (status === 'loading') return <CircularProgress />;
+  if (!recipe) return <div>No recipe found or error loading.</div>;
 
   return (
     <div className='recipe-container'>
