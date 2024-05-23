@@ -5,4 +5,8 @@ export const PATHS = {
   PREVIEW_RECIPE_PATH: 'api/Recipe/preview',
   RECOMMENDED_RECIPE_PATH: 'api/Recipe/recommended',
   IMAGES_PATH: 'images',
+  USER_PROFILE_PATH: 'api/user/profile',
+  USER_RECIPES_PATH: 'api/user/recipes',
+  USER_FAVORITES_PATH: 'api/user/favorites',
+  USER_PROFILE_UPDATE_PATH: 'api/user/profile/update',
 };
