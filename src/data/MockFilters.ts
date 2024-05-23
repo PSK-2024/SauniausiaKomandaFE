@@ -1,22 +1,14 @@
 export const categories = [
-  { label: 'Veggies', value: 'veggies' },
-  { label: 'Dairy', value: 'dairy' },
-];
-
-export const cuisines = [
-  { label: 'Indian', value: 'indian' },
-  { label: 'Italian', value: 'italian' },
-  { label: 'British', value: 'british' },
-  { label: 'Irish', value: 'irish' },
-  { label: 'Persian', value: 'persian' },
-];
-
-export const allergies = [
-  { label: 'Gluten', value: 'gluten' },
-  { label: 'Lorem', value: 'lorem' },
-];
-
-export const goals = [
-  { label: 'Weight Loss', value: 'weightLoss' },
-  { label: 'Get Active', value: 'getActive' },
+  { label: 'Food', value: 'food' },
+  { label: 'Beverage', value: 'beverage' },
+  { label: 'Dessert', value: 'dessert' },
+  { label: 'Breakfast', value: 'breakfast' },
+  { label: 'Dinner', value: 'dinner' },
+  { label: 'Lunch', value: 'lunch' },
+  { label: 'Snacks', value: 'snacks' },
+  { label: 'Drinks', value: 'drinks' },
+  { label: 'Appetizers', value: 'appetizers' },
+  { label: 'Main course', value: 'main course' },
+  { label: 'Side dishes', value: 'side dishes' },
+  { label: 'Salads', value: 'salads' },
 ];

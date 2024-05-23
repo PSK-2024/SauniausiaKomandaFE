@@ -97,6 +97,7 @@ function HomeComponent() {
                 rating={recipe.rating}
                 img={recipe.img}
                 duration={recipe.duration}
+                categories={recipe.categories || []}
               />
             ))
           ) : (
@@ -109,6 +110,7 @@ function HomeComponent() {
                   rating={recommendedRecipe.rating}
                   img={recommendedRecipe.img}
                   duration={recommendedRecipe.duration}
+                  categories={recommendedRecipe.categories || []}
                 />
               ))}
             </>

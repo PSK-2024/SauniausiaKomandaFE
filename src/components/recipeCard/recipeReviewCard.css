@@ -1,24 +1,26 @@
 .card {
     display: flex;
-    position: relative;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
     border-radius: 8px;
     margin: 20px;
     min-height: 360px;
     max-height: 420px;
-    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+    overflow: hidden;
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out; 
 }
 
-.media-wrapper {
-    position: relative;
-    overflow: hidden;
+.card:hover {
+    transform: scale(1.05); 
 }
 
 .card-content {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     padding: 20px;
 }
 
@@ -31,6 +33,7 @@
     align-items: center;
     border-radius: 0 0 0 8px;
     background-color: rgba(0, 0, 0, 0.5);
+    color: #fff; 
 }
 
 .star {
@@ -42,4 +45,16 @@
     display: flex;
     justify-content: space-between;
     padding: 0 20px 20px;
+}
+
+.categories {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.category-chip {
+    background-color: #f0f0f0;
+    color: #000;
 }

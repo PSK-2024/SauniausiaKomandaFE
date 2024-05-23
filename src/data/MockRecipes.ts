@@ -5,6 +5,7 @@ export const allRecipesData = [
     rating: 4.5,
     img: 'https://plus.unsplash.com/premium_photo-1666798637757-bc2899415595?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 40,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ export const allRecipesData = [
     rating: 4.0,
     img: 'https://plus.unsplash.com/premium_photo-1669687759693-52ba5f9fa7a8?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 30,
+    categories: ['Italian', 'Dinner'],
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ export const allRecipesData = [
     rating: 4.2,
     img: 'https://plus.unsplash.com/premium_photo-1669687759693-52ba5f9fa7a8?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 20,
+    categories: ['Dinner'],
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ export const allRecipesData = [
     rating: 4.8,
     img: 'https://plus.unsplash.com/premium_photo-1669687759693-52ba5f9fa7a8?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 60,
+    categories: ['Italian'],
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ export const allRecipesData = [
     rating: 5.0,
     img: 'https://plus.unsplash.com/premium_photo-1669687759693-52ba5f9fa7a8?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 30,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ export const allRecipesData = [
     rating: 4.5,
     img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 40,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
   {
     id: 7,
@@ -47,6 +53,7 @@ export const allRecipesData = [
     rating: 4.0,
     img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 30,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
   {
     id: 8,
@@ -54,6 +61,7 @@ export const allRecipesData = [
     rating: 4.2,
     img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 20,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
   {
     id: 9,
@@ -61,6 +69,7 @@ export const allRecipesData = [
     rating: 4.0,
     img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 30,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
   {
     id: 10,
@@ -68,6 +77,7 @@ export const allRecipesData = [
     rating: 4.2,
     img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 20,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
 ];
 
@@ -78,6 +88,7 @@ export const recommendedRecipesData = [
     rating: 4.2,
     img: 'https://plus.unsplash.com/premium_photo-1669687759693-52ba5f9fa7a8?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 20,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
   {
     id: 12,
@@ -85,5 +96,6 @@ export const recommendedRecipesData = [
     rating: 5.0,
     img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     duration: 30,
+    categories: ['Italian', 'Pasta', 'Dinner'],
   },
 ];
