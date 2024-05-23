@@ -33,7 +33,7 @@
     align-items: center;
     border-radius: 0 0 0 8px;
     background-color: rgba(0, 0, 0, 0.5);
-    color: #fff; /* Ensures text is visible against dark background */
+    color: #fff; 
 }
 
 .star {
