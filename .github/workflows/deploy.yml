@@ -38,6 +38,10 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Enable Cloud Run API
+        run: |
+          gcloud services enable run.googleapis.com --project ${{ secrets.GCP_PROJECT_ID }}
+          
       - name: Build Docker image
         run: |
           gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/recipe-app
