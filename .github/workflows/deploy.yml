@@ -34,7 +34,7 @@ jobs:
           GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
           GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
         run: |
-          echo $GOOGLE_APPLICATION_CREDENTIALS | base64 --decode > $HOME/gcloud-service-key.json
+          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/gcloud-service-key.json
           gcloud auth activate-service-account --key-file=$HOME/gcloud-service-key.json
           gcloud config set project $GCP_PROJECT
           gsutil -m cp -r build/* gs://$GCS_BUCKET
