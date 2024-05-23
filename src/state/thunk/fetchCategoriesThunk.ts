@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BASE_URL, PATHS } from '../../api/paths';
+import api from '../../api/api';
 
 interface Category {
   name: string;
@@ -11,8 +13,8 @@ export const fetchCategories = createAsyncThunk<
   { rejectValue: string }
 >('categories/fetchCategories', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get<Category[]>(
-      'https://pskbackendapi.azurewebsites.net/api/Category/all'
+    const response = await api.get<Category[]>(
+      `${BASE_URL}${PATHS.CATEGORIES_PATH}`
     );
     return response.data;
   } catch (error) {

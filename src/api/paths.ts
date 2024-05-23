@@ -5,4 +5,6 @@ export const PATHS = {
   PREVIEW_RECIPE_PATH: 'api/Recipe/preview',
   RECOMMENDED_RECIPE_PATH: 'api/Recipe/recommended',
   IMAGES_PATH: 'images',
+  UPLOAD_RECIPE_PATH: 'api/Recipe',
+  CATEGORIES_PATH: 'api/Category/all',
 };

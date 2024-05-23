@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RecipeUploadData } from '../model/uploadRecipeModel';
-
-const UPLOAD_RECIPE_URL = 'https://pskbackendapi.azurewebsites.net/api/Recipe';
+import { BASE_URL, PATHS } from '../../api/paths';
 
 export const uploadRecipe = createAsyncThunk<
   RecipeUploadData,
@@ -11,7 +10,7 @@ export const uploadRecipe = createAsyncThunk<
 >('uploadRecipe/uploadRecipe', async (recipeData, { rejectWithValue }) => {
   try {
     const response = await axios.post<RecipeUploadData>(
-      UPLOAD_RECIPE_URL,
+      `${BASE_URL}${PATHS.UPLOAD_RECIPE_PATH}`,
       recipeData
     );
     return response.data;
