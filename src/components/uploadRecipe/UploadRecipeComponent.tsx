@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../app/store';
+import { uploadRecipe } from '../../state/thunk/uploadRecipeThunk';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -8,9 +11,17 @@ import InstructionsComponent from './instructions/InstructionsComponent';
 import IngredientsComponent from './ingredients/IngredientsComponent';
 import SectionTitle from './sectionTitle/SectionTitle';
 import Snackbar from '@mui/material/Snackbar';
+import { CircularProgress } from '@mui/material';
 
 const UploadRecipeComponent: React.FC = () => {
-  const [redirectToHomePage, setRedirectToHomePage] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const uploadStatus = useSelector(
+    (state: RootState) => state.uploadRecipe.status
+  );
+  const uploadError = useSelector(
+    (state: RootState) => state.uploadRecipe.error
+  );
+
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [error, setError] = useState('');
@@ -86,28 +97,20 @@ const UploadRecipeComponent: React.FC = () => {
       imageBase64,
     };
 
-    console.log('Posting recipe:', recipeData);
-    // api call or other logic to actually post the data
-
-    const jsonString = JSON.stringify(recipeData, null, 2);
-    console.log(jsonString);
+    dispatch(uploadRecipe(recipeData));
   };
 
   useEffect(() => {
-    if (redirectToHomePage) {
+    if (uploadStatus === 'succeeded') {
       window.location.href = '/';
     }
-  }, [redirectToHomePage]);
-
-  const handleClickRedirectHomePage = () => {
-    setRedirectToHomePage(true);
-  };
+  }, [uploadStatus]);
 
   const categoryRows = [
-    ['Food', 'Beverage', 'Dessert'],
-    ['Breakfast', 'Dinner', 'Lunch'],
-    ['Snacks', 'Drinks', 'Appetizers'],
-    ['Main Course', 'Side Dishes', 'Salads'],
+    ['Appetizers', 'Beverage', 'Breakfast'],
+    ['Dessert', 'Dinner', 'Drinks'],
+    ['Food', 'Lunch', 'Main Course'],
+    ['Salads', 'Side Dishes', 'Snacks'],
   ];
 
   const handleToggleCategories = () => {
@@ -156,10 +159,10 @@ const UploadRecipeComponent: React.FC = () => {
       }}
     >
       <Snackbar
-        open={!!error}
+        open={!!error || !!uploadError}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message={error}
+        message={error || uploadError}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       />
       <Box
@@ -171,7 +174,6 @@ const UploadRecipeComponent: React.FC = () => {
           typography: 'h5',
           cursor: 'pointer',
         }}
-        onClick={handleClickRedirectHomePage}
       >
         <Box
           component='img'
@@ -420,27 +422,31 @@ const UploadRecipeComponent: React.FC = () => {
             alignItems: 'center',
           }}
         >
-          <Button
-            onClick={postRecipe}
-            variant='contained'
-            sx={{
-              mt: 8,
-              bgcolor: '#509E2F',
-              '&:hover': {
+          {uploadStatus === 'loading' ? (
+            <CircularProgress />
+          ) : (
+            <Button
+              onClick={postRecipe}
+              variant='contained'
+              sx={{
+                mt: 8,
                 bgcolor: '#509E2F',
-              },
-              width: { xs: '100%', md: '633px' },
-              fontSize: '2rem',
-              borderRadius: 'lg',
-              color: 'white',
-              '@media (max-width:768px)': {
-                mt: 10,
-                fontSize: '4xl',
-              },
-            }}
-          >
-            Post Recipe
-          </Button>
+                '&:hover': {
+                  bgcolor: '#509E2F',
+                },
+                width: { xs: '100%', md: '633px' },
+                fontSize: '2rem',
+                borderRadius: 'lg',
+                color: 'white',
+                '@media (max-width:768px)': {
+                  mt: 10,
+                  fontSize: '4xl',
+                },
+              }}
+            >
+              Post Recipe
+            </Button>
+          )}
         </Box>
       </Box>
     </Box>
