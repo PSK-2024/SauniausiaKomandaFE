@@ -12,6 +12,7 @@ import { fetchRecipe } from '../../state/thunk/recipeThunk';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import './RecipeComponent.css';
 import SectionName from './section/SectionName';
+import { Ingredient, IngredientGroup } from '../../state/model/recipeModel';
 
 const RecipeComponent: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,6 +29,20 @@ const RecipeComponent: React.FC = () => {
   if (status === 'loading') return <CircularProgress />;
   if (!recipe) return <div>No recipe found or error loading.</div>;
 
+  const countTotalIngredients = (
+    ingredients: (Ingredient | IngredientGroup)[]
+  ): number => {
+    return ingredients.reduce((total, ingredient) => {
+      if ('groupName' in ingredient) {
+        return total + ingredient.items.length;
+      } else {
+        return total + 1;
+      }
+    }, 0);
+  };
+
+  const totalIngredients = countTotalIngredients(recipe.ingredients);
+
   return (
     <div className='recipe-container'>
       <div className='header-container'>
@@ -35,7 +50,7 @@ const RecipeComponent: React.FC = () => {
           <Header title={recipe.title} />
           <Rating value={recipe.rating} />
           <NutritionalInfo
-            ingredientCount={recipe.ingredients.length}
+            ingredientCount={totalIngredients}
             duration={recipe.duration}
             calories={recipe.calories}
           />
