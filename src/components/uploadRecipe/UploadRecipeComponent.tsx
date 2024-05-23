@@ -440,7 +440,7 @@ const UploadRecipeComponent: React.FC = () => {
           }}
         >
           {uploadStatus === 'loading' ? (
-            <CircularProgress />
+            <CircularProgress sx={{ mt: 4 }} />
           ) : (
             <Button
               onClick={postRecipe}
