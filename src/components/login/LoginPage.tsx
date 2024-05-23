@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-//import authService from '../../api/authService';
+import authService from '../../api/authService';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const [isEmailTouched, setIsEmailTouched] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,27 +29,23 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
-    // await authService.login({ email, password });
-
+    setError('');
     if (!isEmailValid) {
       alert('Please enter a valid email address.');
       return;
     }
-
-    const isLoginSuccessful = email === 'a@a.com' && password === 'a';
-
-    if (isLoginSuccessful) {
-      navigate('/');
-    } else {
-      alert('Login failed. Please check your credentials.');
+    try {
+      const response = await authService.login({ email, password });
+      if (response.success) {
+        navigate('/');
+      } else {
+        setError('Invalid email or password.');
+        console.error(error);
+      }
+    } catch (err) {
+      setError('An error occurred during login. Please try again.');
     }
   };
-
-  // const handleSignUp = () => {
-  //   navigate('/register');
-  // };
 
   return (
     <Container component='main' maxWidth='xs'>
