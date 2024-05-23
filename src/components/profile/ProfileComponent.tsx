@@ -13,12 +13,13 @@ import {
   fetchProfile,
   fetchPostedRecipes,
   fetchFavoriteRecipes,
+  updateProfile,
 } from '../../state/thunk/userProfileThunk';
 import { posted, favorites } from '../../data/MockProfileRecipes';
 
 const ProfileComponent: React.FC = () => {
+  // const { profile, postedRecipes, favoriteRecipes, loading } = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch<AppDispatch>();
-  // const { profile, postedRecipes, favoriteRecipes, loading, error } = useSelector((state: RootState) => state.profile);
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -26,25 +27,38 @@ const ProfileComponent: React.FC = () => {
     dispatch(fetchFavoriteRecipes());
   }, [dispatch]);
 
+  const handleSave = (updatedProfile: {
+    name: string;
+    profilePicture: string;
+    bio: string;
+  }) => {
+    const formData = new FormData();
+    formData.append('name', updatedProfile.name);
+    formData.append('bio', updatedProfile.bio);
+    if (updatedProfile.profilePicture !== mockedProfile?.profilePicture) {
+      formData.append('profilePicture', updatedProfile.profilePicture);
+    }
+
+    dispatch(updateProfile(formData));
+  };
+
   // if (loading) {
   //   return <CircularProgress />;
   // }
 
-  // if (error) {
-  //   return <Typography variant="h6">Error loading profile: {error}</Typography>;
-  // }
-
-  // if (!profile) {
-  //   return <Typography variant="h6">Error loading profile data.</Typography>;
-  // }
-
   return (
     <Box>
-      <ProfileHeader
-        name={mockedProfile.name}
-        imageUrl={mockedProfile.profilePicture}
-      />
-      <BioSection bio={mockedProfile.bio} />
+      {mockedProfile && (
+        <>
+          <ProfileHeader
+            name={mockedProfile.name}
+            imageUrl={mockedProfile.profilePicture}
+            bio={mockedProfile.bio}
+            handleSave={handleSave}
+          />
+          <BioSection bio={mockedProfile.bio} />
+        </>
+      )}
       <RecipesGrid recipes={posted} title='Recipes Posted' />
       <RecipesGrid recipes={favorites} title='Favourites' />
     </Box>
