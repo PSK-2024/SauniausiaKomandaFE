@@ -1,0 +1,40 @@
+name: Deploy to GCS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the app
+        run: npm run build
+
+      - name: Upload to Google Cloud Storage
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+          GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
+        run: |
+          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/gcloud-service-key.json
+          gcloud auth activate-service-account --key-file=$HOME/gcloud-service-key.json
+          gcloud config set project $GCP_PROJECT
+          gsutil -m cp -r build/* gs://$GCS_BUCKET
