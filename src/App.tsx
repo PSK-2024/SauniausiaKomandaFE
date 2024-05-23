@@ -14,6 +14,7 @@ import RecipeComponent from './components/recipe/RecipeComponent';
 import UploadRecipeComponent from './components/uploadRecipe/UploadRecipeComponent';
 import ProfileComponent from './components/profile/ProfileComponent';
 import LoginComponent from './components/login/LoginPage';
+import PrivateRoute from './router/PrivateRoute';
 import './App.css';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
@@ -40,11 +41,12 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path='/login' element={<LoginComponent />} />
-          {/*<Route path='/register' element={<RegisterPage />} />*/}
-          <Route path='/' element={<HomeComponent />} />
-          <Route path='/recipes/:id' element={<RecipeComponent />} />
-          <Route path='/uploadRecipe' element={<UploadRecipeComponent />} />
-          <Route path='/profile' element={<ProfileComponent />} />
+          <Route element={<PrivateRoute />}>
+            <Route path='/' element={<HomeComponent />} />
+            <Route path='/recipes/:id' element={<RecipeComponent />} />
+            <Route path='/uploadRecipe' element={<UploadRecipeComponent />} />
+            <Route path='/profile' element={<ProfileComponent />} />
+          </Route>
         </Routes>
       </MainLayout>
     </Router>
