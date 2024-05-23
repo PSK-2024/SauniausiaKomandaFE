@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import authService from '../../api/authService';
+//import authService from '../../api/authService';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isEmailTouched, setIsEmailTouched] = useState<boolean>(false);
   const navigate = useNavigate();
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    setIsEmailValid(emailPattern.test(e.target.value));
+  };
+
+  const handleEmailBlur = () => {
+    setIsEmailTouched(true);
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    setIsEmailValid(emailPattern.test(email));
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,18 +28,27 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await authService.login({ email, password });
-      if (response.success) {
-        navigate('/');
-      } else {
-        setError('Invalid email or password.');
-        console.error(error);
-      }
-    } catch (err) {
-      setError('An error occurred during login. Please try again.');
+    console.log('Email:', email);
+    console.log('Password:', password);
+    // await authService.login({ email, password });
+
+    if (!isEmailValid) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    const isLoginSuccessful = email === 'a@a.com' && password === 'a';
+
+    if (isLoginSuccessful) {
+      navigate('/');
+    } else {
+      alert('Login failed. Please check your credentials.');
     }
   };
+
+  // const handleSignUp = () => {
+  //   navigate('/register');
+  // };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -49,6 +68,14 @@ const LoginPage: React.FC = () => {
             autoComplete='email'
             value={email}
             onChange={handleEmailChange}
+            onBlur={handleEmailBlur}
+            type='email'
+            error={!isEmailValid && isEmailTouched}
+            helperText={
+              !isEmailValid && isEmailTouched
+                ? 'Please enter a valid email address'
+                : ''
+            }
           />
           <TextField
             variant='outlined'
@@ -66,15 +93,15 @@ const LoginPage: React.FC = () => {
           <Button type='submit' fullWidth variant='contained' color='primary'>
             Sign In
           </Button>
-          {/*<Button*/}
-          {/*  sx={{ margin: '8px 0px' }}*/}
-          {/*  fullWidth*/}
-          {/*  variant='outlined'*/}
-          {/*  color='secondary'*/}
-          {/*  onClick={handleSignUp}*/}
-          {/*>*/}
-          {/*  Sign Up*/}
-          {/*</Button>*/}
+          {/* <Button
+            sx={{ margin: '8px 0px' }}
+            fullWidth
+            variant='outlined'
+            color='secondary'
+            onClick={handleSignUp}
+          >
+            Sign Up
+          </Button> */}
         </form>
       </Box>
     </Container>
