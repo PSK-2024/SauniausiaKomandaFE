@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-//import authService from '../../api/authService';
+import authService from '../../api/authService';
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,22 +18,18 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Username:', username);
-    console.log('Password:', password);
-    //await authService.login({ username, password });
-
-    const isLoginSuccessful = username === 'a' && password === 'a';
-
-    if (isLoginSuccessful) {
-      navigate('/');
-    } else {
-      alert('Login failed. Please check your credentials.');
+    try {
+      const response = await authService.login({ email, password });
+      if (response.success) {
+        navigate('/');
+      } else {
+        setError('Invalid email or password.');
+        console.error(error);
+      }
+    } catch (err) {
+      setError('An error occurred during login. Please try again.');
     }
   };
-
-  // const handleSignUp = () => {
-  //   navigate('/register');
-  // };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -46,12 +43,12 @@ const LoginPage: React.FC = () => {
             margin='normal'
             required
             fullWidth
-            id='username'
-            label='Username'
-            name='username'
-            autoComplete='username'
-            value={username}
-            onChange={handleUsernameChange}
+            id='email'
+            label='Email'
+            name='email'
+            autoComplete='email'
+            value={email}
+            onChange={handleEmailChange}
           />
           <TextField
             variant='outlined'

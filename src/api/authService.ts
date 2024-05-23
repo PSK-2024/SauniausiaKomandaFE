@@ -1,14 +1,26 @@
 import api from './api';
 
 export interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
 
 const login = (request: LoginRequest) =>
-  api.post('/Auth/login', request).then(response => {
-    localStorage.setItem('apiToken', response.data.accessToken);
-  });
+  api
+    .post('api/Identity/login', request)
+    .then(response => {
+      if (response.status === 200) {
+        localStorage.setItem('apiToken', response.data.token);
+        return { success: true };
+      }
+      return { success: false };
+    })
+    .catch(error => {
+      return {
+        success: false,
+        error: error.response?.data?.message || 'An error occurred',
+      };
+    });
 
 const logout = () => {
   localStorage.removeItem('apiToken');

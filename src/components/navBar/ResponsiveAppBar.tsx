@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
+import authService from '../../api/authService';
 
 const pages = ['Home', 'Notifications'];
 const settings = ['Profile', 'Logout'];
@@ -46,7 +47,8 @@ function ResponsiveAppBar() {
         navigate('/profile');
         break;
       case 'Logout':
-        navigate('/signin');
+        navigate('/login');
+        authService.logout();
         break;
       default:
         break;
