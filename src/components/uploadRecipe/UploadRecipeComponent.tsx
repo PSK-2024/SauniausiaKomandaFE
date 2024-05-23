@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/store';
 import { uploadRecipe } from '../../state/thunk/uploadRecipeThunk';
+import { fetchCategories } from '../../state/thunk/fetchCategoriesThunk';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -21,6 +22,12 @@ const UploadRecipeComponent: React.FC = () => {
   const uploadError = useSelector(
     (state: RootState) => state.uploadRecipe.error
   );
+  const categoriesStatus = useSelector(
+    (state: RootState) => state.categories.status
+  );
+  const categories = useSelector(
+    (state: RootState) => state.categories.categories
+  );
 
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -35,6 +42,12 @@ const UploadRecipeComponent: React.FC = () => {
   const [ingredients, setIngredients] = useState<
     { header: string; steps: string[] }[]
   >([]);
+
+  useEffect(() => {
+    if (categoriesStatus === 'idle') {
+      dispatch(fetchCategories());
+    }
+  }, [categoriesStatus, dispatch]);
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategories(prevCategories =>
@@ -106,12 +119,15 @@ const UploadRecipeComponent: React.FC = () => {
     }
   }, [uploadStatus]);
 
-  const categoryRows = [
-    ['Appetizers', 'Beverage', 'Breakfast'],
-    ['Dessert', 'Dinner', 'Drinks'],
-    ['Food', 'Lunch', 'Main Course'],
-    ['Salads', 'Side Dishes', 'Snacks'],
-  ];
+  const getCategoryRows = () => {
+    const rows: string[][] = [];
+    for (let i = 0; i < categories.length; i += 3) {
+      rows.push(categories.slice(i, i + 3).map(category => category.name));
+    }
+    return rows;
+  };
+
+  const categoryRows = getCategoryRows();
 
   const handleToggleCategories = () => {
     setShowAllCategories(!showAllCategories);
@@ -174,6 +190,7 @@ const UploadRecipeComponent: React.FC = () => {
           typography: 'h5',
           cursor: 'pointer',
         }}
+        onClick={() => (window.location.href = '/')}
       >
         <Box
           component='img'
