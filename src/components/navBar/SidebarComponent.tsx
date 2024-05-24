@@ -7,11 +7,11 @@ import {
   FormControlLabel,
   Divider,
 } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchCategories,
   fetchRecipesByCategory,
 } from '../../state/thunk/recipeThunk';
-import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/store';
 import { RecipeCard } from '../../state/model/recipeCardModel';
 import { Category } from '../../state/model/categoryModel';
@@ -20,36 +20,55 @@ interface SidebarComponentProps {
   setFilteredRecipes: (recipes: RecipeCard[]) => void;
 }
 
+interface CheckedState {
+  [key: string]: boolean;
+}
+
 function SidebarComponent({ setFilteredRecipes }: SidebarComponentProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { categories, status, error } = useSelector(
     (state: RootState) => state.categories
   );
-  const [checked, setChecked] = useState<{ [key: string]: boolean }>({});
+  const [checked, setChecked] = useState<CheckedState>({});
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  const handleToggle = async (
+  useEffect(() => {
+    const initialCheckedState: CheckedState = categories.reduce(
+      (acc: CheckedState, category: Category) => {
+        acc[category.name] = false;
+        return acc;
+      },
+      {}
+    );
+    setChecked(initialCheckedState);
+  }, [categories]);
+
+  const dispatchUpdateRecipes = (
+    newCheckedState: CheckedState,
+    category: string
+  ) => {
+    if (newCheckedState[category]) {
+      dispatch(fetchRecipesByCategory({ category })).then(action => {
+        if (fetchRecipesByCategory.fulfilled.match(action)) {
+          setFilteredRecipes(action.payload);
+        }
+      });
+    } else {
+      setFilteredRecipes([]);
+    }
+  };
+
+  const handleToggle = (
     event: React.ChangeEvent<HTMLInputElement>,
     category: string
   ) => {
     event.preventDefault();
     setChecked(prev => {
-      const newState = { ...prev, [category]: !prev[category] };
-      if (newState[category]) {
-        dispatch(fetchRecipesByCategory({ category })).then(action => {
-          if (fetchRecipesByCategory.fulfilled.match(action)) {
-            const response = action.payload;
-            setFilteredRecipes(response);
-          } else if (fetchRecipesByCategory.rejected.match(action)) {
-            // Handle rejection if needed
-          }
-        });
-      } else {
-        setFilteredRecipes([]);
-      }
+      const newState: CheckedState = { ...prev, [category]: !prev[category] };
+      dispatchUpdateRecipes(newState, category);
       return newState;
     });
   };
@@ -73,7 +92,7 @@ function SidebarComponent({ setFilteredRecipes }: SidebarComponentProps) {
             key={category.name}
             control={
               <Checkbox
-                checked={checked[category.name] || false}
+                checked={checked[category.name]}
                 onChange={event => handleToggle(event, category.name)}
                 sx={{
                   color: 'default',
