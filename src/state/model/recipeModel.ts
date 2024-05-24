@@ -1,4 +1,5 @@
 import { Review } from './reviewModel';
+import { Category } from '../slice/categoriesSlice';
 
 export interface Ingredient {
   name: string;
@@ -23,4 +24,5 @@ export interface RecipeData {
   ingredients: Ingredient[] | IngredientGroup[];
   instructions: Instruction[];
   reviews: Review[];
+  categories: Category[];
 }

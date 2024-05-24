@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchCategories } from '../thunk/fetchCategoriesThunk';
 
-interface Category {
+export interface Category {
   name: string;
 }
 

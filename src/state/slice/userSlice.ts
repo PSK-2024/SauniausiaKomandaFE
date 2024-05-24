@@ -4,7 +4,7 @@ import { fetchUserData } from '../thunk/userThunk';
 import { RootState } from '../../app/store';
 
 const initialUser: User = {
-  userId: 0,
+  id: 0,
   email: '',
   firstName: '',
   lastName: '',
@@ -59,7 +59,7 @@ const selectUser = (state: RootState) => state.user.user;
 export const selectUserIdentity = createSelector(
   [selectUser],
   (user): UserIdentity => ({
-    userId: user.userId,
+    id: user.id,
     email: user.email,
   })
 );

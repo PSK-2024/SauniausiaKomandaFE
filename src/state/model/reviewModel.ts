@@ -12,7 +12,7 @@ export interface ReviewAuthor extends UserIdentity {
   lastName: string;
 }
 
-export interface ReviewRequest extends UserIdentity {
+export interface ReviewRequest {
   text: string;
   rating: number;
 }

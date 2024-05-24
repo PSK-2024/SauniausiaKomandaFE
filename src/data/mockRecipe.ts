@@ -40,7 +40,7 @@ export const mockRecipe: RecipeData = {
       id: 1,
       text: 'Absolutely delicious! Will make again.',
       author: {
-        userId: 1,
+        id: 1,
         email: 'a@a.com',
         firstName: 'Jane',
         lastName: 'Doe',
@@ -51,7 +51,7 @@ export const mockRecipe: RecipeData = {
       id: 2,
       text: 'Great recipe, though I added more sugar.',
       author: {
-        userId: 1,
+        id: 1,
         email: 'a@a.com',
         firstName: 'Jane',
         lastName: 'Doe',
@@ -59,4 +59,5 @@ export const mockRecipe: RecipeData = {
       rating: 2,
     },
   ],
+  categories: [{ name: 'Dessert' }],
 };

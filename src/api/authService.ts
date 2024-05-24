@@ -1,5 +1,4 @@
 import api from './api';
-import { mockUser } from '../data/mockUser';
 
 export interface LoginRequest {
   email: string;
@@ -37,9 +36,8 @@ const isLoggedIn = () => {
 };
 
 export const getUserData = async () => {
-  // const response = await api.get('api/Identity/user');
-  // return response.data;
-  return mockUser;
+  const response = await api.get('api/Identity/user');
+  return response.data;
 };
 
 export default { login, logout, isLoggedIn, getUserData };

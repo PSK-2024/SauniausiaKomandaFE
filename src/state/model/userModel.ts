@@ -6,6 +6,6 @@ export interface User extends UserIdentity {
 }
 
 export interface UserIdentity {
-  userId: number;
+  id: number;
   email: string;
 }
