@@ -15,11 +15,9 @@ export const fetchUserData = createAsyncThunk<
     const user: User = await authService.getUserData();
     console.log(user);
     if (!user) {
-      console.log('rejecting');
       return rejectWithValue('Invalid response from auth service');
     }
 
-    console.log(user);
     user.image = await fetchImageUrl(user.image);
 
     return user;

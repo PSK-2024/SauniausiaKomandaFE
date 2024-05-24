@@ -49,7 +49,7 @@ const ProfileComponent: React.FC = () => {
     formData.append('about', updatedProfile.about);
     formData.append('image', updatedProfile.image);
 
-    dispatch(updateUserData(formData));
+    //dispatch(updateUserData(formData));
   };
 
   if (
