@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchCategories } from '../thunk/recipeThunk';
+import { Category } from '../model/categoryModel';
 
 interface CategoryState {
-  categories: string[];
+  categories: Category[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -24,7 +25,7 @@ const categoryReducer = createSlice({
       })
       .addCase(
         fetchCategories.fulfilled,
-        (state, action: PayloadAction<string[]>) => {
+        (state, action: PayloadAction<Category[]>) => {
           state.status = 'succeeded';
           state.categories = action.payload;
         }

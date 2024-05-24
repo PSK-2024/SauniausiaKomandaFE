@@ -13,8 +13,14 @@ import {
 } from '../../state/thunk/recipeThunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/store';
+import { RecipeCard } from '../../state/model/recipeCardModel';
+import { Category } from '../../state/model/categoryModel';
 
-function SidebarComponent() {
+interface SidebarComponentProps {
+  setFilteredRecipes: (recipes: RecipeCard[]) => void;
+}
+
+function SidebarComponent({ setFilteredRecipes }: SidebarComponentProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { categories, status, error } = useSelector(
     (state: RootState) => state.categories
@@ -25,10 +31,25 @@ function SidebarComponent() {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  const handleToggle = (category: string) => {
+  const handleToggle = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    category: string
+  ) => {
+    event.preventDefault();
     setChecked(prev => {
       const newState = { ...prev, [category]: !prev[category] };
-      dispatch(fetchRecipesByCategory({ category }));
+      if (newState[category]) {
+        dispatch(fetchRecipesByCategory({ category })).then(action => {
+          if (fetchRecipesByCategory.fulfilled.match(action)) {
+            const response = action.payload;
+            setFilteredRecipes(response);
+          } else if (fetchRecipesByCategory.rejected.match(action)) {
+            // Handle rejection if needed
+          }
+        });
+      } else {
+        setFilteredRecipes([]);
+      }
       return newState;
     });
   };
@@ -47,22 +68,25 @@ function SidebarComponent() {
       {status === 'failed' && <Typography>Error: {error}</Typography>}
 
       <FormGroup>
-        {categories.map(category => (
+        {categories.map((category: Category) => (
           <FormControlLabel
-            key={category}
+            key={category.name}
             control={
               <Checkbox
-                checked={checked[category] || false}
-                onChange={() => handleToggle(category)}
+                checked={checked[category.name] || false}
+                onChange={event => handleToggle(event, category.name)}
                 sx={{
-                  color: checked[category] ? 'green' : 'default',
+                  color: 'default',
                   '&.Mui-checked': {
                     color: '#509E2F',
+                  },
+                  '& .MuiSvgIcon-root': {
+                    fill: checked[category.name] ? '#509E2F' : 'default',
                   },
                 }}
               />
             }
-            label={category}
+            label={category.name}
           />
         ))}
       </FormGroup>

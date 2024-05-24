@@ -4,6 +4,7 @@ import { RecipeData, ReviewPost } from '../model/recipeModel';
 import axios from 'axios';
 import { BASE_URL, PATHS } from '../../api/paths';
 import api from '../../api/api';
+import { Category } from '../model/categoryModel';
 
 const fetchImageUrl = async (imageName: string): Promise<string> => {
   const response = await api.get(
@@ -133,11 +134,11 @@ export const fetchRecipesByCategory = createAsyncThunk<
   }
 );
 
-export const fetchCategories = createAsyncThunk<string[]>(
+export const fetchCategories = createAsyncThunk<Category[]>(
   'categories/fetchCategories',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get<string[]>(
+      const response = await api.get<Category[]>(
         `${BASE_URL}${PATHS.ALL_CATEGORIES_PATH}`
       );
       return response.data;

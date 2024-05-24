@@ -13,6 +13,7 @@ import {
 } from '../../state/thunk/recipeThunk';
 
 import './homeComponent.css';
+import { RecipeCard } from '../../state/model/recipeCardModel';
 
 function HomeComponent() {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,9 +22,7 @@ function HomeComponent() {
   const recommendedRecipes = useSelector(
     (state: RootState) => state.recipes.recommendedRecipes
   );
-  const filteredRecipes = useSelector(
-    (state: RootState) => state.recipes.filteredRecipes
-  );
+  const [filteredRecipes, setFilteredRecipes] = useState<RecipeCard[]>([]);
 
   const statusAll = useSelector((state: RootState) => state.recipes.statusAll);
   const statusRecommended = useSelector(
@@ -103,9 +102,9 @@ function HomeComponent() {
       </Box>
 
       <Box className='home-container-content'>
-        <SidebarComponent />
+        <SidebarComponent setFilteredRecipes={setFilteredRecipes} />
         <Box className='recipes-container'>
-          {statusFiltered === 'succeeded' && filteredRecipes.length > 0 ? (
+          {statusFiltered === 'succeeded' ? (
             filteredRecipes.map(recipe => (
               <RecipeReviewCard
                 key={recipe.id}
