@@ -46,7 +46,7 @@ function ResponsiveAppBar() {
         navigate('/profile');
         break;
       case 'Logout':
-        navigate('/signin');
+        navigate('/login');
         break;
       default:
         break;

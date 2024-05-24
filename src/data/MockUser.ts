@@ -1,5 +1,6 @@
 export const mockedProfile = {
-  name: 'John Doe',
-  profilePicture: 'https://via.placeholder.com/100',
+  firstName: 'John',
+  lastName: 'Doe',
+  profilePicture: 'https://via.placeholder.com/200',
   bio: 'Lorem ipsum dolor sit amet...',
 };

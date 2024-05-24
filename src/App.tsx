@@ -26,7 +26,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {!hideAppBarAndFooter && <ResponsiveAppBar />}
-      <Box component='main' sx={{ flexGrow: 1, padding: '50px 100px' }}>
+      <Box component='main' sx={{ flexGrow: 1, padding: '50px 200px' }}>
         {children}
       </Box>
       {!hideAppBarAndFooter && <FooterComponent />}

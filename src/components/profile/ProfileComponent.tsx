@@ -28,12 +28,14 @@ const ProfileComponent: React.FC = () => {
   }, [dispatch]);
 
   const handleSave = (updatedProfile: {
-    name: string;
+    firstName: string;
+    lastName: string;
     profilePicture: string;
     bio: string;
   }) => {
     const formData = new FormData();
-    formData.append('name', updatedProfile.name);
+    formData.append('first name', updatedProfile.firstName);
+    formData.append('last name', updatedProfile.lastName);
     formData.append('bio', updatedProfile.bio);
     if (updatedProfile.profilePicture !== mockedProfile?.profilePicture) {
       formData.append('profilePicture', updatedProfile.profilePicture);
@@ -51,7 +53,8 @@ const ProfileComponent: React.FC = () => {
       {mockedProfile && (
         <>
           <ProfileHeader
-            name={mockedProfile.name}
+            firstName={mockedProfile.firstName}
+            lastName={mockedProfile.lastName}
             imageUrl={mockedProfile.profilePicture}
             bio={mockedProfile.bio}
             handleSave={handleSave}

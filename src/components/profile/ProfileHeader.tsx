@@ -3,18 +3,21 @@ import { Box, Button, Typography, Avatar } from '@mui/material';
 import EditProfile from './EdiProfile';
 
 interface ProfileHeaderProps {
-  name: string;
+  firstName: string;
+  lastName: string;
   imageUrl: string;
   bio: string;
   handleSave: (profile: {
-    name: string;
+    firstName: string;
+    lastName: string;
     profilePicture: string;
     bio: string;
   }) => void;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  name,
+  firstName,
+  lastName,
   imageUrl,
   bio,
   handleSave,
@@ -37,7 +40,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       <Avatar src={imageUrl} sx={{ width: 200, height: 200 }} />
       <Box sx={{ flexGrow: 1, textAlign: 'left' }}>
         <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
-          {name}
+          {firstName} {lastName}
         </Typography>
         <Button
           variant='contained'
@@ -50,7 +53,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       <EditProfile
         open={open}
         handleClose={handleClose}
-        profile={{ name, profilePicture: imageUrl, bio }}
+        profile={{ firstName, lastName, profilePicture: imageUrl, bio }}
         handleSave={handleSave}
       />
     </Box>

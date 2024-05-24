@@ -1,18 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RecipeCard } from '../model/recipeCardModel';
+import {
+  fetchAllRecipes,
+  fetchRecommendedRecipes,
+  fetchRecipesByCategory,
+} from '../thunk/recipeThunk';
 
-import { RecipeCard, RecipeCardState } from '../model/recipeCardModel';
-import { fetchAllRecipes, fetchRecommendedRecipes } from '../thunk/recipeThunk';
+interface RecipeState {
+  recipes: RecipeCard[];
+  recommendedRecipes: RecipeCard[];
+  filteredRecipes: RecipeCard[];
+  statusAll: 'idle' | 'loading' | 'succeeded' | 'failed';
+  statusRecommended: 'idle' | 'loading' | 'succeeded' | 'failed';
+  statusFiltered: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
 
-const initialState: RecipeCardState = {
+const initialState: RecipeState = {
   recipes: [],
   recommendedRecipes: [],
-  statusRecommended: 'loading',
-  statusAll: 'loading',
-  error: '',
+  filteredRecipes: [],
+  statusAll: 'idle',
+  statusRecommended: 'idle',
+  statusFiltered: 'idle',
+  error: null,
 };
 
-const recipeCardSlice = createSlice({
-  name: 'recipeCard',
+const recipeCardReducer = createSlice({
+  name: 'recipes',
   initialState,
   reducers: {},
   extraReducers: builder => {
@@ -27,6 +42,10 @@ const recipeCardSlice = createSlice({
           state.recipes = action.payload;
         }
       )
+      .addCase(fetchAllRecipes.rejected, (state, action) => {
+        state.statusAll = 'failed';
+        state.error = action.error.message || 'Failed to fetch recipes';
+      })
       .addCase(fetchRecommendedRecipes.pending, state => {
         state.statusRecommended = 'loading';
       })
@@ -37,16 +56,27 @@ const recipeCardSlice = createSlice({
           state.recommendedRecipes = action.payload;
         }
       )
-      .addCase(fetchAllRecipes.rejected, (state, action) => {
-        state.statusAll = 'failed';
-        state.error = action.error.message || 'Failed to fetch recipes';
-      })
       .addCase(fetchRecommendedRecipes.rejected, (state, action) => {
         state.statusRecommended = 'failed';
         state.error =
           action.error.message || 'Failed to fetch recommended recipes';
+      })
+      .addCase(fetchRecipesByCategory.pending, state => {
+        state.statusFiltered = 'loading';
+      })
+      .addCase(
+        fetchRecipesByCategory.fulfilled,
+        (state, action: PayloadAction<RecipeCard[]>) => {
+          state.statusFiltered = 'succeeded';
+          state.filteredRecipes = action.payload;
+        }
+      )
+      .addCase(fetchRecipesByCategory.rejected, (state, action) => {
+        state.statusFiltered = 'failed';
+        state.error =
+          action.error.message || 'Failed to fetch filtered recipes';
       });
   },
 });
 
-export default recipeCardSlice.reducer;
+export default recipeCardReducer.reducer;

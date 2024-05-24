@@ -12,12 +12,14 @@ interface EditProfileProps {
   open: boolean;
   handleClose: () => void;
   profile: {
-    name: string;
+    firstName: string;
+    lastName: string;
     profilePicture: string;
     bio: string;
   };
   handleSave: (profile: {
-    name: string;
+    firstName: string;
+    lastName: string;
     profilePicture: string;
     bio: string;
   }) => void;
@@ -29,7 +31,8 @@ const EditProfile: React.FC<EditProfileProps> = ({
   profile,
   handleSave,
 }) => {
-  const [name, setName] = useState(profile.name);
+  const [firstName, setFirstName] = useState(profile.firstName);
+  const [lastName, setLastName] = useState(profile.lastName);
   const [profilePicture, setProfilePicture] = useState(profile.profilePicture);
   const [bio, setBio] = useState(profile.bio);
 
@@ -48,7 +51,7 @@ const EditProfile: React.FC<EditProfileProps> = ({
   };
 
   const handleSubmit = () => {
-    handleSave({ name, profilePicture, bio });
+    handleSave({ firstName, lastName, profilePicture, bio });
     handleClose();
   };
 
@@ -84,9 +87,15 @@ const EditProfile: React.FC<EditProfileProps> = ({
             <input type='file' hidden onChange={handleProfilePictureChange} />
           </Button>
           <TextField
-            label='Name'
-            value={name}
-            onChange={e => setName(e.target.value)}
+            label='First name'
+            value={firstName}
+            onChange={e => setFirstName(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            label='Last name'
+            value={lastName}
+            onChange={e => setLastName(e.target.value)}
             fullWidth
           />
           <TextField

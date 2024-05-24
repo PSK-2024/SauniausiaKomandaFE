@@ -111,3 +111,38 @@ export const addReview = createAsyncThunk<
     throw error;
   }
 });
+
+export const fetchRecipesByCategory = createAsyncThunk<
+  RecipeCard[],
+  string,
+  { rejectValue: string }
+>('recipes/fetchRecipesByCategory', async (category, { rejectWithValue }) => {
+  try {
+    const response = await api.get<RecipeCard[]>(
+      `${BASE_URL}${PATHS.PREVIEW_RECIPE_PATH}?categoryFilter=${category}`
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return rejectWithValue('Failed to fetch recipes by category');
+    }
+    throw error;
+  }
+});
+
+export const fetchCategories = createAsyncThunk<string[]>(
+  'categories/fetchCategories',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get<string[]>(
+        `${BASE_URL}${PATHS.ALL_CATEGORIES_PATH}`
+      );
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue('Failed to fetch categories');
+      }
+      throw error;
+    }
+  }
+);

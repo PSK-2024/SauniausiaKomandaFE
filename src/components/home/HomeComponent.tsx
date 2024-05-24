@@ -21,9 +21,16 @@ function HomeComponent() {
   const recommendedRecipes = useSelector(
     (state: RootState) => state.recipes.recommendedRecipes
   );
+  const filteredRecipes = useSelector(
+    (state: RootState) => state.recipes.filteredRecipes
+  );
+
   const statusAll = useSelector((state: RootState) => state.recipes.statusAll);
   const statusRecommended = useSelector(
     (state: RootState) => state.recipes.statusRecommended
+  );
+  const statusFiltered = useSelector(
+    (state: RootState) => state.recipes.statusFiltered
   );
   const error = useSelector((state: RootState) => state.recipes.error);
 
@@ -54,8 +61,13 @@ function HomeComponent() {
     }
   }, [dispatch, recipes, recommendedRecipes]);
 
-  if (statusAll === 'loading' || statusRecommended === 'loading')
+  if (
+    statusAll === 'loading' ||
+    statusRecommended === 'loading' ||
+    statusFiltered === 'loading'
+  ) {
     return <CircularProgress />;
+  }
   if (error) return <Typography>Error occurred. Try again!</Typography>;
 
   return (
@@ -88,7 +100,19 @@ function HomeComponent() {
       <Box className='home-container-content'>
         <SidebarComponent />
         <Box className='recipes-container'>
-          {showAllRecipes ? (
+          {statusFiltered === 'succeeded' && filteredRecipes.length > 0 ? (
+            filteredRecipes.map(recipe => (
+              <RecipeReviewCard
+                key={recipe.id}
+                id={recipe.id}
+                title={recipe.title}
+                rating={recipe.rating}
+                img={recipe.img}
+                duration={recipe.duration}
+                categories={recipe.categories || []}
+              />
+            ))
+          ) : showAllRecipes ? (
             recipes.map(recipe => (
               <RecipeReviewCard
                 key={recipe.id}

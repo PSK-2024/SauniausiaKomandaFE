@@ -4,6 +4,7 @@ export const PATHS = {
   RECIPE_PATH: 'api/Recipe',
   PREVIEW_RECIPE_PATH: 'api/Recipe/preview',
   RECOMMENDED_RECIPE_PATH: 'api/Recipe/recommended',
+  ALL_CATEGORIES_PATH: 'api/Category/all',
   IMAGES_PATH: 'images',
   USER_PROFILE_PATH: 'api/user/profile',
   USER_RECIPES_PATH: 'api/user/recipes',
