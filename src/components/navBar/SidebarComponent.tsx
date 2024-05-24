@@ -7,47 +7,31 @@ import {
   FormControlLabel,
   Divider,
 } from '@mui/material';
-import { fetchCategories } from '../../state/thunk/recipeThunk';
-import { fetchRecipesByCategory } from '../../state/thunk/recipeThunk';
+import {
+  fetchCategories,
+  fetchRecipesByCategory,
+} from '../../state/thunk/recipeThunk';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../app/store';
-
-interface CheckedState {
-  [key: string]: boolean;
-}
+import { AppDispatch, RootState } from '../../app/store';
 
 function SidebarComponent() {
   const dispatch = useDispatch<AppDispatch>();
   const { categories, status, error } = useSelector(
     (state: RootState) => state.categories
   );
-  const [checked, setChecked] = useState<CheckedState>({});
+  const [checked, setChecked] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  const handleToggle = (value: string) => {
-    const newChecked = {
-      ...checked,
-      [value]: !checked[value],
-    };
-    setChecked(newChecked);
-
-    if (newChecked[value]) {
-      dispatch(fetchRecipesByCategory(value));
-    } else {
-      dispatch(fetchRecipesByCategory('')); // Fetch all recipes or handle accordingly
-    }
+  const handleToggle = (category: string) => {
+    setChecked(prev => {
+      const newState = { ...prev, [category]: !prev[category] };
+      dispatch(fetchRecipesByCategory({ category }));
+      return newState;
+    });
   };
-
-  if (status === 'loading') {
-    return <Typography>Loading categories...</Typography>;
-  }
-
-  if (status === 'failed') {
-    return <Typography>Error: {error}</Typography>;
-  }
 
   return (
     <Box sx={{ p: 2 }}>
@@ -58,6 +42,10 @@ function SidebarComponent() {
       <Typography variant='subtitle2' sx={{ mt: 2, mb: 1, color: '#509E2F' }}>
         Categories
       </Typography>
+
+      {status === 'loading' && <Typography>Loading categories...</Typography>}
+      {status === 'failed' && <Typography>Error: {error}</Typography>}
+
       <FormGroup>
         {categories.map(category => (
           <FormControlLabel

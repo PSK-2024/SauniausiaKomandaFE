@@ -72,23 +72,28 @@ function HomeComponent() {
 
   return (
     <>
-      <Link to={`/recipes/${recipes[0].id}`} style={{ textDecoration: 'none' }}>
-        <Box className='hero-image'>
-          <img src={recipes[0].img} alt='Hero' />
-          <Box className='hero-image-text'>
-            <Typography
-              sx={{ color: '#DC582A', fontWeight: '400', fontSize: '30px' }}
-            >
-              Trending now
-            </Typography>
-            <Typography
-              sx={{ color: '#ffffff', fontWeight: '600', fontSize: '50px' }}
-            >
-              {recipes[0].title}
-            </Typography>
+      {recipes.length > 0 && (
+        <Link
+          to={`/recipes/${recipes[0].id}`}
+          style={{ textDecoration: 'none' }}
+        >
+          <Box className='hero-image'>
+            <img src={recipes[0].img} alt='Hero' />
+            <Box className='hero-image-text'>
+              <Typography
+                sx={{ color: '#DC582A', fontWeight: '400', fontSize: '30px' }}
+              >
+                Trending now
+              </Typography>
+              <Typography
+                sx={{ color: '#ffffff', fontWeight: '600', fontSize: '50px' }}
+              >
+                {recipes[0].title}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      </Link>
+        </Link>
+      )}
 
       <Box className='button-container'>
         <Button variant='text' onClick={toggleRecipesDisplay}>
