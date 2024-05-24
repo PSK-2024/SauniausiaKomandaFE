@@ -17,7 +17,7 @@ import authService from '../../api/authService';
 import { useAppDispatch } from '../../app/hooks';
 import { clearUser } from '../../state/slice/userSlice';
 
-const pages = ['Home', 'Notifications'];
+const pages = ['Home'];
 const settings = ['Profile', 'Logout'];
 
 function ResponsiveAppBar() {
