@@ -37,6 +37,7 @@ const isLoggedIn = () => {
 
 export const getUserData = async () => {
   const response = await api.get('api/Identity/user');
+  console.log(response.data);
   return response.data;
 };
 

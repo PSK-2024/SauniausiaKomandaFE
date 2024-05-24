@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User, UserIdentity } from '../model/userModel';
-import { fetchUserData } from '../thunk/userThunk';
+import { fetchUserData, updateUserData } from '../thunk/userThunk';
 import { RootState } from '../../app/store';
 
 const initialUser: User = {
@@ -50,6 +50,15 @@ const userSlice = createSlice({
       .addCase(fetchUserData.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || 'Failed to fetch user data';
+      })
+      .addCase(updateUserData.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(updateUserData.rejected, (state, action) => {
+        state.error = action.error.message || 'Failed to update profile';
+      })
+      .addCase(updateUserData.pending, state => {
+        state.error = null;
       });
   },
 });
