@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  RecipeUploadData,
-  UploadRecipeState,
-} from '../model/uploadRecipeModel';
+import { RecipeUploadData } from '../model/uploadRecipeModel';
 import { uploadRecipe } from '../thunk/uploadRecipeThunk';
+
+export interface UploadRecipeState {
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+  recipeData: RecipeUploadData | null;
+}
 
 const initialState: UploadRecipeState = {
   status: 'idle',
@@ -29,7 +32,7 @@ const uploadRecipeSlice = createSlice({
       )
       .addCase(uploadRecipe.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message || 'Failed to upload recipe';
       });
   },
 });

@@ -1,19 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RecipeCard } from '../model/recipeCardModel';
-import { RecipeData, ReviewPost } from '../model/recipeModel';
+import { RecipeData } from '../model/recipeModel';
+import { ReviewRequest } from '../model/reviewModel';
 import axios from 'axios';
 import { BASE_URL, PATHS } from '../../api/paths';
 import api from '../../api/api';
-
-const fetchImageUrl = async (imageName: string): Promise<string> => {
-  const response = await api.get(
-    `${BASE_URL}${PATHS.IMAGES_PATH}/${imageName}`,
-    {
-      responseType: 'blob',
-    }
-  );
-  return URL.createObjectURL(response.data);
-};
+import { fetchImageUrl } from '../../utils/imageUtils';
 
 export const fetchRecipe = createAsyncThunk<
   RecipeData,
@@ -95,7 +87,7 @@ export const fetchRecommendedRecipes = createAsyncThunk<
 
 export const addReview = createAsyncThunk<
   RecipeData,
-  { recipeId: string; review: ReviewPost },
+  { recipeId: string; review: ReviewRequest },
   { rejectValue: string }
 >('recipe/addReview', async ({ recipeId, review }, { rejectWithValue }) => {
   try {

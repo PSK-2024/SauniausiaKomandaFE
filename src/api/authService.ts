@@ -24,7 +24,6 @@ const login = (request: LoginRequest) =>
 
 const logout = () => {
   localStorage.removeItem('apiToken');
-  window.location.href = '/login';
 };
 
 const getToken = () => {
@@ -35,4 +34,10 @@ const isLoggedIn = () => {
   return !!getToken();
 };
 
-export default { login, logout, isLoggedIn };
+export const getUserData = async () => {
+  const response = await api.get('api/Identity/user');
+  console.log(response.data);
+  return response.data;
+};
+
+export default { login, logout, isLoggedIn, getUserData };

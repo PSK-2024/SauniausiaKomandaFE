@@ -2,6 +2,7 @@ import { RecipeData } from '../state/model/recipeModel';
 
 export const mockRecipe: RecipeData = {
   title: 'Classic Cheesecake',
+  category: 'Dessert',
   rating: 4,
   duration: 90,
   calories: 350,
@@ -38,14 +39,25 @@ export const mockRecipe: RecipeData = {
     {
       id: 1,
       text: 'Absolutely delicious! Will make again.',
-      author: 'Jane Doe',
+      author: {
+        id: 1,
+        email: 'a@a.com',
+        firstName: 'Jane',
+        lastName: 'Doe',
+      },
       rating: 5,
     },
     {
       id: 2,
       text: 'Great recipe, though I added more sugar.',
-      author: 'John Smith',
+      author: {
+        id: 1,
+        email: 'a@a.com',
+        firstName: 'Jane',
+        lastName: 'Doe',
+      },
       rating: 2,
     },
   ],
+  categories: [{ name: 'Dessert' }],
 };

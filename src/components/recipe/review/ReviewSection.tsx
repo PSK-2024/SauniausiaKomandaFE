@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { List, ListItem, ListItemText, TextField, Rating } from '@mui/material';
 import './ReviewSection.css';
-import { Review } from '../../../state/model/recipeModel';
 import { addReview } from '../../../state/thunk/recipeThunk';
 import { useAppDispatch } from '../../../app/hooks';
-
+import { Review } from '../../../state/model/reviewModel';
 interface ReviewSectionProps {
   recipeId: string;
   reviews: Review[];

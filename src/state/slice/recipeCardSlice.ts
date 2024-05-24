@@ -1,13 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RecipeCard, RecipeCardState } from '../model/recipeCardModel';
+import { RecipeCard } from '../model/recipeCardModel';
 import { fetchAllRecipes, fetchRecommendedRecipes } from '../thunk/recipeThunk';
+
+export interface RecipeCardState {
+  recipes: RecipeCard[];
+  recommendedRecipes: RecipeCard[];
+  statusRecommended: 'idle' | 'loading' | 'succeeded' | 'failed';
+  statusAll: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | undefined;
+}
 
 const initialState: RecipeCardState = {
   recipes: [],
   recommendedRecipes: [],
-  statusRecommended: 'loading',
-  statusAll: 'loading',
+  statusRecommended: 'idle',
+  statusAll: 'idle',
   error: '',
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,6 +16,9 @@ import ProfileComponent from './components/profile/ProfileComponent';
 import LoginComponent from './components/login/LoginPage';
 import PrivateRoute from './router/PrivateRoute';
 import './App.css';
+import { RootState } from './app/store';
+import { fetchUserData } from './state/thunk/userThunk';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -36,6 +39,16 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 function App() {
+  const dispatch = useAppDispatch();
+  const userStatus = useAppSelector((state: RootState) => state.user.status);
+  const token = localStorage.getItem('apiToken');
+
+  useEffect(() => {
+    if (token && userStatus == 'idle') {
+      dispatch(fetchUserData());
+    }
+  }, [dispatch, token, userStatus]);
+
   return (
     <Router>
       <MainLayout>

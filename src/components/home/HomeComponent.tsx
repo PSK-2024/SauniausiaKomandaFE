@@ -54,7 +54,12 @@ function HomeComponent() {
     }
   }, [dispatch, recipes, recommendedRecipes]);
 
-  if (statusAll === 'loading' || statusRecommended === 'loading')
+  if (
+    statusAll === 'idle' ||
+    statusRecommended === 'idle' ||
+    statusAll === 'loading' ||
+    statusRecommended === 'loading'
+  )
     return <CircularProgress />;
   if (error) return <Typography>Error occurred. Try again!</Typography>;
 

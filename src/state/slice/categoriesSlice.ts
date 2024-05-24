@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchCategories } from '../thunk/fetchCategoriesThunk';
 
-interface Category {
+export interface Category {
   name: string;
 }
 
@@ -35,7 +35,7 @@ const categoriesSlice = createSlice({
       )
       .addCase(fetchCategories.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message || 'Failed to fetch categories';
       });
   },
 });
