@@ -13,6 +13,7 @@ import {
 } from '../../state/thunk/userProfileThunk';
 import { fetchUserData, updateUserData } from '../../state/thunk/userThunk';
 import { favorites, posted } from '../../data/MockProfileRecipes';
+import { UserUpdateRequest } from '../../state/model/userModel';
 
 const ProfileComponent: React.FC = () => {
   const {
@@ -41,15 +42,12 @@ const ProfileComponent: React.FC = () => {
     }
   }, [favoriteStatus, dispatch]);
 
-  const handleSave = (updatedProfile: {
-    name: string;
-    profilePicture: string;
-    bio: string;
-  }) => {
+  const handleSave = (updatedProfile: UserUpdateRequest) => {
     const formData = new FormData();
-    formData.append('firstName', updatedProfile.name);
-    formData.append('about', updatedProfile.bio);
-    formData.append('image', updatedProfile.profilePicture);
+    formData.append('firstName', updatedProfile.firstName);
+    formData.append('lastName', updatedProfile.lastName);
+    formData.append('about', updatedProfile.about);
+    formData.append('image', updatedProfile.image);
 
     dispatch(updateUserData(formData));
   };
@@ -74,9 +72,10 @@ const ProfileComponent: React.FC = () => {
       {user && (
         <>
           <ProfileHeader
-            name={user.firstName}
-            imageUrl={user.image}
-            bio={user.about}
+            firstName={user.firstName}
+            lastName={user.lastName}
+            image={user.image}
+            about={user.about}
             handleSave={handleSave}
           />
           <BioSection bio={user.about} />

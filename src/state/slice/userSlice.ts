@@ -51,14 +51,17 @@ const userSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message || 'Failed to fetch user data';
       })
+      .addCase(updateUserData.pending, state => {
+        state.error = null;
+        state.status = 'loading';
+      })
       .addCase(updateUserData.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.error = null;
+        state.status = 'succeeded';
       })
       .addCase(updateUserData.rejected, (state, action) => {
         state.error = action.error.message || 'Failed to update profile';
-      })
-      .addCase(updateUserData.pending, state => {
-        state.error = null;
       });
   },
 });

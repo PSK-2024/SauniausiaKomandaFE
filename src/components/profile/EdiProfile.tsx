@@ -12,14 +12,16 @@ interface EditProfileProps {
   open: boolean;
   handleClose: () => void;
   profile: {
-    name: string;
-    profilePicture: string;
-    bio: string;
+    firstName: string;
+    lastName: string;
+    image: string;
+    about: string;
   };
   handleSave: (profile: {
-    name: string;
-    profilePicture: string;
-    bio: string;
+    firstName: string;
+    lastName: string;
+    image: string;
+    about: string;
   }) => void;
 }
 
@@ -29,9 +31,10 @@ const EditProfile: React.FC<EditProfileProps> = ({
   profile,
   handleSave,
 }) => {
-  const [name, setName] = useState(profile.name);
-  const [profilePicture, setProfilePicture] = useState(profile.profilePicture);
-  const [bio, setBio] = useState(profile.bio);
+  const [firstName, setFirstName] = useState(profile.firstName);
+  const [lastName, setLastName] = useState(profile.lastName);
+  const [image, setImage] = useState(profile.image);
+  const [about, setAbout] = useState(profile.about);
 
   const handleProfilePictureChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -40,7 +43,7 @@ const EditProfile: React.FC<EditProfileProps> = ({
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         if (e.target && e.target.result) {
-          setProfilePicture(e.target.result as string);
+          setImage(e.target.result as string);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -48,7 +51,7 @@ const EditProfile: React.FC<EditProfileProps> = ({
   };
 
   const handleSubmit = () => {
-    handleSave({ name, profilePicture, bio });
+    handleSave({ firstName, lastName, image, about });
     handleClose();
   };
 
@@ -74,7 +77,7 @@ const EditProfile: React.FC<EditProfileProps> = ({
             gap: 2,
           }}
         >
-          <Avatar src={profilePicture} sx={{ width: 100, height: 100 }} />
+          <Avatar src={image} sx={{ width: 100, height: 100 }} />
           <Button
             variant='contained'
             component='label'
@@ -84,15 +87,21 @@ const EditProfile: React.FC<EditProfileProps> = ({
             <input type='file' hidden onChange={handleProfilePictureChange} />
           </Button>
           <TextField
-            label='Name'
-            value={name}
-            onChange={e => setName(e.target.value)}
+            label='First name'
+            value={firstName}
+            onChange={e => setFirstName(e.target.value)}
             fullWidth
           />
           <TextField
-            label='Bio'
-            value={bio}
-            onChange={e => setBio(e.target.value)}
+            label='Last name'
+            value={lastName}
+            onChange={e => setLastName(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            label='About me'
+            value={about}
+            onChange={e => setAbout(e.target.value)}
             multiline
             rows={4}
             fullWidth
