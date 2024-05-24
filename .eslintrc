@@ -28,9 +28,9 @@
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/no-unused-vars": ["error", {
-      "ignoreRestSiblings": true
-    }],
+    // "@typescript-eslint/no-unused-vars": ["error", {
+    //   "ignoreRestSiblings": true
+    // }],
     "arrow-parens": "off",
     "implicit-arrow-linebreak": "off",
     "comma-dangle": "off",

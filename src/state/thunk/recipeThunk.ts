@@ -124,7 +124,17 @@ export const fetchRecipesByCategory = createAsyncThunk<
       const response = await api.get<RecipeCard[]>(
         `${BASE_URL}${PATHS.PREVIEW_RECIPE_PATH}?categoryFilter=${category}`
       );
-      return response.data;
+      const recipes = response.data;
+
+      return await Promise.all(
+        recipes.map(async recipe => {
+          if (recipe.img) {
+            const imageUrl = await fetchImageUrl(recipe.img);
+            return { ...recipe, img: imageUrl };
+          }
+          return recipe;
+        })
+      );
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         return rejectWithValue('Failed to fetch recipes by category');
