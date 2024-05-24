@@ -24,7 +24,6 @@ const login = (request: LoginRequest) =>
 
 const logout = () => {
   localStorage.removeItem('apiToken');
-  window.location.href = '/login';
 };
 
 const getToken = () => {
