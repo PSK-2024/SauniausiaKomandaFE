@@ -8,7 +8,7 @@ import { AppDispatch } from '../../app/store';
 import ProfileHeader from './ProfileHeader';
 import BioSection from './BioSection';
 import RecipesGrid from './RecipesGrid';
-import { mockedProfile } from '../../data/MockUser';
+import { mockedProfile } from '../../data/mockProfile';
 import {
   fetchProfile,
   fetchPostedRecipes,

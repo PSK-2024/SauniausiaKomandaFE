@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { List, ListItem, ListItemText, TextField, Rating } from '@mui/material';
 import './ReviewSection.css';
-import { Review } from '../../../state/model/recipeModel';
 import { addReview } from '../../../state/thunk/recipeThunk';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { selectUserIdentity } from '../../../state/slice/userSlice';
+import { Review } from '../../../state/model/reviewModel';
+import { RootState } from '../../../app/store';
 
 interface ReviewSectionProps {
   recipeId: string;
@@ -14,13 +16,15 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ recipeId, reviews }) => {
   const [text, setText] = useState('');
   const [rating, setRating] = useState<number | null>(null);
   const dispatch = useAppDispatch();
-
+  const { userId, email } = useAppSelector((state: RootState) =>
+    selectUserIdentity(state)
+  );
   const handleAddReview = async () => {
     if (text && rating !== null) {
       await dispatch(
         addReview({
           recipeId: recipeId,
-          review: { text, rating },
+          review: { text, rating, userId: userId, email },
         })
       );
       setText('');

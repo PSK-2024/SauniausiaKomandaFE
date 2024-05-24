@@ -1,13 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RecipeData, RecipeState } from '../model/recipeModel';
+import { RecipeData } from '../model/recipeModel';
 import { addReview, fetchRecipe } from '../thunk/recipeThunk';
+
+export interface RecipeState {
+  recipe: RecipeData | null;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
 
 const recipeSlice = createSlice({
   name: 'recipe',
   initialState: {
     recipe: null,
-    status: 'loading',
+    status: 'idle',
     error: null,
   } as RecipeState,
   reducers: {},

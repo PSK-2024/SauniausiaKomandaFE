@@ -12,9 +12,3 @@ export interface RecipeUploadData {
   ingredients: Ingredient[];
   imageBase64: string;
 }
-
-export interface UploadRecipeState {
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-  recipeData: RecipeUploadData | null;
-}

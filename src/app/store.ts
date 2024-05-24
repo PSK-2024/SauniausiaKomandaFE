@@ -4,6 +4,7 @@ import recipeCardReducer from '../state/slice/recipeCardSlice';
 import uploadRecipeReducer from '../state/slice/uploadRecipeSlice';
 import categoriesReducer from '../state/slice/categoriesSlice';
 import profileReducer from '../state/slice/profileSlice';
+import userReducer from '../state/slice/userSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     uploadRecipe: uploadRecipeReducer,
     categories: categoriesReducer,
     profile: profileReducer,
+    user: userReducer,
   },
 });
 

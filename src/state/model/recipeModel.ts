@@ -1,3 +1,5 @@
+import { Review } from './reviewModel';
+
 export interface Ingredient {
   name: string;
 }
@@ -11,27 +13,10 @@ interface Instruction {
   step: string;
 }
 
-export interface Review {
-  id: number;
-  text: string;
-  author: string;
-  rating: number;
-}
-
-export interface ReviewPost {
-  text: string;
-  rating: number;
-}
-
-export interface RecipeState {
-  recipe: RecipeData | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-}
-
 export interface RecipeData {
   title: string;
   rating: number;
+  category: string;
   duration: number;
   calories: number;
   image: string;

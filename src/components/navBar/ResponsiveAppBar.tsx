@@ -14,12 +14,15 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../api/authService';
+import { useAppDispatch } from '../../app/hooks';
+import { clearUser } from '../../state/slice/userSlice';
 
 const pages = ['Home', 'Notifications'];
 const settings = ['Profile', 'Logout'];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -47,8 +50,9 @@ function ResponsiveAppBar() {
         navigate('/profile');
         break;
       case 'Logout':
-        navigate('/login');
         authService.logout();
+        dispatch(clearUser());
+        navigate('/login');
         break;
       default:
         break;

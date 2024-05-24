@@ -12,7 +12,9 @@ interface ProfileState {
   profile: UserProfile | null;
   postedRecipes: RecipeCard[];
   favoriteRecipes: RecipeCard[];
-  loading: boolean;
+  profileStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+  postedStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+  favoriteStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
 
@@ -20,7 +22,9 @@ const initialState: ProfileState = {
   profile: null,
   postedRecipes: [],
   favoriteRecipes: [],
-  loading: false,
+  profileStatus: 'idle',
+  postedStatus: 'idle',
+  favoriteStatus: 'idle',
   error: null,
 };
 
@@ -31,56 +35,56 @@ const profileReducer = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchProfile.pending, state => {
-        state.loading = true;
+        state.profileStatus = 'loading';
         state.error = null;
       })
       .addCase(fetchProfile.fulfilled, (state, action) => {
-        state.loading = false;
+        state.profileStatus = 'succeeded';
         state.profile = action.payload;
       })
       .addCase(fetchProfile.rejected, (state, action) => {
-        state.loading = false;
+        state.profileStatus = 'failed';
         state.error = action.error.message || 'Failed to fetch profile';
       })
       .addCase(fetchPostedRecipes.pending, state => {
-        state.loading = true;
+        state.postedStatus = 'loading';
         state.error = null;
       })
       .addCase(fetchPostedRecipes.fulfilled, (state, action) => {
-        state.loading = false;
+        state.postedStatus = 'succeeded';
         state.postedRecipes = action.payload;
       })
       .addCase(fetchPostedRecipes.rejected, (state, action) => {
-        state.loading = false;
+        state.postedStatus = 'failed';
         state.error = action.error.message || 'Failed to fetch posted recipes';
       })
       .addCase(fetchFavoriteRecipes.pending, state => {
-        state.loading = true;
+        state.favoriteStatus = 'loading';
         state.error = null;
       })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
-        state.loading = false;
+        state.favoriteStatus = 'succeeded';
         state.favoriteRecipes = action.payload;
       })
       .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
-        state.loading = false;
+        state.favoriteStatus = 'failed';
         state.error =
           action.error.message || 'Failed to fetch favorite recipes';
       })
       .addCase(updateProfile.pending, state => {
-        state.loading = true;
+        state.profileStatus = 'loading';
         state.error = null;
       })
       .addCase(
         updateProfile.fulfilled,
         (state, action: PayloadAction<UserProfile>) => {
-          state.loading = false;
+          state.profileStatus = 'succeeded';
           state.profile = action.payload;
         }
       )
       .addCase(updateProfile.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
+        state.profileStatus = 'failed';
+        state.error = action.error.message || 'Failed to update profile';
       });
   },
 });

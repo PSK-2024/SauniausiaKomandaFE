@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RecipeCard } from '../model/recipeCardModel';
-import { RecipeData, ReviewPost } from '../model/recipeModel';
+import { RecipeData } from '../model/recipeModel';
+import { ReviewRequest } from '../model/reviewModel';
 import axios from 'axios';
 import { BASE_URL, PATHS } from '../../api/paths';
 import api from '../../api/api';
@@ -95,7 +96,7 @@ export const fetchRecommendedRecipes = createAsyncThunk<
 
 export const addReview = createAsyncThunk<
   RecipeData,
-  { recipeId: string; review: ReviewPost },
+  { recipeId: string; review: ReviewRequest },
   { rejectValue: string }
 >('recipe/addReview', async ({ recipeId, review }, { rejectWithValue }) => {
   try {
