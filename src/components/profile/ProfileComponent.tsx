@@ -94,8 +94,12 @@ const ProfileComponent: React.FC = () => {
           <BioSection bio={user.about} />
         </>
       )}
-      <RecipesGrid recipes={postedRecipes} title='Recipes Posted' />
-      <RecipesGrid recipes={favoriteRecipes} title='Favourites' />
+      {postedRecipes.length > 0 && (
+        <RecipesGrid recipes={postedRecipes} title='Recipes Posted' />
+      )}
+      {favoriteRecipes.length > 0 && (
+        <RecipesGrid recipes={favoriteRecipes} title='Favourites' />
+      )}
     </Box>
   );
 };

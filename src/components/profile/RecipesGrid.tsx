@@ -12,28 +12,32 @@ interface RecipesGridProps {
 }
 
 const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
+  const slidesToShow = Math.min(recipes.length, 4);
+  const slidesToScroll = slidesToShow;
+
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: slidesToShow > 1,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: slidesToShow,
+    slidesToScroll: slidesToScroll,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
+          slidesToShow: Math.min(recipes.length, 3),
+          slidesToScroll: Math.min(recipes.length, 3),
+          infinite: recipes.length > 1,
           dots: true,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: Math.min(recipes.length, 2),
+          slidesToScroll: Math.min(recipes.length, 2),
           initialSlide: 2,
+          infinite: recipes.length > 1,
         },
       },
       {
@@ -41,6 +45,7 @@ const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          infinite: recipes.length > 1,
         },
       },
     ],
@@ -54,20 +59,27 @@ const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
       >
         {title}
       </Typography>
-      <Slider {...settings}>
-        {recipes.map(recipe => (
-          <Box key={recipe.id} sx={{ padding: '0 5px' }}>
-            <RecipeReviewCard
-              id={recipe.id}
-              title={recipe.title}
-              rating={recipe.rating}
-              img={recipe.img}
-              duration={recipe.duration}
-              categories={recipe.categories}
-            />
-          </Box>
-        ))}
-      </Slider>
+      <Box
+        sx={{
+          maxWidth: slidesToShow === 1 ? '500px' : '100%',
+          margin: '0 auto',
+        }}
+      >
+        <Slider {...settings}>
+          {recipes.map(recipe => (
+            <Box key={recipe.id} sx={{ padding: '0 5px' }}>
+              <RecipeReviewCard
+                id={recipe.id}
+                title={recipe.title}
+                rating={recipe.rating}
+                img={recipe.img}
+                duration={recipe.duration}
+                categories={recipe.categories}
+              />
+            </Box>
+          ))}
+        </Slider>
+      </Box>
     </Box>
   );
 };
