@@ -5,6 +5,7 @@ import { fetchImageUrl } from '../../utils/imageUtils';
 import axios from 'axios';
 import api from '../../api/api';
 import { BASE_URL, PATHS } from '../../api/paths';
+import { toast } from 'react-toastify';
 
 export const fetchUserData = createAsyncThunk<
   User,
@@ -44,9 +45,18 @@ export const updateUserData = createAsyncThunk<User, FormData>(
       );
       const user: User = response.data;
       user.image = await fetchImageUrl(user.image);
+      toast.success('Profile was updated successfully!');
       return user;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 409) {
+          toast.error(
+            'Someone changed the record since you last read it. Please reload the data and try again.'
+          );
+          return rejectWithValue(
+            'Conflict error: Someone changed the record since you last read it.'
+          );
+        }
         return rejectWithValue('Failed to update user data');
       }
       throw error;

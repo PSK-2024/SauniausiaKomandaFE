@@ -13,6 +13,7 @@ export interface ReviewAuthor extends UserIdentity {
 }
 
 export interface ReviewRequest {
+  recipeId: number;
   text: string;
   rating: number;
 }

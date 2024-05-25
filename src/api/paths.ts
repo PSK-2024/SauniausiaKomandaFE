@@ -12,4 +12,5 @@ export const PATHS = {
   USER_RECIPES_PATH: 'api/Profile/posted',
   USER_FAVORITES_PATH: 'api/Profile/favorite',
   USER_UPDATE_PATH: 'api/Profile',
+  REVIEW_PATH: 'api/Review',
 };

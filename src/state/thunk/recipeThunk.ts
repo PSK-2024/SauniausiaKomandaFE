@@ -100,12 +100,12 @@ export const fetchRecommendedRecipes = createAsyncThunk<
 
 export const addReview = createAsyncThunk<
   RecipeData,
-  { recipeId: string; review: ReviewRequest },
+  { review: ReviewRequest },
   { rejectValue: string }
->('recipe/addReview', async ({ recipeId, review }, { rejectWithValue }) => {
+>('recipe/addReview', async ({ review }, { rejectWithValue }) => {
   try {
     const response = await api.post<RecipeData>(
-      `${BASE_URL}${PATHS.RECIPE_PATH}/${recipeId}/reviews`,
+      `${BASE_URL}${PATHS.REVIEW_PATH}`,
       review
     );
     return response.data;
