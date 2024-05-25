@@ -103,3 +103,21 @@ export const addReview = createAsyncThunk<
     throw error;
   }
 });
+
+export const addToFavorite = createAsyncThunk<
+  number,
+  { recipeId: number },
+  { rejectValue: string }
+>('recipe/addToFavorite', async ({ recipeId }, { rejectWithValue }) => {
+  try {
+    await api.post(`${BASE_URL}${PATHS.FAVORITE_RECIPE_PATH}`, {
+      recipeId,
+    });
+    return recipeId;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return rejectWithValue('Failed to add to favorites');
+    }
+    throw error;
+  }
+});

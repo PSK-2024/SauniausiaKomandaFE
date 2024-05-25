@@ -14,6 +14,8 @@ import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import { RecipeCard } from '../../state/model/recipeCardModel';
 
 import './recipeReviewCard.css';
+import { useAppDispatch } from '../../app/hooks';
+import { addToFavorite } from '../../state/thunk/recipeThunk';
 
 const RecipeReviewCard: React.FC<RecipeCard> = ({
   id,
@@ -21,12 +23,12 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
   rating,
   img,
   duration,
+  favorite,
   categories,
 }) => {
-  const [isFavorite, setIsFavorite] = React.useState(false);
-
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  const dispatch = useAppDispatch();
+  const handleFavoriteClick = () => {
+    dispatch(addToFavorite({ recipeId: id }));
   };
 
   return (
@@ -81,8 +83,8 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
         <Box>
           <IconButton
             aria-label='add to favorites'
-            onClick={toggleFavorite}
-            sx={{ color: isFavorite ? '#e01930' : '#D3D3D3' }}
+            onClick={handleFavoriteClick}
+            sx={{ color: favorite ? '#e01930' : '#D3D3D3' }}
           >
             <FavoriteIcon />
           </IconButton>

@@ -77,6 +77,7 @@ const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
                   rating={recipe.rating}
                   img={recipe.img}
                   duration={recipe.duration}
+                  favorite={recipe.favorite}
                   categories={recipe.categories}
                 />
               </Box>
@@ -84,7 +85,7 @@ const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
           </Slider>
         </Box>
       ) : (
-        <Box sx={{ maxWidth: '100%', margin: '0' }}>
+        <Box sx={{ maxWidth: '100%', margin: '0', maxHeight: '400px' }}>
           <Slider {...settings}>
             {recipes.map(recipe => (
               <Box key={recipe.id} sx={{ padding: '0 5px' }}>
@@ -93,6 +94,7 @@ const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
                   title={recipe.title}
                   rating={recipe.rating}
                   img={recipe.img}
+                  favorite={recipe.favorite}
                   duration={recipe.duration}
                   categories={recipe.categories}
                 />

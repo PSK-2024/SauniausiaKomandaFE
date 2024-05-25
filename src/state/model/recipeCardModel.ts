@@ -3,6 +3,7 @@ export interface RecipeCard {
   title: string;
   rating: number;
   img: string;
+  favorite: boolean;
   duration: number;
   categories: string[];
 }
