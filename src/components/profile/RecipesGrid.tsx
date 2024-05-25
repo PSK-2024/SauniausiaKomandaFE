@@ -56,7 +56,13 @@ const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
     <Box sx={{ margin: 2 }}>
       <Typography
         variant='h6'
-        sx={{ mb: 2, fontWeight: 'bold', fontSize: '2rem' }}
+        sx={{
+          mb: 2,
+          fontWeight: 'bold',
+          fontSize: '2rem',
+          marginTop: '40px',
+          marginBottom: '40px',
+        }}
       >
         {title}
       </Typography>
