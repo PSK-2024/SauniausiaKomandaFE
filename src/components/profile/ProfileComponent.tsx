@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, CircularProgress } from '@mui/material';
@@ -6,13 +5,11 @@ import { AppDispatch, RootState } from '../../app/store';
 import ProfileHeader from './ProfileHeader';
 import BioSection from './BioSection';
 import RecipesGrid from './RecipesGrid';
-import { mockedProfile } from '../../data/mockProfile';
 import {
   fetchPostedRecipes,
   fetchFavoriteRecipes,
 } from '../../state/thunk/userProfileThunk';
-import { fetchUserData, updateUserData } from '../../state/thunk/userThunk';
-import { favorites, posted } from '../../data/MockProfileRecipes';
+import { updateUserData } from '../../state/thunk/userThunk';
 import { UserUpdateRequest } from '../../state/model/userModel';
 import { blobToBase64, fetchBlob } from '../../utils/imageUtils';
 
@@ -33,13 +30,13 @@ const ProfileComponent: React.FC = () => {
 
   useEffect(() => {
     if (postedStatus === 'idle') {
-      //dispatch(fetchPostedRecipes());
+      dispatch(fetchPostedRecipes());
     }
   }, [postedStatus, dispatch]);
 
   useEffect(() => {
     if (favoriteStatus === 'idle') {
-      //dispatch(fetchFavoriteRecipes());
+      dispatch(fetchFavoriteRecipes());
     }
   }, [favoriteStatus, dispatch]);
 
@@ -97,8 +94,8 @@ const ProfileComponent: React.FC = () => {
           <BioSection bio={user.about} />
         </>
       )}
-      <RecipesGrid recipes={posted} title='Recipes Posted' />
-      <RecipesGrid recipes={favorites} title='Favourites' />
+      <RecipesGrid recipes={postedRecipes} title='Recipes Posted' />
+      <RecipesGrid recipes={favoriteRecipes} title='Favourites' />
     </Box>
   );
 };

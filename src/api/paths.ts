@@ -8,7 +8,7 @@ export const PATHS = {
   UPLOAD_RECIPE_PATH: 'api/Recipe',
   CATEGORIES_PATH: 'api/Category/all',
   USER_PROFILE_PATH: 'api/user/profile',
-  USER_RECIPES_PATH: 'api/user/recipes',
-  USER_FAVORITES_PATH: 'api/user/favorites',
+  USER_RECIPES_PATH: 'api/Profile/posted',
+  USER_FAVORITES_PATH: 'api/Profile/favorite',
   USER_UPDATE_PATH: 'api/Profile',
 };
