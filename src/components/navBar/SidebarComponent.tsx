@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -9,12 +9,28 @@ import {
 } from '@mui/material';
 import { categories } from '../../data/MockFilters';
 
+interface SidebarComponentProps {
+  selectedCategories: string[];
+  onCategoryChange: (categories: string[]) => void;
+}
+
 interface CheckedState {
   [key: string]: boolean;
 }
 
-function SidebarComponent() {
+function SidebarComponent({
+  selectedCategories,
+  onCategoryChange,
+}: SidebarComponentProps) {
   const [checked, setChecked] = useState<CheckedState>({});
+
+  useEffect(() => {
+    const initialChecked: CheckedState = {};
+    selectedCategories.forEach(category => {
+      initialChecked[category] = true;
+    });
+    setChecked(initialChecked);
+  }, [selectedCategories]);
 
   const handleToggle = (value: string) => {
     const newChecked = {
@@ -22,6 +38,9 @@ function SidebarComponent() {
       [value]: !checked[value],
     };
     setChecked(newChecked);
+
+    const selected = Object.keys(newChecked).filter(key => newChecked[key]);
+    onCategoryChange(selected);
   };
 
   return (

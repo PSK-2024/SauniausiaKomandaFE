@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RecipeReviewCard from '../recipeCard/RecipeReviewCard';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import SidebarComponent from '../navBar/SidebarComponent';
 
 import { AppDispatch, RootState } from '../../app/store';
@@ -30,6 +29,7 @@ function HomeComponent() {
   const [redirectToUploadRecipePage, setRedirectToUploadRecipePage] =
     useState(false);
   const [showAllRecipes, setShowAllRecipes] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleClickShareRecipe = () => {
     setRedirectToUploadRecipePage(true);
@@ -37,6 +37,11 @@ function HomeComponent() {
 
   const toggleRecipesDisplay = () => {
     setShowAllRecipes(!showAllRecipes);
+  };
+
+  const handleCategoryChange = (categories: string[]) => {
+    setSelectedCategories(categories);
+    dispatch(fetchAllRecipes(categories.join(',')));
   };
 
   useEffect(() => {
@@ -91,7 +96,10 @@ function HomeComponent() {
       </Box>
 
       <Box className='home-container-content'>
-        <SidebarComponent />
+        <SidebarComponent
+          selectedCategories={selectedCategories}
+          onCategoryChange={handleCategoryChange}
+        />
         <Box className='recipes-container'>
           {showAllRecipes ? (
             recipes.map(recipe => (
