@@ -14,6 +14,7 @@ import {
 import { fetchUserData, updateUserData } from '../../state/thunk/userThunk';
 import { favorites, posted } from '../../data/MockProfileRecipes';
 import { UserUpdateRequest } from '../../state/model/userModel';
+import { blobToBase64, fetchBlob } from '../../utils/imageUtils';
 
 const ProfileComponent: React.FC = () => {
   const {
@@ -42,14 +43,29 @@ const ProfileComponent: React.FC = () => {
     }
   }, [favoriteStatus, dispatch]);
 
-  const handleSave = (updatedProfile: UserUpdateRequest) => {
+  const handleSave = async (updatedProfile: UserUpdateRequest) => {
     const formData = new FormData();
     formData.append('firstName', updatedProfile.firstName);
     formData.append('lastName', updatedProfile.lastName);
     formData.append('about', updatedProfile.about);
-    formData.append('image', updatedProfile.image);
 
-    //dispatch(updateUserData(formData));
+    if (updatedProfile.image.startsWith('blob:')) {
+      try {
+        const blob = await fetchBlob(updatedProfile.image);
+        const base64Image = await blobToBase64(blob);
+        if (base64Image) {
+          formData.append('image', base64Image);
+        } else {
+          console.error('Error: Failed to convert blob to base64');
+        }
+      } catch (error) {
+        console.error('Error converting image to base64:', error);
+      }
+    } else {
+      formData.append('image', updatedProfile.image);
+    }
+
+    dispatch(updateUserData(formData));
   };
 
   if (
