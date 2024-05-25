@@ -13,13 +13,11 @@ export const fetchUserData = createAsyncThunk<
 >('user/fetchUserData', async (_, { rejectWithValue }) => {
   try {
     const user: User = await authService.getUserData();
-    console.log(user);
+
     if (!user) {
-      console.log('rejecting');
       return rejectWithValue('Invalid response from auth service');
     }
 
-    console.log(user);
     user.image = await fetchImageUrl(user.image);
 
     return user;
@@ -44,7 +42,9 @@ export const updateUserData = createAsyncThunk<User, FormData>(
           },
         }
       );
-      return response.data;
+      const user: User = response.data;
+      user.image = await fetchImageUrl(user.image);
+      return user;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         return rejectWithValue('Failed to update user data');

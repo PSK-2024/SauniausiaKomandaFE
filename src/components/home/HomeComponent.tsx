@@ -101,6 +101,7 @@ function HomeComponent() {
                 title={recipe.title}
                 rating={recipe.rating}
                 img={recipe.img}
+                favorite={recipe.favorite}
                 duration={recipe.duration}
                 categories={recipe.categories || []}
               />
@@ -115,6 +116,7 @@ function HomeComponent() {
                   rating={recommendedRecipe.rating}
                   img={recommendedRecipe.img}
                   duration={recommendedRecipe.duration}
+                  favorite={recommendedRecipe.favorite}
                   categories={recommendedRecipe.categories || []}
                 />
               ))}

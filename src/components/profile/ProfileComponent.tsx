@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, CircularProgress } from '@mui/material';
@@ -6,14 +5,13 @@ import { AppDispatch, RootState } from '../../app/store';
 import ProfileHeader from './ProfileHeader';
 import BioSection from './BioSection';
 import RecipesGrid from './RecipesGrid';
-import { mockedProfile } from '../../data/mockProfile';
 import {
   fetchPostedRecipes,
   fetchFavoriteRecipes,
 } from '../../state/thunk/userProfileThunk';
-import { fetchUserData, updateUserData } from '../../state/thunk/userThunk';
-import { favorites, posted } from '../../data/MockProfileRecipes';
+import { updateUserData } from '../../state/thunk/userThunk';
 import { UserUpdateRequest } from '../../state/model/userModel';
+import { blobToBase64, fetchBlob } from '../../utils/imageUtils';
 
 const ProfileComponent: React.FC = () => {
   const {
@@ -32,22 +30,37 @@ const ProfileComponent: React.FC = () => {
 
   useEffect(() => {
     if (postedStatus === 'idle') {
-      //dispatch(fetchPostedRecipes());
+      dispatch(fetchPostedRecipes());
     }
   }, [postedStatus, dispatch]);
 
   useEffect(() => {
     if (favoriteStatus === 'idle') {
-      //dispatch(fetchFavoriteRecipes());
+      dispatch(fetchFavoriteRecipes());
     }
   }, [favoriteStatus, dispatch]);
 
-  const handleSave = (updatedProfile: UserUpdateRequest) => {
+  const handleSave = async (updatedProfile: UserUpdateRequest) => {
     const formData = new FormData();
     formData.append('firstName', updatedProfile.firstName);
     formData.append('lastName', updatedProfile.lastName);
     formData.append('about', updatedProfile.about);
-    formData.append('image', updatedProfile.image);
+
+    if (updatedProfile.image.startsWith('blob:')) {
+      try {
+        const blob = await fetchBlob(updatedProfile.image);
+        const base64Image = await blobToBase64(blob);
+        if (base64Image) {
+          formData.append('image', base64Image);
+        } else {
+          console.error('Error: Failed to convert blob to base64');
+        }
+      } catch (error) {
+        console.error('Error converting image to base64:', error);
+      }
+    } else {
+      formData.append('image', updatedProfile.image);
+    }
 
     dispatch(updateUserData(formData));
   };
@@ -81,8 +94,12 @@ const ProfileComponent: React.FC = () => {
           <BioSection bio={user.about} />
         </>
       )}
-      <RecipesGrid recipes={posted} title='Recipes Posted' />
-      <RecipesGrid recipes={favorites} title='Favourites' />
+      {postedRecipes.length > 0 && (
+        <RecipesGrid recipes={postedRecipes} title='Recipes Posted' />
+      )}
+      {favoriteRecipes.length > 0 && (
+        <RecipesGrid recipes={favoriteRecipes} title='Favourites' />
+      )}
     </Box>
   );
 };

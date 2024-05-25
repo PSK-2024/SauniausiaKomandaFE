@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 interface BioSectionProps {
   bio: string;
@@ -7,9 +7,15 @@ interface BioSectionProps {
 
 const BioSection: React.FC<BioSectionProps> = ({ bio }) => {
   return (
-    <Typography variant='body1' sx={{ margin: 2, textAlign: 'center' }}>
-      {bio}
-    </Typography>
+    <Box sx={{ margin: 2, textAlign: 'start' }}>
+      <Typography
+        variant='h6'
+        sx={{ mb: 2, fontWeight: 'bold', fontSize: '2rem' }}
+      >
+        About
+      </Typography>
+      <Typography variant='body1'>{bio}</Typography>
+    </Box>
   );
 };
 
