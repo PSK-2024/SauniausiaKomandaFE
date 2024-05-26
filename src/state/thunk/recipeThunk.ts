@@ -108,7 +108,10 @@ export const addReview = createAsyncThunk<
       `${BASE_URL}${PATHS.REVIEW_PATH}`,
       review
     );
-    return response.data;
+    const recipe: RecipeData = response.data;
+    const [imageUrl] = await Promise.all([fetchImageUrl(recipe.image)]);
+    recipe.image = imageUrl;
+    return recipe;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return rejectWithValue('Failed to add review');
