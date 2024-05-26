@@ -74,6 +74,9 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
             fontWeight='bold'
             fontSize='25px'
             color='#000000'
+            overflow='hidden'
+            textOverflow='ellipsis'
+            whiteSpace='nowrap'
           >
             {title}
           </Typography>

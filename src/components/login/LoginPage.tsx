@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box } from '@mui/material';
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Alert,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../api/authService';
 import { fetchUserData } from '../../state/thunk/userThunk';
@@ -14,37 +21,41 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const validateEmail = (email: string) => {
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    return emailPattern.test(email);
+  };
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-    setIsEmailValid(emailPattern.test(e.target.value));
+    setIsEmailValid(validateEmail(e.target.value));
   };
 
   const handleEmailBlur = () => {
     setIsEmailTouched(true);
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-    setIsEmailValid(emailPattern.test(email));
+    setIsEmailValid(validateEmail(email));
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    if (!isEmailTouched) {
+      setIsEmailTouched(true);
+      setIsEmailValid(validateEmail(email));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!isEmailValid) {
-      alert('Please enter a valid email address.');
-      return;
-    }
+    setIsEmailTouched(true);
+    setIsEmailValid(validateEmail(email));
     try {
       const response = await authService.login({ email, password });
       if (response.success) {
         dispatch(fetchUserData());
         navigate('/');
       } else {
-        setError('Invalid email or password.');
-        console.error(error);
+        setError('Credentials are invalid.');
       }
     } catch (err) {
       setError('An error occurred during login. Please try again.');
@@ -57,6 +68,11 @@ const LoginPage: React.FC = () => {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
+        {error && (
+          <Box mt={2}>
+            <Alert severity='error'>{error}</Alert>
+          </Box>
+        )}
         <form noValidate onSubmit={handleSubmit}>
           <TextField
             variant='outlined'
@@ -90,19 +106,11 @@ const LoginPage: React.FC = () => {
             autoComplete='current-password'
             value={password}
             onChange={handlePasswordChange}
+            onFocus={handleEmailBlur}
           />
           <Button type='submit' fullWidth variant='contained' color='primary'>
             Sign In
           </Button>
-          {/* <Button
-            sx={{ margin: '8px 0px' }}
-            fullWidth
-            variant='outlined'
-            color='secondary'
-            onClick={handleSignUp}
-          >
-            Sign Up
-          </Button> */}
         </form>
       </Box>
     </Container>
