@@ -71,15 +71,14 @@ export const fetchAllRecipes = createAsyncThunk<
 
 export const fetchRecommendedRecipes = createAsyncThunk<
   RecipeCard[],
-  void,
+  number,
   { rejectValue: string }
->('recipes/fetchRecommendedRecipes', async (_, { rejectWithValue }) => {
+>('recipes/fetchRecommendedRecipes', async (top, { rejectWithValue }) => {
   try {
-    // TODO: specify from somewhere in UI recommended recipe count
     const response = await api.get<RecipeCard[]>(
-      `${BASE_URL}${PATHS.PREVIEW_RECIPE_PATH}?top=5`
+      `${BASE_URL}${PATHS.RECOMMENDED_RECIPE_PATH}?top=${top}`
     );
-    const recipes = response.data;
+    const recipes: RecipeCard[] = response.data;
 
     return await Promise.all(
       recipes.map(async recipe => {
@@ -100,15 +99,18 @@ export const fetchRecommendedRecipes = createAsyncThunk<
 
 export const addReview = createAsyncThunk<
   RecipeData,
-  { recipeId: string; review: ReviewRequest },
+  { review: ReviewRequest },
   { rejectValue: string }
->('recipe/addReview', async ({ recipeId, review }, { rejectWithValue }) => {
+>('recipe/addReview', async ({ review }, { rejectWithValue }) => {
   try {
     const response = await api.post<RecipeData>(
-      `${BASE_URL}${PATHS.RECIPE_PATH}/${recipeId}/reviews`,
+      `${BASE_URL}${PATHS.REVIEW_PATH}`,
       review
     );
-    return response.data;
+    const recipe: RecipeData = response.data;
+    const [imageUrl] = await Promise.all([fetchImageUrl(recipe.image)]);
+    recipe.image = imageUrl;
+    return recipe;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return rejectWithValue('Failed to add review');
@@ -130,6 +132,24 @@ export const addToFavorite = createAsyncThunk<
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return rejectWithValue('Failed to add to favorites');
+    }
+    throw error;
+  }
+});
+
+export const removeFromFavorite = createAsyncThunk<
+  number,
+  { recipeId: number },
+  { rejectValue: string }
+>('recipe/removeFromFavorite', async ({ recipeId }, { rejectWithValue }) => {
+  try {
+    await api.delete(`${BASE_URL}${PATHS.FAVORITE_RECIPE_PATH}`, {
+      data: { recipeId },
+    });
+    return recipeId;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return rejectWithValue('Failed to delete from favorites');
     }
     throw error;
   }

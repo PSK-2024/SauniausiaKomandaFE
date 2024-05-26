@@ -4,22 +4,27 @@ import './ReviewSection.css';
 import { addReview } from '../../../state/thunk/recipeThunk';
 import { useAppDispatch } from '../../../app/hooks';
 import { Review } from '../../../state/model/reviewModel';
+
 interface ReviewSectionProps {
-  recipeId: string;
+  recipeId: number;
   reviews: Review[];
+  hasUserReviewed: boolean;
 }
 
-const ReviewSection: React.FC<ReviewSectionProps> = ({ recipeId, reviews }) => {
+const ReviewSection: React.FC<ReviewSectionProps> = ({
+  recipeId,
+  reviews,
+  hasUserReviewed,
+}) => {
   const [text, setText] = useState('');
   const [rating, setRating] = useState<number | null>(null);
   const dispatch = useAppDispatch();
 
-  const handleAddReview = async () => {
-    if (text && rating !== null) {
-      await dispatch(
+  const handleAddReview = () => {
+    if (text && rating !== null && !hasUserReviewed) {
+      dispatch(
         addReview({
-          recipeId: recipeId,
-          review: { text, rating },
+          review: { recipeId, text, rating },
         })
       );
       setText('');
@@ -34,7 +39,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ recipeId, reviews }) => {
           <ListItem key={review.id}>
             <ListItemText
               primary={review.text}
-              secondary={`By ${review.author} - ${review.rating} Stars`}
+              secondary={`By ${review.author.firstName} ${review.author.lastName} - ${review.rating} Stars`}
             />
           </ListItem>
         ))}
@@ -47,6 +52,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ recipeId, reviews }) => {
             onChange={(event, newValue) => {
               setRating(newValue);
             }}
+            disabled={hasUserReviewed}
           />
         </div>
         <TextField
@@ -54,6 +60,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ recipeId, reviews }) => {
           value={text}
           onChange={e => setText(e.target.value)}
           fullWidth
+          disabled={hasUserReviewed}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -69,7 +76,13 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ recipeId, reviews }) => {
           }}
         />
         <div className='review-button'>
-          <button onClick={handleAddReview}>Comment</button>
+          <button
+            onClick={handleAddReview}
+            disabled={hasUserReviewed}
+            className={hasUserReviewed ? 'disabled-button' : 'enabled-button'}
+          >
+            {hasUserReviewed ? 'Already Reviewed' : 'Comment'}
+          </button>
         </div>
       </div>
     </div>

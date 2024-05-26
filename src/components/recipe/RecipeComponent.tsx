@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress, CardMedia, Card } from '@mui/material';
 import Header from './header/Header';
@@ -13,18 +13,31 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import './RecipeComponent.css';
 import SectionName from './section/SectionName';
 import { Ingredient, IngredientGroup } from '../../state/model/recipeModel';
+import { useSelector } from 'react-redux';
 
 const RecipeComponent: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const recipe = useAppSelector((state: RootState) => state.recipe.recipe);
   const status = useAppSelector((state: RootState) => state.recipe.status);
+  const currentUserId = useSelector((state: RootState) => state.user.user.id);
+  const [hasUserReviewed, setHasUserReviewed] = useState(false);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchRecipe(id));
     }
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (recipe) {
+      const reviews = recipe.reviews;
+      const userReviewed = reviews.some(
+        review => review.author.userId === currentUserId
+      );
+      setHasUserReviewed(userReviewed);
+    }
+  }, [recipe, currentUserId]);
 
   const countTotalIngredients = (
     ingredients: (Ingredient | IngredientGroup)[]
@@ -79,7 +92,11 @@ const RecipeComponent: React.FC = () => {
       </div>
       <div className='reviews-container'>
         <SectionName name={'Reviews'} />
-        <ReviewSection recipeId={id as string} reviews={recipe.reviews} />
+        <ReviewSection
+          recipeId={Number(id)}
+          reviews={recipe.reviews}
+          hasUserReviewed={hasUserReviewed}
+        />
       </div>
     </div>
   );
