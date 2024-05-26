@@ -22,16 +22,14 @@ const RecipeComponent: React.FC = () => {
   const status = useAppSelector((state: RootState) => state.recipe.status);
   const userId = useSelector((state: RootState) => state.user.user.id);
   const [hasUserReviewed, setHasUserReviewed] = useState(false);
-  console.log('user', userId);
+
   useEffect(() => {
-    console.log('User ID:', userId);
     if (id) {
       dispatch(fetchRecipe(id));
     }
   }, [dispatch, id]);
 
   useEffect(() => {
-    console.log('aaaa');
     if (recipe) {
       const reviews = recipe.reviews;
       const userReviewed = reviews.some(review => review.author.id === userId);

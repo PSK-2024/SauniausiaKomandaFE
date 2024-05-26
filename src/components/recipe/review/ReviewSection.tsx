@@ -21,7 +21,6 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
   const dispatch = useAppDispatch();
 
   const handleAddReview = () => {
-    console.log('aaa', hasUserReviewed);
     if (text && rating !== null && !hasUserReviewed) {
       dispatch(
         addReview({
