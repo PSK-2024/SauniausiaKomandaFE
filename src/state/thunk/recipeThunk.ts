@@ -71,13 +71,12 @@ export const fetchAllRecipes = createAsyncThunk<
 
 export const fetchRecommendedRecipes = createAsyncThunk<
   RecipeCard[],
-  void,
+  number,
   { rejectValue: string }
->('recipes/fetchRecommendedRecipes', async (_, { rejectWithValue }) => {
+>('recipes/fetchRecommendedRecipes', async (top, { rejectWithValue }) => {
   try {
-    // TODO: specify from somewhere in UI recommended recipe count
     const response = await api.get<RecipeCard[]>(
-      `${BASE_URL}${PATHS.PREVIEW_RECIPE_PATH}?top=5`
+      `${BASE_URL}${PATHS.RECOMMENDED_RECIPE_PATH}?top=${top}`
     );
     const recipes = response.data;
 

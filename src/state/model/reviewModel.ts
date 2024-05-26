@@ -1,5 +1,3 @@
-import { UserIdentity } from './userModel';
-
 export interface Review {
   id: number;
   text: string;
@@ -7,7 +5,9 @@ export interface Review {
   rating: number;
 }
 
-export interface ReviewAuthor extends UserIdentity {
+export interface ReviewAuthor {
+  userId: number;
+  email: string;
   firstName: string;
   lastName: string;
 }

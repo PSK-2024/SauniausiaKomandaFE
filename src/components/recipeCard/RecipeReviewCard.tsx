@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarIcon from '@mui/icons-material/Star';
 import { Box, Chip } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 
 import { RecipeCard } from '../../state/model/recipeCardModel';
@@ -27,8 +27,12 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
   categories,
 }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const handleFavoriteClick = () => {
     dispatch(addToFavorite({ recipeId: id }));
+  };
+  const handleCommentClick = () => {
+    navigate(`/recipes/${id}`);
   };
 
   return (
@@ -88,7 +92,7 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
           >
             <FavoriteIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={handleCommentClick}>
             <ModeCommentOutlinedIcon />
           </IconButton>
         </Box>

@@ -20,7 +20,7 @@ const RecipeComponent: React.FC = () => {
   const dispatch = useAppDispatch();
   const recipe = useAppSelector((state: RootState) => state.recipe.recipe);
   const status = useAppSelector((state: RootState) => state.recipe.status);
-  const userId = useSelector((state: RootState) => state.user.user.id);
+  const currentUserId = useSelector((state: RootState) => state.user.user.id);
   const [hasUserReviewed, setHasUserReviewed] = useState(false);
 
   useEffect(() => {
@@ -32,10 +32,12 @@ const RecipeComponent: React.FC = () => {
   useEffect(() => {
     if (recipe) {
       const reviews = recipe.reviews;
-      const userReviewed = reviews.some(review => review.author.id === userId);
+      const userReviewed = reviews.some(
+        review => review.author.userId === currentUserId
+      );
       setHasUserReviewed(userReviewed);
     }
-  }, [recipe, userId]);
+  }, [recipe, currentUserId]);
 
   const countTotalIngredients = (
     ingredients: (Ingredient | IngredientGroup)[]

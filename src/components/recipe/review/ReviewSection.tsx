@@ -52,6 +52,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
             onChange={(event, newValue) => {
               setRating(newValue);
             }}
+            disabled={hasUserReviewed}
           />
         </div>
         <TextField
@@ -59,6 +60,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
           value={text}
           onChange={e => setText(e.target.value)}
           fullWidth
+          disabled={hasUserReviewed}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -74,8 +76,12 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
           }}
         />
         <div className='review-button'>
-          <button onClick={handleAddReview} disabled={hasUserReviewed}>
-            Comment
+          <button
+            onClick={handleAddReview}
+            disabled={hasUserReviewed}
+            className={hasUserReviewed ? 'disabled-button' : 'enabled-button'}
+          >
+            {hasUserReviewed ? 'Already Reviewed' : 'Comment'}
           </button>
         </div>
       </div>

@@ -12,6 +12,8 @@ import {
 } from '../../state/thunk/recipeThunk';
 
 import './homeComponent.css';
+import { RecipeCard } from '../../state/model/recipeCardModel';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 function HomeComponent() {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,6 +32,7 @@ function HomeComponent() {
     useState(false);
   const [showAllRecipes, setShowAllRecipes] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [isCategoryEmpty, setIsCategoryEmpty] = useState(false);
 
   const handleClickShareRecipe = () => {
     setRedirectToUploadRecipePage(true);
@@ -41,7 +44,19 @@ function HomeComponent() {
 
   const handleCategoryChange = (categories: string[]) => {
     setSelectedCategories(categories);
-    dispatch(fetchAllRecipes(categories.join(',')));
+    dispatch(fetchAllRecipes(categories.join(',')))
+      .then(unwrapResult)
+      .then((recipes: RecipeCard[]) => {
+        if (recipes.length === 0) {
+          setIsCategoryEmpty(true);
+        } else {
+          setIsCategoryEmpty(false);
+        }
+      })
+      .catch(error => {
+        console.error('Failed to fetch recipes:', error);
+        setIsCategoryEmpty(false);
+      });
   };
 
   useEffect(() => {
@@ -51,42 +66,44 @@ function HomeComponent() {
   }, [redirectToUploadRecipePage]);
 
   useEffect(() => {
-    if (recipes.length < 1) {
-      dispatch(fetchAllRecipes());
-    }
-    if (recommendedRecipes.length < 1) {
-      dispatch(fetchRecommendedRecipes());
-    }
-  }, [dispatch, recipes, recommendedRecipes]);
+    dispatch(fetchAllRecipes());
+    dispatch(fetchRecommendedRecipes(5));
+  }, [dispatch]);
 
   if (
-    statusAll === 'idle' ||
-    statusRecommended === 'idle' ||
-    statusAll === 'loading' ||
-    statusRecommended === 'loading'
-  )
+    ((statusAll === 'idle' || statusAll === 'loading') && showAllRecipes) ||
+    ((statusRecommended === 'idle' || statusRecommended === 'loading') &&
+      !showAllRecipes)
+  ) {
     return <CircularProgress />;
+  }
+
   if (error) return <Typography>Error occurred. Try again!</Typography>;
 
   return (
     <>
-      <Link to={`/recipes/${recipes[0].id}`} style={{ textDecoration: 'none' }}>
-        <Box className='hero-image'>
-          <img src={recipes[0].img} alt='Hero' />
-          <Box className='hero-image-text'>
-            <Typography
-              sx={{ color: '#DC582A', fontWeight: '400', fontSize: '30px' }}
-            >
-              Trending now
-            </Typography>
-            <Typography
-              sx={{ color: '#ffffff', fontWeight: '600', fontSize: '50px' }}
-            >
-              {recipes[0].title}
-            </Typography>
+      {recommendedRecipes.length > 0 && (
+        <Link
+          to={`/recipes/${recommendedRecipes[0].id}`}
+          style={{ textDecoration: 'none' }}
+        >
+          <Box className='hero-image'>
+            <img src={recommendedRecipes[0].img} alt='Hero' />
+            <Box className='hero-image-text'>
+              <Typography
+                sx={{ color: '#DC582A', fontWeight: '400', fontSize: '30px' }}
+              >
+                Trending now
+              </Typography>
+              <Typography
+                sx={{ color: '#ffffff', fontWeight: '600', fontSize: '50px' }}
+              >
+                {recommendedRecipes[0].title}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      </Link>
+        </Link>
+      )}
 
       <Box className='button-container'>
         <Button variant='text' onClick={toggleRecipesDisplay}>
@@ -102,33 +119,44 @@ function HomeComponent() {
         />
         <Box className='recipes-container'>
           {showAllRecipes ? (
-            recipes.map(recipe => (
+            recipes.length > 0 ? (
+              recipes.map(recipe => (
+                <RecipeReviewCard
+                  key={recipe.id}
+                  id={recipe.id}
+                  title={recipe.title}
+                  rating={recipe.rating}
+                  img={recipe.img}
+                  favorite={recipe.favorite}
+                  duration={recipe.duration}
+                  categories={recipe.categories || []}
+                />
+              ))
+            ) : isCategoryEmpty ? (
+              <Typography>
+                No recipes available for the selected category. Please try
+                another category!
+              </Typography>
+            ) : (
+              <Typography>
+                No recipes available. Please add some recipes!
+              </Typography>
+            )
+          ) : recommendedRecipes.length > 0 ? (
+            recommendedRecipes.map(recommendedRecipe => (
               <RecipeReviewCard
-                key={recipe.id}
-                id={recipe.id}
-                title={recipe.title}
-                rating={recipe.rating}
-                img={recipe.img}
-                favorite={recipe.favorite}
-                duration={recipe.duration}
-                categories={recipe.categories || []}
+                key={recommendedRecipe.id}
+                id={recommendedRecipe.id}
+                title={recommendedRecipe.title}
+                rating={recommendedRecipe.rating}
+                img={recommendedRecipe.img}
+                duration={recommendedRecipe.duration}
+                favorite={recommendedRecipe.favorite}
+                categories={recommendedRecipe.categories || []}
               />
             ))
           ) : (
-            <>
-              {recommendedRecipes.map(recommendedRecipe => (
-                <RecipeReviewCard
-                  key={recommendedRecipe.id}
-                  id={recommendedRecipe.id}
-                  title={recommendedRecipe.title}
-                  rating={recommendedRecipe.rating}
-                  img={recommendedRecipe.img}
-                  duration={recommendedRecipe.duration}
-                  favorite={recommendedRecipe.favorite}
-                  categories={recommendedRecipe.categories || []}
-                />
-              ))}
-            </>
+            <Typography>No recommended recipes available.</Typography>
           )}
         </Box>
       </Box>
