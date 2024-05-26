@@ -15,7 +15,10 @@ import { RecipeCard } from '../../state/model/recipeCardModel';
 
 import './recipeReviewCard.css';
 import { useAppDispatch } from '../../app/hooks';
-import { addToFavorite } from '../../state/thunk/recipeThunk';
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from '../../state/thunk/recipeThunk';
 
 const RecipeReviewCard: React.FC<RecipeCard> = ({
   id,
@@ -28,9 +31,15 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const handleFavoriteClick = () => {
-    dispatch(addToFavorite({ recipeId: id }));
+    if (favorite) {
+      dispatch(removeFromFavorite({ recipeId: id }));
+    } else {
+      dispatch(addToFavorite({ recipeId: id }));
+    }
   };
+
   const handleCommentClick = () => {
     navigate(`/recipes/${id}`);
   };

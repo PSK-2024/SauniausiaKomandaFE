@@ -78,7 +78,7 @@ export const fetchRecommendedRecipes = createAsyncThunk<
     const response = await api.get<RecipeCard[]>(
       `${BASE_URL}${PATHS.RECOMMENDED_RECIPE_PATH}?top=${top}`
     );
-    const recipes = response.data;
+    const recipes: RecipeCard[] = response.data;
 
     return await Promise.all(
       recipes.map(async recipe => {
@@ -132,6 +132,24 @@ export const addToFavorite = createAsyncThunk<
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return rejectWithValue('Failed to add to favorites');
+    }
+    throw error;
+  }
+});
+
+export const removeFromFavorite = createAsyncThunk<
+  number,
+  { recipeId: number },
+  { rejectValue: string }
+>('recipe/removeFromFavorite', async ({ recipeId }, { rejectWithValue }) => {
+  try {
+    await api.delete(`${BASE_URL}${PATHS.FAVORITE_RECIPE_PATH}`, {
+      data: { recipeId },
+    });
+    return recipeId;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return rejectWithValue('Failed to delete from favorites');
     }
     throw error;
   }

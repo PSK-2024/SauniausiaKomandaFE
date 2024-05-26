@@ -5,6 +5,7 @@ import {
   addToFavorite,
   fetchAllRecipes,
   fetchRecommendedRecipes,
+  removeFromFavorite,
 } from '../thunk/recipeThunk';
 
 export interface RecipeCardState {
@@ -13,6 +14,7 @@ export interface RecipeCardState {
   statusRecommended: 'idle' | 'loading' | 'succeeded' | 'failed';
   statusAll: 'idle' | 'loading' | 'succeeded' | 'failed';
   statusAddToFavorite: 'idle' | 'loading' | 'succeeded' | 'failed';
+  statusRemoveFromFavorite: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | undefined;
 }
 
@@ -22,6 +24,7 @@ const initialState: RecipeCardState = {
   statusRecommended: 'idle',
   statusAll: 'idle',
   statusAddToFavorite: 'idle',
+  statusRemoveFromFavorite: 'idle',
   error: '',
 };
 
@@ -82,6 +85,30 @@ const recipeCardSlice = createSlice({
       )
       .addCase(addToFavorite.rejected, (state, action) => {
         state.statusAddToFavorite = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(removeFromFavorite.pending, state => {
+        state.statusRemoveFromFavorite = 'loading';
+      })
+      .addCase(
+        removeFromFavorite.fulfilled,
+        (state, action: PayloadAction<number>) => {
+          state.statusRemoveFromFavorite = 'succeeded';
+          const recipeId = action.payload;
+          const recipe = state.recipes.find(r => r.id === recipeId);
+          if (recipe) {
+            recipe.favorite = false;
+          }
+          const recommendedRecipe = state.recommendedRecipes.find(
+            r => r.id === recipeId
+          );
+          if (recommendedRecipe) {
+            recommendedRecipe.favorite = false;
+          }
+        }
+      )
+      .addCase(removeFromFavorite.rejected, (state, action) => {
+        state.statusRemoveFromFavorite = 'failed';
         state.error = action.payload;
       });
   },
