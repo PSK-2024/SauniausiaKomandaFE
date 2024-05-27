@@ -25,6 +25,7 @@ const login = (request: LoginRequest) =>
 
 const logout = () => {
   localStorage.removeItem('apiToken');
+  window.location.href = '/login';
 };
 
 const getToken = () => {
@@ -48,12 +49,13 @@ export const isTokenValid = (token: string | null) => {
   try {
     const { exp } = jwtDecode(token);
     const isValid = !(exp && Date.now() >= exp * 1000);
+    console.log('isValid', isValid);
     if (!isValid) {
-      localStorage.removeItem('apiToken');
+      logout();
     }
     return isValid;
   } catch (e) {
-    localStorage.removeItem('apiToken');
+    logout();
     return false;
   }
 };
