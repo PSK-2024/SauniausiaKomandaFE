@@ -82,7 +82,18 @@ const RecipeReviewCard: React.FC<RecipeCard> = ({
           </Typography>
           <Box className='categories'>
             {categories.map(category => (
-              <Chip key={category} label={category} className='category-chip' />
+              <Chip
+                key={category}
+                label={category}
+                className='category-chip'
+                sx={{
+                  fontSize: '12px',
+                  height: '26px',
+                  padding: '2px 4px',
+                  marginRight: '4px',
+                  marginBottom: '4px',
+                }}
+              />
             ))}
           </Box>
         </CardContent>

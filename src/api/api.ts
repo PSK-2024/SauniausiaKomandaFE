@@ -9,7 +9,6 @@ const api = axios.create({
 api.interceptors.request.use(
   config => {
     const token = localStorage.getItem('apiToken');
-    console.log('token', token);
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token;
     }
@@ -17,6 +16,8 @@ api.interceptors.request.use(
     return config;
   },
   error => {
+    authService.logout();
+    window.location.href = '/login';
     return Promise.reject(error);
   }
 );
