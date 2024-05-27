@@ -18,6 +18,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { clearUser } from '../../state/slice/userSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import useFetchUserData from '../../hooks/useFetchUserData';
 
 const pages = ['Home'];
 const settings = ['Profile', 'Logout'];
@@ -29,6 +30,7 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -66,6 +68,8 @@ function ResponsiveAppBar() {
     navigate('/');
     handleCloseNavMenu();
   };
+
+  useFetchUserData();
 
   return (
     <AppBar position='static' sx={{ bgcolor: '#ffffff' }}>

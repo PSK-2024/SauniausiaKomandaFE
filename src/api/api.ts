@@ -29,9 +29,11 @@ axios.interceptors.response.use(
   function (error) {
     if (error.response.status === 401) {
       authService.logout();
+      window.location.href = '/login';
       return Promise.reject(error);
     }
-
+    authService.logout();
+    window.location.href = '/login';
     return Promise.reject(error);
   }
 );
