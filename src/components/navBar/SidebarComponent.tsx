@@ -7,7 +7,9 @@ import {
   FormControlLabel,
   Divider,
 } from '@mui/material';
-import { categories } from '../../data/MockFilters';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../app/store';
+import { fetchCategories } from '../../state/thunk/fetchCategoriesThunk';
 
 interface SidebarComponentProps {
   selectedCategories: string[];
@@ -22,7 +24,17 @@ function SidebarComponent({
   selectedCategories,
   onCategoryChange,
 }: SidebarComponentProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const { categories, status } = useSelector(
+    (state: RootState) => state.categories
+  );
   const [checked, setChecked] = useState<CheckedState>({});
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchCategories());
+    }
+  }, [status, dispatch]);
 
   useEffect(() => {
     const initialChecked: CheckedState = {};
@@ -52,26 +64,30 @@ function SidebarComponent({
       <Typography variant='subtitle2' sx={{ mt: 2, mb: 1, color: '#509E2F' }}>
         Categories
       </Typography>
-      <FormGroup>
-        {categories.map(category => (
-          <FormControlLabel
-            key={category.value}
-            control={
-              <Checkbox
-                checked={checked[category.value] || false}
-                onChange={() => handleToggle(category.value)}
-                sx={{
-                  color: checked[category.value] ? 'green' : 'default',
-                  '&.Mui-checked': {
-                    color: '#509E2F',
-                  },
-                }}
-              />
-            }
-            label={category.label}
-          />
-        ))}
-      </FormGroup>
+      {status === 'loading' ? (
+        <Typography>Loading...</Typography>
+      ) : (
+        <FormGroup>
+          {categories.map(category => (
+            <FormControlLabel
+              key={category.name}
+              control={
+                <Checkbox
+                  checked={checked[category.name] || false}
+                  onChange={() => handleToggle(category.name)}
+                  sx={{
+                    color: checked[category.name] ? 'green' : 'default',
+                    '&.Mui-checked': {
+                      color: '#509E2F',
+                    },
+                  }}
+                />
+              }
+              label={category.name}
+            />
+          ))}
+        </FormGroup>
+      )}
 
       <Divider sx={{ my: 2 }} />
     </Box>
