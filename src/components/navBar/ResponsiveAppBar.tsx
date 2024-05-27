@@ -16,6 +16,9 @@ import { useNavigate } from 'react-router-dom';
 import authService from '../../api/authService';
 import { useAppDispatch } from '../../app/hooks';
 import { clearUser } from '../../state/slice/userSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import useFetchUserData from '../../hooks/useFetchUserData';
 
 const pages = ['Home'];
 const settings = ['Profile', 'Logout'];
@@ -23,9 +26,11 @@ const settings = ['Profile', 'Logout'];
 function ResponsiveAppBar() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const image = useSelector((state: RootState) => state.user.user.image);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -64,6 +69,8 @@ function ResponsiveAppBar() {
     handleCloseNavMenu();
   };
 
+  useFetchUserData();
+
   return (
     <AppBar position='static' sx={{ bgcolor: '#ffffff' }}>
       <Container maxWidth={false}>
@@ -77,7 +84,6 @@ function ResponsiveAppBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: '#509E2F',
@@ -144,7 +150,15 @@ function ResponsiveAppBar() {
                 onClick={
                   page === 'Home' ? handleNavigateHome : handleCloseNavMenu
                 }
-                sx={{ my: 2, color: '#509E2F', display: 'block', p: 0, m: 0 }}
+                sx={{
+                  my: 2,
+                  color: '#509E2F',
+                  display: 'block',
+                  p: 0,
+                  m: 0,
+                  fontWeight: 900,
+                  fontSize: '14px',
+                }}
               >
                 {page}
               </Button>
@@ -154,7 +168,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title='Open settings'>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                <Avatar src={image} alt='R' />
               </IconButton>
             </Tooltip>
             <Menu

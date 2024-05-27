@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,9 +16,8 @@ import ProfileComponent from './components/profile/ProfileComponent';
 import LoginComponent from './components/login/LoginPage';
 import PrivateRoute from './router/PrivateRoute';
 import './App.css';
-import { RootState } from './app/store';
-import { fetchUserData } from './state/thunk/userThunk';
-import { useAppDispatch, useAppSelector } from './app/hooks';
+import useFetchUserData from './hooks/useFetchUserData';
+import NotFoundComponent from './components/notFound/NotFound';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -39,15 +38,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 function App() {
-  const dispatch = useAppDispatch();
-  const userStatus = useAppSelector((state: RootState) => state.user.status);
-  const token = localStorage.getItem('apiToken');
-
-  useEffect(() => {
-    if (token && userStatus == 'idle') {
-      dispatch(fetchUserData());
-    }
-  }, [dispatch, token, userStatus]);
+  useFetchUserData();
 
   return (
     <Router>
@@ -60,6 +51,7 @@ function App() {
             <Route path='/uploadRecipe' element={<UploadRecipeComponent />} />
             <Route path='/profile' element={<ProfileComponent />} />
           </Route>
+          <Route path='*' element={<NotFoundComponent />} />
         </Routes>
       </MainLayout>
     </Router>

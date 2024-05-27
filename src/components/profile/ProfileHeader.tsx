@@ -26,7 +26,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   return (
     <Box
       sx={{
@@ -39,10 +38,22 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     >
       <Avatar src={image} sx={{ width: 200, height: 200 }} />
       <Box sx={{ flexGrow: 1, textAlign: 'left' }}>
-        <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
+        <Typography
+          variant='h4'
+          sx={{
+            fontWeight: 'bold',
+            fontFamily: 'Montserrat-Regular, Arial, sans-serif',
+          }}
+        >
           {firstName}
         </Typography>
-        <Typography variant='h4' sx={{ fontWeight: 'bold' }}>
+        <Typography
+          variant='h4'
+          sx={{
+            fontWeight: 'bold',
+            fontFamily: 'Montserrat-Regular, Arial, sans-serif',
+          }}
+        >
           {lastName}
         </Typography>
         <Button

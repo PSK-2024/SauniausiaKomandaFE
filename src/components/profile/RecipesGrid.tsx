@@ -60,7 +60,7 @@ const RecipesGrid: React.FC<RecipesGridProps> = ({ recipes, title }) => {
           mb: 2,
           fontWeight: 'bold',
           fontSize: '2rem',
-          marginTop: '40px',
+          marginTop: '72px',
           marginBottom: '40px',
         }}
       >
