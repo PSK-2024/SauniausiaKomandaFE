@@ -7,9 +7,10 @@ import {
   FormControlLabel,
   Divider,
 } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../app/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import { fetchCategories } from '../../state/thunk/fetchCategoriesThunk';
+import { useAppDispatch } from '../../app/hooks';
 
 interface SidebarComponentProps {
   selectedCategories: string[];
@@ -24,7 +25,7 @@ function SidebarComponent({
   selectedCategories,
   onCategoryChange,
 }: SidebarComponentProps) {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { categories, status } = useSelector(
     (state: RootState) => state.categories
   );
