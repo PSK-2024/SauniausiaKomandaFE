@@ -9,7 +9,7 @@ import {
   fetchPostedRecipes,
   fetchFavoriteRecipes,
 } from '../../state/thunk/userProfileThunk';
-import { updateUserData } from '../../state/thunk/userThunk';
+import { fetchUserData, updateUserData } from '../../state/thunk/userThunk';
 import { UserUpdateRequest } from '../../state/model/userModel';
 import { blobToBase64, fetchBlob } from '../../utils/imageUtils';
 
@@ -39,6 +39,12 @@ const ProfileComponent: React.FC = () => {
       dispatch(fetchFavoriteRecipes());
     }
   }, [favoriteStatus, dispatch]);
+
+  useEffect(() => {
+    if (userStatus === 'idle') {
+      dispatch(fetchUserData());
+    }
+  }, [userStatus, dispatch]);
 
   const handleSave = async (updatedProfile: UserUpdateRequest) => {
     const formData = new FormData();

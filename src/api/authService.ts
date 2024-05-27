@@ -1,4 +1,5 @@
 import api from './api';
+import { jwtDecode } from 'jwt-decode';
 
 export interface LoginRequest {
   email: string;
@@ -39,4 +40,22 @@ export const getUserData = async () => {
   return response.data;
 };
 
-export default { login, logout, isLoggedIn, getUserData };
+export const isTokenValid = (token: string | null) => {
+  if (!token) {
+    return false;
+  }
+
+  try {
+    const { exp } = jwtDecode(token);
+    const isValid = !(exp && Date.now() >= exp * 1000);
+    if (!isValid) {
+      localStorage.removeItem('apiToken');
+    }
+    return isValid;
+  } catch (e) {
+    localStorage.removeItem('apiToken');
+    return false;
+  }
+};
+
+export default { login, logout, isLoggedIn, getUserData, isTokenValid };

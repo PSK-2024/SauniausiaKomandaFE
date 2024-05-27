@@ -7,7 +7,7 @@ interface BioSectionProps {
 
 const BioSection: React.FC<BioSectionProps> = ({ bio }) => {
   return (
-    <Box sx={{ margin: 2, textAlign: 'start' }}>
+    <Box sx={{ marginLeft: 2, marginTop: 2, textAlign: 'start' }}>
       <Typography
         variant='h6'
         sx={{ mb: 2, fontWeight: 'bold', fontSize: '2rem' }}

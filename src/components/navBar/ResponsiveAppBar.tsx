@@ -77,7 +77,6 @@ function ResponsiveAppBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: '#509E2F',
@@ -144,7 +143,15 @@ function ResponsiveAppBar() {
                 onClick={
                   page === 'Home' ? handleNavigateHome : handleCloseNavMenu
                 }
-                sx={{ my: 2, color: '#509E2F', display: 'block', p: 0, m: 0 }}
+                sx={{
+                  my: 2,
+                  color: '#509E2F',
+                  display: 'block',
+                  p: 0,
+                  m: 0,
+                  fontWeight: 900,
+                  fontSize: '14px',
+                }}
               >
                 {page}
               </Button>
