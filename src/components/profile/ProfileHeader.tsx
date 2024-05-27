@@ -26,7 +26,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   return (
     <Box
       sx={{

@@ -9,8 +9,6 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../api/authService';
-//import { fetchUserData } from '../../state/thunk/userThunk';
-//import { useAppDispatch } from '../../app/hooks';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -19,7 +17,6 @@ const LoginPage: React.FC = () => {
   const [isEmailTouched, setIsEmailTouched] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  //const dispatch = useAppDispatch();
 
   const validateEmail = (email: string) => {
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
@@ -52,7 +49,6 @@ const LoginPage: React.FC = () => {
     try {
       const response = await authService.login({ email, password });
       if (response.success) {
-        //dispatch(fetchUserData());
         navigate('/');
       } else {
         setError('Credentials are invalid.');

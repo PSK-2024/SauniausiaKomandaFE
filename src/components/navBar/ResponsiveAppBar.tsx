@@ -16,6 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import authService from '../../api/authService';
 import { useAppDispatch } from '../../app/hooks';
 import { clearUser } from '../../state/slice/userSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 const pages = ['Home'];
 const settings = ['Profile', 'Logout'];
@@ -23,6 +25,7 @@ const settings = ['Profile', 'Logout'];
 function ResponsiveAppBar() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const image = useSelector((state: RootState) => state.user.user.image);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -161,7 +164,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title='Open settings'>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                <Avatar src={image} alt='R' />
               </IconButton>
             </Tooltip>
             <Menu
