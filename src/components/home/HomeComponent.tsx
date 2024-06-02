@@ -112,6 +112,22 @@ function HomeComponent() {
         <Button onClick={handleClickShareRecipe}>Share your recipe</Button>
       </Box>
 
+      <Box className='indicator'>
+        <Typography
+          variant='h6'
+          sx={{
+            mt: 2,
+            mb: 2,
+            ml: 24,
+            textAlign: 'start',
+            color: '#509E2F',
+            fontWeight: 900,
+          }}
+        >
+          {showAllRecipes ? 'All Recipes' : 'Recommended Recipes'}
+        </Typography>
+      </Box>
+
       <Box className='home-container-content'>
         <SidebarComponent
           selectedCategories={selectedCategories}

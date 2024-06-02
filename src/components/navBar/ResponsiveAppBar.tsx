@@ -20,13 +20,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import useFetchUserData from '../../hooks/useFetchUserData';
 
-const pages = ['Home'];
 const settings = ['Profile', 'Logout'];
+const pages = ['Home', 'Share Recipe'];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const image = useSelector((state: RootState) => state.user.user.image);
+  const username = useSelector((state: RootState) => state.user.user.firstName);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -66,6 +67,11 @@ function ResponsiveAppBar() {
 
   const handleNavigateHome = () => {
     navigate('/');
+    handleCloseNavMenu();
+  };
+
+  const handleNavigateUploadRecipe = () => {
+    navigate('/uploadRecipe');
     handleCloseNavMenu();
   };
 
@@ -144,33 +150,58 @@ function ResponsiveAppBar() {
             }}
           ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map(page => (
-              <Button
-                key={page}
-                onClick={
-                  page === 'Home' ? handleNavigateHome : handleCloseNavMenu
-                }
-                sx={{
-                  my: 2,
-                  color: '#509E2F',
-                  display: 'block',
-                  p: 0,
-                  m: 0,
-                  fontWeight: 900,
-                  fontSize: '14px',
-                }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button
+              onClick={handleNavigateHome}
+              sx={{
+                my: 2,
+                color: '#509E2F',
+                display: 'block',
+                p: 0,
+                m: 0,
+                fontWeight: 900,
+                fontSize: '14px',
+                margin: '6px',
+              }}
+            >
+              Home
+            </Button>
+            <Button
+              onClick={handleNavigateUploadRecipe}
+              sx={{
+                my: 2,
+                color: '#509E2F',
+                display: 'block',
+                p: 0,
+                m: 0,
+                fontWeight: 900,
+                fontSize: '14px',
+                margin: '6px',
+              }}
+            >
+              Share Recipe
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar src={image} alt='R' />
-              </IconButton>
-            </Tooltip>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                variant='body1'
+                sx={{ mr: 2, color: '#509E2F', fontWeight: 900 }}
+              >
+                Welcome back, {username}!
+              </Typography>
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar src={image} alt='R' />
+                </IconButton>
+              </Tooltip>
+            </Box>
             <Menu
               sx={{ mt: '45px' }}
               id='menu-appbar'

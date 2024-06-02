@@ -115,7 +115,11 @@ const UploadRecipeComponent: React.FC = () => {
 
   useEffect(() => {
     if (uploadStatus === 'succeeded') {
-      window.location.href = '/';
+      const timeoutId = setTimeout(() => {
+        window.location.href = '/';
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
     }
   }, [uploadStatus]);
 
