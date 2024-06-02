@@ -6,6 +6,7 @@ import { BASE_URL, PATHS } from '../../api/paths';
 import api from '../../api/api';
 import { fetchImageUrl } from '../../utils/imageUtils';
 import { ReviewRequest } from '../model/reviewModel';
+import { toast } from 'react-toastify';
 
 export const fetchRecipe = createAsyncThunk<
   RecipeData,
@@ -128,9 +129,11 @@ export const addToFavorite = createAsyncThunk<
     await api.post(`${BASE_URL}${PATHS.FAVORITE_RECIPE_PATH}`, {
       recipeId,
     });
+    toast.success('Recipe was added to favorites');
     return recipeId;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
+      toast.error('Failed to add to favorites');
       return rejectWithValue('Failed to add to favorites');
     }
     throw error;
@@ -146,9 +149,11 @@ export const removeFromFavorite = createAsyncThunk<
     await api.delete(`${BASE_URL}${PATHS.FAVORITE_RECIPE_PATH}`, {
       data: { recipeId },
     });
+    toast.success('Recipe was removed from favorites');
     return recipeId;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
+      toast.error('Failed to delete from favorites');
       return rejectWithValue('Failed to delete from favorites');
     }
     throw error;
